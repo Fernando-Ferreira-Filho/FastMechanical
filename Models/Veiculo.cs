@@ -10,10 +10,10 @@ namespace FastMechanical.Models {
         public DateTime AnoDeFabricacao { get; set; }
         public string Cor { get; set; }
 
-        public Pessoa Pessoa { get; set; }
+        public Cliente Pessoa { get; set; }
 
         public Veiculo() { }
-        public Veiculo(string renavam, string placa, string modelo, DateTime anoDeFabricacao, string cor, Pessoa pessoa) {
+        public Veiculo(string renavam, string placa, string modelo, DateTime anoDeFabricacao, string cor, Cliente pessoa) {
             Renavam = renavam;
             Placa = placa;
             Modelo = modelo;

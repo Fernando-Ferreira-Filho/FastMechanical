@@ -7,35 +7,35 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace FastMechanical.Services {
-    public class PessoaService : IPessoaService {
+    public class ClienteService : IClienteService {
         private readonly BancoContext _context;
 
-        public PessoaService(BancoContext context) {
+        public ClienteService(BancoContext context) {
             _context = context;
         }
 
-        public async Task<List<Pessoa>> FindAllAsync() {
+        public async Task<List<Cliente>> FindAllAsync() {
 
             try {
-                return await _context.Pessoa.ToListAsync();
+                return await _context.Cliente.ToListAsync();
             }
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
             }
         }
 
-        public async Task<Pessoa> FindByIdAsync(int id) {
+        public async Task<Cliente> FindByIdAsync(int id) {
             try {
-                return await _context.Pessoa.FirstOrDefaultAsync(obj => obj.Id == id);
+                return await _context.Cliente.FirstOrDefaultAsync(obj => obj.Id == id);
             }
             catch (Exception e) {
                 throw new Exception($"Houve um erro para encontrar tente mais tarde, ERRO: {e.Message}");
             }
         }
 
-        public async Task InsertAsync(Pessoa cliente) {
+        public async Task InsertAsync(Cliente cliente) {
             try {
-                _context.Pessoa.Add(cliente);
+                _context.Cliente.Add(cliente);
                 await _context.SaveChangesAsync();
             }
             catch (Exception e) {
@@ -46,7 +46,7 @@ namespace FastMechanical.Services {
             }
         }
 
-        public Pessoa TransformUpperCase(Pessoa cliente) {
+        public Cliente TransformUpperCase(Cliente cliente) {
 
             cliente.Nome = cliente.Nome.Trim().ToUpper();
             cliente.Email = cliente.Email.Trim().ToUpper();
@@ -68,14 +68,14 @@ namespace FastMechanical.Services {
             return cliente;
         }
 
-        public async Task UpdateAsync(Pessoa cliente) {
+        public async Task UpdateAsync(Cliente cliente) {
             try {
-                bool hasAny = await _context.Pessoa.AnyAsync(x => x.Id == cliente.Id);
+                bool hasAny = await _context.Cliente.AnyAsync(x => x.Id == cliente.Id);
 
                 if (!hasAny) {
                     throw new Exception("ID não encontrado");
                 }
-                _context.Pessoa.Update(cliente);
+                _context.Cliente.Update(cliente);
                 await _context.SaveChangesAsync();
 
             }

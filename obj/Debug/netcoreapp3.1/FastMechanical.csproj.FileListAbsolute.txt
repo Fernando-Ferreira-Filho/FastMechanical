@@ -359,3 +359,7 @@ D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.CSharp.r
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\FastMechanical.MvcApplicationPartsAssemblyInfo.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Details.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Edit.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\New.cshtml.g.cs

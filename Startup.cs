@@ -1,4 +1,5 @@
 using FastMechanical.Data;
+using FastMechanical.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,8 @@ namespace FastMechanical {
 
             services.AddDbContext<BancoContext>(options => options.UseMySql(Configuration.GetConnectionString("BancoContext"), builder =>
                builder.MigrationsAssembly("FastMechanical")));
+
+            services.AddScoped<IClienteService, ClienteService>();
 
         }
 
