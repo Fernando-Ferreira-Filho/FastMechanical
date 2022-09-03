@@ -38,6 +38,7 @@
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Modelo)</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Renavam)</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Placa)</th>
+            <th class="text-center" scope="col">Cliente</th>
             
 
             @if (Model != null && Model.Any()) {
@@ -53,6 +54,7 @@
                     <td>@item.Modelo</td>
                     <td>@item.Renavam</td>
                     <td>@item.Placa</td>
+                    <td>@item.Pessoa.Nome</td>
                     <td>
                         <div class="btn-group-sm" role="group">
                             <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Veiculo" asp-action="Edit">Editar</a>

@@ -1,4 +1,4 @@
-﻿@model FastMechanical.Models.Veiculo
+﻿@model FastMechanical.Models.ViewModel.VeiculoViewModel
 
 @{
     ViewData["Title"] = "Cadastrar veículos";
@@ -13,33 +13,44 @@
 
 <form class="row g-3" asp-action="New">
     <div class="col-md-6">
-        <label asp-for="@Model.Renavam" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Renavam" type="text" class="form-control" placeholder="Digite o número Renavam">
-        <span asp-validation-for="@Model.Renavam" class="text-danger"></span>
+        <label asp-for="@Model.Veiculo.Renavam" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Veiculo.Renavam" type="text" class="form-control" placeholder="Digite o número Renavam">
+        <span asp-validation-for="@Model.Veiculo.Renavam" class="text-danger"></span>
     </div>
     <div class="col-md-6">
-        <label asp-for="@Model.Placa" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Placa" type="text" class="form-control" placeholder="Digite a placa do veículo">
-        <span asp-validation-for="@Model.Placa" class="text-danger"></span>
+        <label asp-for="@Model.Veiculo.Placa" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Veiculo.Placa" type="text" class="form-control" placeholder="Digite a placa do veículo">
+        <span asp-validation-for="@Model.Veiculo.Placa" class="text-danger"></span>
     </div>
     <div class="col-md-6">
-        <label asp-for="@Model.Modelo" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Modelo" type="text" class="form-control" placeholder="Digite o modelo">
-        <span asp-validation-for="@Model.Modelo" class="text-danger"></span>
+        <label asp-for="@Model.Veiculo.Modelo" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Veiculo.Modelo" type="text" class="form-control" placeholder="Digite o modelo">
+        <span asp-validation-for="@Model.Veiculo.Modelo" class="text-danger"></span>
     </div>
 
     <div class="col-md-6">
-        <label asp-for="@Model.Cor" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Cor" type="text" class="form-control" placeholder="Digite a cor do veículo">
-        <span asp-validation-for="@Model.Cor" class="text-danger"></span>
+        <label asp-for="@Model.Veiculo.Cor" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Veiculo.Cor" type="text" class="form-control" placeholder="Digite a cor do veículo">
+        <span asp-validation-for="@Model.Veiculo.Cor" class="text-danger"></span>
     </div>
 
     <div class="col-md-6">
-        <label asp-for="@Model.Marca" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Marca" type="text" class="form-control" placeholder="Digite a marca do veículo">
-        <span asp-validation-for="@Model.Marca" class="text-danger"></span>
+        <label asp-for="@Model.Veiculo.Marca" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Veiculo.Marca" type="text" class="form-control" placeholder="Digite a marca do veículo">
+        <span asp-validation-for="@Model.Veiculo.Marca" class="text-danger"></span>
     </div>
-    
+
+    <div class="col-md-6">
+        <label asp-for="@Model.Clientes" class="form-label"></label><span class="text-danger">*</span>
+        <select asp-for="@Model.PessoaId" class="form-select" aria-label="Clientes">
+            @foreach(var item in Model.Clientes)
+            {
+                <option value="@item.Id">@item.Nome</option>
+            }
+        </select>
+        
+    </div>
+
     <div class="col-12 mb-5">
         <button type="submit" class="btn btn-success">Cadastrar</button>
         <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Veiculo">Voltar</a>

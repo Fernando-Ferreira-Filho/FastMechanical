@@ -17,7 +17,7 @@ namespace FastMechanical.Services {
         public async Task<List<Veiculo>> FindAllAsync() {
 
             try {
-                return await _context.Veiculo.ToListAsync();
+                return await _context.Veiculo.Include(obj => obj.Pessoa).ToListAsync();
             }
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
@@ -26,7 +26,7 @@ namespace FastMechanical.Services {
 
         public async Task<Veiculo> FindByIdAsync(int id) {
             try {
-                return await _context.Veiculo.FirstOrDefaultAsync(obj => obj.Id == id);
+                return await _context.Veiculo.Include(obj => obj.Pessoa).FirstOrDefaultAsync(obj => obj.Id == id);
             }
             catch (Exception e) {
                 throw new Exception($"Houve um erro para encontrar tente mais tarde, ERRO: {e.Message}");
@@ -68,7 +68,7 @@ namespace FastMechanical.Services {
 
         public async Task UpdateAsync(Veiculo veiculo) {
             try {
-                bool hasAny = await _context.Veiculo.AnyAsync(x => x.Id == veiculo.Id);
+                bool hasAny = await _context.Veiculo.AnyAsync(obj => obj.Id == veiculo.Id);
 
                 if (!hasAny) {
                     throw new Exception("ID não encontrado");

@@ -12,7 +12,7 @@
     <div class="col-lg-6">
         <h6 class="display-6 mb-5">Dados do Veículo</h6>
 
-        
+
         <div class="row mb-2">
             <div class="col-md-4">
                 <span class="fw-bold">@Html.DisplayNameFor(model => model.Renavam)</span>
@@ -29,6 +29,16 @@
             </div>
             <div class="col-md-7">
                 @Html.DisplayFor(model => model.Placa)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Pessoa)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Pessoa.Nome)
             </div>
 
         </div>
@@ -64,11 +74,11 @@
             </div>
 
         </div>
-        
-   
+
+
         <div class="col-12 mt-5 mb-5">
             <a role="button" asp-route-id="@Model.Id" asp-action="Edit" asp-controller="Veiculo" class="btn btn-primary">Editar</a>
             <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Veiculo">Voltar</a>
         </div>
 
-</div>
+    </div>

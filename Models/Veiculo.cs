@@ -39,8 +39,7 @@ namespace FastMechanical.Models {
         [MaxLength(25, ErrorMessage = "Campo invalido ")]
         [Display(Name = "Cor")]
         public string Cor { get; set; }
-
-
+        [Display(Name = "Dono" )]
         public Cliente Pessoa { get; set; }
 
         public Veiculo() { }

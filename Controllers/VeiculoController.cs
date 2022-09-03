@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using System;
 using FastMechanical.Services;
 using FastMechanical.Models;
+using FastMechanical.Models.ViewModel;
 
 namespace FastMechanical.Controllers {
     public class VeiculoController : Controller {
 
         private readonly IVeiculoService _veiculoService;
+        private readonly IClienteService _clienteService;
 
 
-        public VeiculoController(IVeiculoService veiculoService)
+        public VeiculoController(IVeiculoService veiculoService, IClienteService clienteService)
         {
             _veiculoService = veiculoService;
+            _clienteService = clienteService;
 
         }
 
@@ -23,9 +26,10 @@ namespace FastMechanical.Controllers {
             return View(list);
         }
 
-        public IActionResult New()
+        public async Task<IActionResult> New()
         {
-            return View();
+            VeiculoViewModel veiculo = new VeiculoViewModel { Clientes = await _clienteService.FindAllActiveAsync()};
+            return View(veiculo);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -100,20 +104,23 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Veiculo veiculo)
+        public async Task<IActionResult> New(VeiculoViewModel veiculoViewModel)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(veiculo);
+                    return View(veiculoViewModel);
                 }
-                string str = veiculo.Renavam;
+                string str = veiculoViewModel.Veiculo.Renavam;
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
-                veiculo.Renavam = str;
-                veiculo = _veiculoService.TransformUpperCase(veiculo);
-                await _veiculoService.InsertAsync(veiculo);
+                veiculoViewModel.Veiculo.Renavam = str;
+                Cliente cliente = new Cliente();
+                cliente = await _clienteService.FindByIdAsync(veiculoViewModel.PessoaId);
+                Veiculo veiculoDb = new Veiculo { Renavam = veiculoViewModel.Veiculo.Renavam, Placa = veiculoViewModel.Veiculo.Placa, Modelo = veiculoViewModel.Veiculo.Modelo, Cor = veiculoViewModel.Veiculo.Cor, Marca = veiculoViewModel.Veiculo.Marca, Pessoa = cliente };
+                veiculoDb = _veiculoService.TransformUpperCase(veiculoDb);
+                await _veiculoService.InsertAsync(veiculoDb);
                 TempData["SuccessMessage"] = "Veículo cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
