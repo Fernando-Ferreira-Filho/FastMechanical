@@ -7,7 +7,10 @@ namespace FastMechanical.Services {
 
         public Task InsertAsync(Cliente cliente);
 
-        public Task<List<Cliente>> FindAllAsync();
+        public Task<List<Cliente>> FindAllActiveAsync();
+        public Task<List<Cliente>> FindAllDisableAsync();
+
+        //public List<Cliente> ListInativos();
 
         public Task<Cliente> FindByIdAsync(int id);
 

@@ -1,0 +1,74 @@
+﻿@model FastMechanical.Models.Veiculo
+@{
+    ViewData["Title"] = $"Detalhes do(a) Veículo(a) {@Model.Modelo}";
+}
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-6">
+        <h6 class="display-6 mb-5">Dados do Veículo</h6>
+
+        
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Renavam)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Renavam)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Placa)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Placa)
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+        <h6 class="display-6 mb-5">Informações básicas</h6>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Modelo)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Modelo)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Cor)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Cor)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Marca)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Marca)
+            </div>
+
+        </div>
+        
+   
+        <div class="col-12 mt-5 mb-5">
+            <a role="button" asp-route-id="@Model.Id" asp-action="Edit" asp-controller="Veiculo" class="btn btn-primary">Editar</a>
+            <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Veiculo">Voltar</a>
+        </div>
+
+</div>

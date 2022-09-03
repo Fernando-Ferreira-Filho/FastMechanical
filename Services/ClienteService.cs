@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FastMechanical.Models.Enums;
 
 namespace FastMechanical.Services {
     public class ClienteService : IClienteService {
@@ -16,13 +17,55 @@ namespace FastMechanical.Services {
 
         public async Task<List<Cliente>> FindAllAsync() {
 
-            try {
+            try
+            {
                 return await _context.Cliente.ToListAsync();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
             }
         }
+        // public List<Cliente> ListInativos() {
+        //try
+        //{
+        //    var buscar = _context.Cliente.ToList();
+        //  //   return buscar.Where(x => x.Status == Status.Desativado).ToList();
+        // }
+        // catch (Exception ex) { 
+        //     throw new Exception(ex.Message);
+        // }
+        //}
+
+        public async Task<List<Cliente>> FindAllDisableAsync()
+        {
+
+            try
+            {
+                var list = await _context.Cliente.ToListAsync();
+                return list.Where(x => x.Status == Status.Desativado ).ToList();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Houve um erro para listar, ERRO: {e.Message}");
+            }
+        }
+
+        public async Task<List<Cliente>> FindAllActiveAsync()
+        {
+
+            try
+            {
+                var list = await _context.Cliente.ToListAsync();
+                return list.Where(x => x.Status == Status.Ativado).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Houve um erro para listar, ERRO: {e.Message}");
+            }
+        }
+
 
         public async Task<Cliente> FindByIdAsync(int id) {
             try {
@@ -43,7 +86,7 @@ namespace FastMechanical.Services {
                     throw new Exception($"Houve um erro ao salvar, registro duplicado");
                 }
                 throw new Exception($"Houve um erro ao salvar, ERRO: {e.InnerException.Message}");
-            }
+           }
         }
 
         public Cliente TransformUpperCase(Cliente cliente) {

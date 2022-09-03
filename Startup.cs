@@ -28,6 +28,9 @@ namespace FastMechanical {
                builder.MigrationsAssembly("FastMechanical")));
 
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IMecanicoService, MecanicoService>();
+            services.AddScoped<IVendedorService, VendedorService>();
+            services.AddScoped<IVeiculoService, VeiculoService>();
 
         }
 

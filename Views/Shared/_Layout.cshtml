@@ -1,52 +1,86 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FastMechanical</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
+    <link rel="stylesheet" href="~/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FastMechanical</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Pagina Inicial</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>FastMechanical </h3>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            <ul class="list-unstyled components">
+                <p>Funcionalidades</p>
+                <li>
+                    
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start"> 
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home</a>
+                </li>
+                <li>
+                    
+                    <a asp-controller="Veiculo" asp-action="Index"> 
+                        <i class="fa fa-car"></i> Veículos</a>
+                </li>
+                <li>
+                    
+                    <a asp-controller="Cliente" asp-action="Index"> 
+                        <i class="fa fa-user"></i> Clientes</a>
+                </li>
+                <li>
+                    <a asp-controller="Mecanico" asp-action="Index">
+                       <i class="fa fa-wrench"></i> Mecânicos</a>
+                </li>
+                <li>
+                    <a asp-controller="Vendedor" asp-action="Index">
+                         <i class="fa fa-user-tie"></i> Vendedores</a>
+                </li>
+            </ul>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - FastMechanical - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <ul class="list-unstyled CTAs">
+              <a class=""></a>
+            </ul>
+        </nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Menu</span>
+                    </button>
+                </div>
+            </nav>
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
-    </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+ 
+            
+    <script>
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

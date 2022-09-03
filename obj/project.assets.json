@@ -1588,23 +1588,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Fernandovisky\\.nuget\\packages\\": {},
+    "C:\\Users\\Lucas Jorge\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\TCC\\FastMechanical\\FastMechanical.csproj",
+      "projectUniqueName": "C:\\Users\\Lucas Jorge\\Source\\Repos\\Fernando-Ferreira-Filho\\FastMechanical\\FastMechanical.csproj",
       "projectName": "FastMechanical",
-      "projectPath": "D:\\TCC\\FastMechanical\\FastMechanical.csproj",
-      "packagesPath": "C:\\Users\\Fernandovisky\\.nuget\\packages\\",
-      "outputPath": "D:\\TCC\\FastMechanical\\obj\\",
+      "projectPath": "C:\\Users\\Lucas Jorge\\Source\\Repos\\Fernando-Ferreira-Filho\\FastMechanical\\FastMechanical.csproj",
+      "packagesPath": "C:\\Users\\Lucas Jorge\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Lucas Jorge\\Source\\Repos\\Fernando-Ferreira-Filho\\FastMechanical\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Fernandovisky\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Lucas Jorge\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1674,7 +1674,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   }

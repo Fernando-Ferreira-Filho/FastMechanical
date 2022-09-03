@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System;
 using FastMechanical.Services;
 using FastMechanical.Models;
+using FastMechanical.Models.Enums;
 
 namespace FastMechanical.Controllers {
     public class ClienteController : Controller {
@@ -16,13 +17,27 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> Index() {
-            ViewData["Title"] = "Listagem de medicos ativos";
-            var list = await _clienteService.FindAllAsync();
+            ViewData["Title"] = "Listagem de clientes ativos";
+            var list = await _clienteService.FindAllActiveAsync();
             return View(list);
         }
 
         public IActionResult New() {
             return View();
+        }
+        public  async Task<IActionResult> Inativos()
+{
+            try
+            {
+                ViewData["Title"] = "Listagen de clientes inativos.";
+                var list = await _clienteService.FindAllDisableAsync();
+                return View("Index", list);
+            }
+            catch (Exception erro)
+            {
+                TempData[""] = erro.Message;    
+                return View("ErrorMessage");
+            }
         }
 
         public async Task<IActionResult> Edit(int? id) {
@@ -89,11 +104,13 @@ namespace FastMechanical.Controllers {
                 if (!ModelState.IsValid) {
                     return View(cliente);
                 }
+                cliente.Status = Status.Ativado;
                 string str = cliente.Cpf;
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
                 cliente.Cpf = str;
                 cliente = _clienteService.TransformUpperCase(cliente);
+                cliente.Status = Status.Ativado;
                 await _clienteService.InsertAsync(cliente);
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");
@@ -116,6 +133,7 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+                cliente.Status = Status.Desativado;
                 await _clienteService.UpdateAsync(cliente);
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
@@ -139,6 +157,7 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+                cliente.Status = Status.Ativado;
                 await _clienteService.UpdateAsync(cliente);
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");

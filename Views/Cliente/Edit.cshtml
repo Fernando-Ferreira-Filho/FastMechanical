@@ -1,7 +1,7 @@
 ﻿@model FastMechanical.Models.Cliente
 
 @{
-    ViewData["Title"] = "Editar medicos";
+    ViewData["Title"] = "Editar clientes";
 }
 
 
@@ -23,21 +23,21 @@
         <span asp-validation-for="@Model.Email" class="text-danger"></span>
     </div>
     <div class="col-md-6">
-        <label asp-for="@Model.Telefone" class="form-label"></label><span class="text-warning"> (Apenas numeros)</span><span class="text-danger">*</span>
+        <label asp-for="@Model.Telefone" class="form-label"></label><span class="text-warning"> (Apenas números)</span><span class="text-danger">*</span>
         <input asp-for="@Model.Telefone" type="text" class="form-control" placeholder="Digite o numero de telefone " onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
         <span asp-validation-for="@Model.Telefone" class="text-danger"></span>
 
     </div>
 
     <div class="col-md-6">
-        <label asp-for="@Model.Cpf" class="form-label"></label><span class="text-warning"> (Apenas numeros)</span><span class="text-danger">*</span>
-        <input asp-for="@Model.Cpf" type="text" class="form-control" id="cpf" placeholder="Digite o CPF do medico" onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
+        <label asp-for="@Model.Cpf" class="form-label"></label><span class="text-warning"> (Apenas números)</span><span class="text-danger">*</span>
+        <input asp-for="@Model.Cpf" type="text" class="form-control" id="cpf" placeholder="Digite o CPF do cliente" onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
         <span asp-validation-for="@Model.Cpf" class="text-danger"></span>
 
     </div>
     <div class="col-md-6">
         <label asp-for="@Model.DataDeNascimento" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.DataDeNascimento" type="date" class="form-control" id="cpf" placeholder="Digite o CPF do medico" onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
+        <input asp-for="@Model.DataDeNascimento" type="date" class="form-control" id="cpf" placeholder="Digite a data de nascimento do cliente" onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
         <span asp-validation-for="@Model.DataDeNascimento" class="text-danger"></span>
 
     </div>

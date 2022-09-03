@@ -8,9 +8,18 @@ namespace FastMechanical.Data {
 
         public DbSet<Veiculo> Veiculo { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Mecanico> Mecanico { get; set; }
+        public DbSet<Vendedor> Vendedor { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Cliente>()
+                .HasIndex(p => p.Cpf)
+                .IsUnique(true);
+            modelBuilder.Entity<Mecanico>()
+                .HasIndex(p => p.Cpf)
+                .IsUnique(true);
+            modelBuilder.Entity<Vendedor>()
                 .HasIndex(p => p.Cpf)
                 .IsUnique(true);
             modelBuilder.Entity<Veiculo>()
