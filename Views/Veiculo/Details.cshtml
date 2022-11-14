@@ -75,6 +75,18 @@
 
         </div>
 
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.AnoDeFabricacao)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.AnoDeFabricacao.Year)
+            </div>
+
+        </div>
+
+
+
 
         <div class="col-12 mt-5 mb-5">
             <a role="button" asp-route-id="@Model.Id" asp-action="Edit" asp-controller="Veiculo" class="btn btn-primary">Editar</a>

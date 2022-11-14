@@ -54,15 +54,6 @@ namespace FastMechanical.Services {
             veiculo.Cor = veiculo.Cor.Trim().ToUpper();
             veiculo.Marca = veiculo.Marca.Trim().ToUpper();
 
-            //if (veiculo.Numero != null && cliente.Numero != "") {
-            //     veiculo.Numero = cliente.Numero.Trim().ToUpper();
-            // }
-
-
-            // if (cliente.Complemento != null && cliente.Complemento != "") {
-            //     cliente.Complemento = cliente.Complemento.Trim().ToUpper();
-            //}
-
             return veiculo;
         }
 

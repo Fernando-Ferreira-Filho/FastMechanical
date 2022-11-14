@@ -1,10 +1,14 @@
 ﻿using PresMed.Models.ValidationModels;
 using System.ComponentModel.DataAnnotations;
 using System;
+using FastMechanical.Models.Enums;
 
 namespace FastMechanical.Models
 {
     public class Mecanico {
+        
+     
+
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [MinLength(3, ErrorMessage = "Campo inválido ")]
@@ -76,5 +80,7 @@ namespace FastMechanical.Models
             Numero = numero;
             DataDeNascimento = dataDeNascimento;
         }
+
+       
     }
 }

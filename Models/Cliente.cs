@@ -8,7 +8,7 @@ namespace FastMechanical.Models {
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [MinLength(3, ErrorMessage = "Campo inválido ")]
-        [MaxLength(50, ErrorMessage = "Campo inválido ")]
+        [MaxLength(60, ErrorMessage = "Campo inválido ")]
         [Display(Name = "Nome")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "O campo não pode ser vazio")]

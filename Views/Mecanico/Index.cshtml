@@ -22,8 +22,10 @@
     <div class="col-lg-10">
         <span class="display-4">@ViewData["Title"]</span>
     </div>
-    <div class="col-lg-2">
-        <a asp-action="New" asp-controller="Mecanico" class="link-dark  float-sm-end"><i class="fas fa-plus d-block text-center text-success" style="font-size:2rem; "></i><span>Novo</span></a>
+    <div style="width: 100%; display: flex; align-items:center;justify-content: flex-end;" class="col-lg-16">
+       <div class="col-lg-3" style="max-width: 500px;display: flex; align-items:center;justify-content:space-evenly;">
+        <a style="margin-right:5px;" asp-action="New" asp-controller="Mecanico" class="link-dark  float-sm-end"><i class="fa fa-user-plus d-block text-center" style="font-size:2rem; "></i><span>Novo&nbsp;&nbsp;</span></a>
+       </div>
     </div>
 
 

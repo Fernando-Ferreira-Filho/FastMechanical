@@ -31,6 +31,9 @@ namespace FastMechanical.Models {
         [Display(Name = "Marca")]
         public string Marca { get; set; }
 
+        [Required(ErrorMessage = "O campo não pode ser vazio")]
+        [DataType(DataType.Date, ErrorMessage = "Data inválida favor inserir novamente")]
+        [Display(Name = "Ano de Fabricação")]
         public DateTime AnoDeFabricacao { get; set; }
         //pendente fazer
 
@@ -43,7 +46,7 @@ namespace FastMechanical.Models {
         public Cliente Pessoa { get; set; }
 
         public Veiculo() { }
-        public Veiculo(string renavam, string placa, string modelo, DateTime anoDeFabricacao, string cor, String marca, Cliente pessoa) {
+        public Veiculo(string renavam, string placa, string modelo, DateTime anoDeFabricacao, string cor, string marca, Cliente pessoa) {
             Renavam = renavam;
             Placa = placa;
             Modelo = modelo;

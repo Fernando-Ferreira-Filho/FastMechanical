@@ -4,9 +4,12 @@ using System;
 using FastMechanical.Services;
 using FastMechanical.Models;
 using FastMechanical.Models.ViewModel;
+using FastMechanical.Models.Enums;
 
-namespace FastMechanical.Controllers {
-    public class VeiculoController : Controller {
+namespace FastMechanical.Controllers
+{
+    public class VeiculoController : Controller
+    {
 
         private readonly IVeiculoService _veiculoService;
         private readonly IClienteService _clienteService;
@@ -28,7 +31,7 @@ namespace FastMechanical.Controllers {
 
         public async Task<IActionResult> New()
         {
-            VeiculoViewModel veiculo = new VeiculoViewModel { Clientes = await _clienteService.FindAllActiveAsync()};
+            VeiculoViewModel veiculo = new VeiculoViewModel { Clientes = await _clienteService.FindAllActiveAsync() };
             return View(veiculo);
         }
 
@@ -46,7 +49,27 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            return View(veiculo);
+            if (veiculo.Pessoa.Status == Status.Desativado)
+            {
+                TempData["ErrorMessage"] = $"Proprietário do veiculo desativado";
+                return RedirectToAction("Index");
+            }
+            var list = await _clienteService.FindAllActiveAsync();
+            VeiculoViewModel veiculoViewModel = new VeiculoViewModel
+            {
+                Renavam = veiculo.Renavam,
+                Cor = veiculo.Cor,
+                Marca = veiculo.Marca,
+                Modelo = veiculo.Modelo,
+                Placa = veiculo.Placa,
+                Year = veiculo.AnoDeFabricacao.Year,
+                Id = veiculo.Id,
+                Pessoa = veiculo.Pessoa,
+                AnoDeFabricacao = veiculo.AnoDeFabricacao,
+                Clientes = list,
+                PessoaId = veiculo.Pessoa.Id
+            };
+            return View(veiculoViewModel);
         }
 
         public async Task<IActionResult> Disable(int? id)
@@ -110,15 +133,16 @@ namespace FastMechanical.Controllers {
             {
                 if (!ModelState.IsValid)
                 {
+                    veiculoViewModel.Clientes = await _clienteService.FindAllActiveAsync();
                     return View(veiculoViewModel);
                 }
-                string str = veiculoViewModel.Veiculo.Renavam;
+                string str = veiculoViewModel.Renavam;
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
-                veiculoViewModel.Veiculo.Renavam = str;
+                veiculoViewModel.Renavam = str;
                 Cliente cliente = new Cliente();
                 cliente = await _clienteService.FindByIdAsync(veiculoViewModel.PessoaId);
-                Veiculo veiculoDb = new Veiculo { Renavam = veiculoViewModel.Veiculo.Renavam, Placa = veiculoViewModel.Veiculo.Placa, Modelo = veiculoViewModel.Veiculo.Modelo, Cor = veiculoViewModel.Veiculo.Cor, Marca = veiculoViewModel.Veiculo.Marca, Pessoa = cliente };
+                Veiculo veiculoDb = new Veiculo { Renavam = veiculoViewModel.Renavam, Placa = veiculoViewModel.Placa, Modelo = veiculoViewModel.Modelo, Cor = veiculoViewModel.Cor, AnoDeFabricacao = new DateTime(veiculoViewModel.Year, 01, 01), Marca = veiculoViewModel.Marca, Pessoa = cliente, };
                 veiculoDb = _veiculoService.TransformUpperCase(veiculoDb);
                 await _veiculoService.InsertAsync(veiculoDb);
                 TempData["SuccessMessage"] = "Veículo cadastrado com sucesso";
@@ -134,30 +158,38 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Veiculo veiculo)
+        public async Task<IActionResult> Edit(VeiculoViewModel veiculoViewModel)
         {
             try
             {
+                veiculoViewModel.Clientes = await _clienteService.FindAllActiveAsync();
                 if (!ModelState.IsValid)
+
                 {
-                    return View(veiculo);
-                }
-                int id = (int)veiculo.Id;
-                Veiculo dbPessoa = await _veiculoService.FindByIdAsync(id);
-                if (dbPessoa == null)
-                {
-                    TempData["ErrorMessage"] = "ID não encontrado";
-                    return RedirectToAction("Index");
+                    return View(veiculoViewModel);
                 }
 
-                dbPessoa.Renavam = veiculo.Renavam;
-                dbPessoa.Placa = veiculo.Placa;
-                dbPessoa.Modelo = veiculo.Modelo;
-                dbPessoa.Cor = veiculo.Cor;
-                dbPessoa.Marca = veiculo.Marca;
-                dbPessoa = _veiculoService.TransformUpperCase(dbPessoa);
-                await _veiculoService.UpdateAsync(dbPessoa);
-                TempData["SuccessMessage"] = "Veículo alterado com sucesso";
+                Veiculo dbVeiculo = await _veiculoService.FindByIdAsync(veiculoViewModel.Id);
+                if (dbVeiculo == null)
+                {
+                    TempData["ErrorMessage"] = $"ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (dbVeiculo.Pessoa.Status == Status.Desativado)
+                {
+                    TempData["ErrorMessage"] = $"Dono do veiculo desativado";
+                    return RedirectToAction("Index");
+                }
+                dbVeiculo.AnoDeFabricacao = new DateTime(veiculoViewModel.Year, 01, 01);
+                dbVeiculo.Renavam = veiculoViewModel.Renavam;
+                dbVeiculo.Placa = veiculoViewModel.Placa;
+                dbVeiculo.Modelo = veiculoViewModel.Modelo;
+                dbVeiculo.Cor = veiculoViewModel.Cor;
+                dbVeiculo.Marca = veiculoViewModel.Marca;
+                dbVeiculo.Pessoa = await _clienteService.FindByIdAsync(veiculoViewModel.PessoaId);
+                dbVeiculo = _veiculoService.TransformUpperCase(dbVeiculo);
+                await _veiculoService.UpdateAsync(dbVeiculo);
+                TempData["SuccessMessage"] = $"Veículo alterado com sucesso";
 
                 return RedirectToAction("Index");
             }
