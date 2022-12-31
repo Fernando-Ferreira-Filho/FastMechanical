@@ -1,6 +1,8 @@
 ﻿using PresMed.Models.ValidationModels;
 using System.ComponentModel.DataAnnotations;
 using System;
+using FastMechanical.Models.ViewModel;
+using FastMechanical.Models.Enums;
 
 namespace FastMechanical.Models {
     public class Veiculo {
@@ -20,8 +22,8 @@ namespace FastMechanical.Models {
         public string Placa { get; set; }
 
         [Required(ErrorMessage = "O campo não pode ser vazio")]
-        [MinLength(3, ErrorMessage = "Campo invalido ")]
-        [MaxLength(20, ErrorMessage = "Campo invalido ")]
+        [MinLength(5, ErrorMessage = "Campo invalido ")]
+        [MaxLength(255, ErrorMessage = "Campo invalido ")]
         [Display(Name = "Modelo")]
         public string Modelo { get; set; }
 
@@ -31,7 +33,9 @@ namespace FastMechanical.Models {
         [Display(Name = "Marca")]
         public string Marca { get; set; }
 
-        public DateTime AnoDeFabricacao { get; set; }
+        [Required(ErrorMessage = "O campo não pode ser vazio")]
+        [Display(Name = "Ano de Fabricação")]
+        public int AnoDeFabricacao { get; set; }
         //pendente fazer
 
         [Required(ErrorMessage = "O campo não pode ser vazio")]
@@ -40,11 +44,11 @@ namespace FastMechanical.Models {
         [Display(Name = "Cor")]
         public string Cor { get; set; }
 
-
-        public Cliente Pessoa { get; set; }
+        public Status Status { get; set; }
+        public Person Pessoa { get; set; }
 
         public Veiculo() { }
-        public Veiculo(string renavam, string placa, string modelo, DateTime anoDeFabricacao, string cor, String marca, Cliente pessoa) {
+        public Veiculo(string renavam, string placa, string modelo, int anoDeFabricacao, string cor, String marca, Person pessoa) {
             Renavam = renavam;
             Placa = placa;
             Modelo = modelo;

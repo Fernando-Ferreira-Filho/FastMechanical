@@ -2,94 +2,105 @@
 using System.Threading.Tasks;
 using System;
 using FastMechanical.Services;
+using FastMechanical.Models.ViewModel;
 using FastMechanical.Models;
+using FastMechanical.Models.Enums;
 
 namespace FastMechanical.Controllers {
     public class MecanicoController : Controller {
 
-        private readonly IMecanicoService _mecanicoService;
+        private readonly IPersonServices _personServices;
 
 
-        public MecanicoController(IMecanicoService mecanicoService) {
-            _mecanicoService = mecanicoService;
+        public MecanicoController(IPersonServices personServices) {
+            _personServices = personServices;
 
         }
 
-        public async Task<IActionResult> Index()
-        {
-            ViewData["Title"] = "Listagem de medicos ativos";
-            var list = await _mecanicoService.FindAllAsync();
+        public async Task<IActionResult> Index() {
+            ViewData["Title"] = "Listagem de mecanicos ativos";
+            var list = await _personServices.TodosMecanicosAtivosAsync();
             return View(list);
         }
 
-        public IActionResult New()
-        {
+        public async Task<IActionResult> Inativos() {
+            try {
+                ViewData["Title"] = "Listagen de mecanicos inativos.";
+                var list = await _personServices.TodosMecanicosDesativadosAsync();
+                return View("Index", list);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+        }
+
+        public IActionResult New() {
             return View();
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
+        public async Task<IActionResult> Edit(int? id) {
 
-            if (id == null)
-            {
+            if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Mecanico mecanico = await _mecanicoService.FindByIdAsync(id.Value);
-            if (mecanico == null)
-            {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            return View(mecanico);
-        }
-
-        public async Task<IActionResult> Disable(int? id)
-        {
-
-            if (id == null)
-            {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            Mecanico mecanico = await _mecanicoService.FindByIdAsync(id.Value);
-            if (mecanico == null)
-            {
+            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+            if (mecanico == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
             return View(mecanico);
         }
 
+        public async Task<IActionResult> Disable(int? id) {
 
-        public async Task<IActionResult> Enabled(int? id)
-        {
-
-            if (id == null)
-            {
+            if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Mecanico mecanico = await _mecanicoService.FindByIdAsync(id.Value);
-            if (mecanico == null)
-            {
+            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+            if (mecanico == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+            if (mecanico.Status == Status.Desativado) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+            return View(mecanico);
+        }
+
+
+        public async Task<IActionResult> Enabled(int? id) {
+
+            if (id == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+            if (mecanico == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+            if (mecanico.Status == Status.Ativado) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
             return View("Disable", mecanico);
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
+        public async Task<IActionResult> Details(int? id) {
 
-            if (id == null)
-            {
+            if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Mecanico mecanico = await _mecanicoService.FindByIdAsync(id.Value);
-            if (mecanico == null)
-            {
+            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+            if (mecanico == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
@@ -98,25 +109,21 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Mecanico mecanico)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
+        public async Task<IActionResult> New(Person mecanico) {
+            try {
+                if (!ModelState.IsValid) {
                     return View(mecanico);
                 }
                 string str = mecanico.Cpf;
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
                 mecanico.Cpf = str;
-                mecanico = _mecanicoService.TransformUpperCase(mecanico);
-                await _mecanicoService.InsertAsync(mecanico);
+                mecanico = await _personServices.TransformCaptalizeAsync(mecanico);
+                await _personServices.SalvarAsync(mecanico);
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -126,23 +133,19 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Disable(int id)
-        {
+        public async Task<IActionResult> Disable(int id) {
 
-            try
-            {
-                Mecanico mecanico = await _mecanicoService.FindByIdAsync(id);
-                if (mecanico == null)
-                {
+            try {
+                Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id);
+                if (mecanico == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                await _mecanicoService.UpdateAsync(mecanico);
+                await _personServices.AtualizarAsync(mecanico);
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -153,23 +156,19 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Enable(int id)
-        {
+        public async Task<IActionResult> Enable(int id) {
 
-            try
-            {
-                Mecanico mecanico = await _mecanicoService.FindByIdAsync(id);
-                if (mecanico == null)
-                {
+            try {
+                Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id);
+                if (mecanico == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                await _mecanicoService.UpdateAsync(mecanico);
+                await _personServices.AtualizarAsync(mecanico);
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -180,18 +179,14 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Mecanico mecanico)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
+        public async Task<IActionResult> Edit(Person mecanico) {
+            try {
+                if (!ModelState.IsValid) {
                     return View(mecanico);
                 }
                 int id = (int)mecanico.Id;
-                Mecanico dbPessoa = await _mecanicoService.FindByIdAsync(id);
-                if (dbPessoa == null)
-                {
+                Person dbPessoa = await _personServices.BuscarMecanicoPorIdAsync(id);
+                if (dbPessoa == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -205,14 +200,13 @@ namespace FastMechanical.Controllers {
                 dbPessoa.Complemento = mecanico.Complemento;
                 dbPessoa.Numero = mecanico.Numero;
                 dbPessoa.DataDeNascimento = mecanico.DataDeNascimento;
-                dbPessoa = _mecanicoService.TransformUpperCase(dbPessoa);
-                await _mecanicoService.UpdateAsync(dbPessoa);
+                dbPessoa = await _personServices.TransformCaptalizeAsync(dbPessoa);
+                await _personServices.AtualizarAsync(dbPessoa);
                 TempData["SuccessMessage"] = "Usuario alterado com sucesso";
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }

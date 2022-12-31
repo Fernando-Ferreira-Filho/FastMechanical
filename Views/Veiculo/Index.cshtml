@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FastMechanical.Models.Veiculo>
 
 @{
-   ViewData["Title"] = $"Veículos";
+    ViewData["Title"] = $"Veículos";
 }
 
 @if (TempData["SuccessMessage"] != null) {
@@ -22,8 +22,10 @@
     <div class="col-lg-10">
         <span class="display-4">@ViewData["Title"]</span>
     </div>
-    <div class="col-lg-2">
-        <a asp-action="New" asp-controller="Veiculo" class="link-dark  float-sm-end"><i class="fas fa-plus d-block text-center text-success" style="font-size:2rem; "></i><span>Novo</span></a>
+    <div class="col-lg-16">
+        <a style="margin-right:5px;" asp-action="New" asp-controller="Veiculo" class="link-dark  float-sm-end"><i class="fa fa-user-plus d-block text-center text-success" style="font-size:2rem; "></i><span>Novo</span></a>
+        <a style="margin-right:5px;" asp-action="Index" asp-controller="Veiculo" class="link-dark  float-sm-end"><i class="fa fa-user d-block text-center" style="font-size:2rem; "></i><span>Ativos</span></a>
+        <a style="margin-right:5px;" asp-action="Inativos" asp-controller="Veiculo" class="link-dark  float-sm-end"><i class="fa fa-user-lock d-block text-center text-success" style="font-size:2rem; "></i><span>Inativos</span></a>
     </div>
 
 
@@ -33,12 +35,12 @@
 <table class="table table-striped text-center" id="table-contacts">
     <thead>
         <tr>
-            
+
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Id)</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Modelo)</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Renavam)</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Placa)</th>
-            
+
 
             @if (Model != null && Model.Any()) {
                 <th class="text-center" scope="col">Ações</th>

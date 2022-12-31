@@ -2,41 +2,38 @@
 using System.Threading.Tasks;
 using System;
 using FastMechanical.Services;
-using FastMechanical.Models;
 using FastMechanical.Models.Enums;
+using FastMechanical.Models;
 
 namespace FastMechanical.Controllers {
     public class ClienteController : Controller {
 
-        private readonly IClienteService _clienteService;
+        private readonly IPersonServices _personService;
 
 
-        public ClienteController(IClienteService clienteService) {
-            _clienteService = clienteService;
+        public ClienteController(IPersonServices personService) {
+            _personService = personService;
 
         }
 
         public async Task<IActionResult> Index() {
             ViewData["Title"] = "Listagem de clientes ativos";
-            var list = await _clienteService.FindAllActiveAsync();
+            var list = await _personService.TodosClientesAtivosAsync();
             return View(list);
         }
 
         public IActionResult New() {
             return View();
         }
-        public  async Task<IActionResult> Inativos()
-{
-            try
-            {
+        public async Task<IActionResult> Inativos() {
+            try {
                 ViewData["Title"] = "Listagen de clientes inativos.";
-                var list = await _clienteService.FindAllDisableAsync();
+                var list = await _personService.TodosClientesDesativadosAsync();
                 return View("Index", list);
             }
-            catch (Exception erro)
-            {
-                TempData[""] = erro.Message;    
-                return View("ErrorMessage");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
         }
 
@@ -46,7 +43,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Cliente cliente = await _clienteService.FindByIdAsync(id.Value);
+            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -60,11 +57,17 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Cliente cliente = await _clienteService.FindByIdAsync(id.Value);
+            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
+
+            if (cliente.Status == Status.Desativado) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
             return View(cliente);
         }
 
@@ -75,11 +78,17 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Cliente cliente = await _clienteService.FindByIdAsync(id.Value);
+            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
+
+            if (cliente.Status == Status.Ativado) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
             return View("Disable", cliente);
         }
 
@@ -89,7 +98,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Cliente cliente = await _clienteService.FindByIdAsync(id.Value);
+            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -99,7 +108,7 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Cliente cliente) {
+        public async Task<IActionResult> New(Person cliente) {
             try {
                 if (!ModelState.IsValid) {
                     return View(cliente);
@@ -109,10 +118,11 @@ namespace FastMechanical.Controllers {
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
                 cliente.Cpf = str;
-                cliente = _clienteService.TransformUpperCase(cliente);
+                cliente = await _personService.TransformCaptalizeAsync(cliente);
                 cliente.Status = Status.Ativado;
-                await _clienteService.InsertAsync(cliente);
-                TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
+                cliente.TipoPessoa = TipoPessoa.Cliente;
+                await _personService.SalvarAsync(cliente);
+                TempData["SuccessMessage"] = "Usuário cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
             catch (Exception e) {
@@ -128,13 +138,13 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Disable(int id) {
 
             try {
-                Cliente cliente = await _clienteService.FindByIdAsync(id);
+                Person cliente = await _personService.BuscarClientePorIdAsync(id);
                 if (cliente == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 cliente.Status = Status.Desativado;
-                await _clienteService.UpdateAsync(cliente);
+                await _personService.AtualizarAsync(cliente);
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
             }
@@ -152,13 +162,13 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Enable(int id) {
 
             try {
-                Cliente cliente = await _clienteService.FindByIdAsync(id);
+                Person cliente = await _personService.BuscarClientePorIdAsync(id);
                 if (cliente == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 cliente.Status = Status.Ativado;
-                await _clienteService.UpdateAsync(cliente);
+                await _personService.AtualizarAsync(cliente);
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");
             }
@@ -173,13 +183,13 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Cliente cliente) {
+        public async Task<IActionResult> Edit(Person cliente) {
             try {
                 if (!ModelState.IsValid) {
                     return View(cliente);
                 }
                 int id = (int)cliente.Id;
-                Cliente dbPessoa = await _clienteService.FindByIdAsync(id);
+                Person dbPessoa = await _personService.BuscarClientePorIdAsync(id);
                 if (dbPessoa == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -194,8 +204,8 @@ namespace FastMechanical.Controllers {
                 dbPessoa.Complemento = cliente.Complemento;
                 dbPessoa.Numero = cliente.Numero;
                 dbPessoa.DataDeNascimento = cliente.DataDeNascimento;
-                dbPessoa = _clienteService.TransformUpperCase(dbPessoa);
-                await _clienteService.UpdateAsync(dbPessoa);
+                dbPessoa = await _personService.TransformCaptalizeAsync(dbPessoa);
+                await _personService.AtualizarAsync(dbPessoa);
                 TempData["SuccessMessage"] = "Usuario alterado com sucesso";
 
                 return RedirectToAction("Index");

@@ -742,3 +742,23 @@ C:\Users\Lucas Jorge\Source\Repos\Fernando-Ferreira-Filho\FastMechanical\obj\Deb
 C:\Users\Lucas Jorge\Source\Repos\Fernando-Ferreira-Filho\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\Details.cshtml.g.cs
 C:\Users\Lucas Jorge\Source\Repos\Fernando-Ferreira-Filho\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Disable.cshtml.g.cs
 C:\Users\Lucas Jorge\Source\Repos\Fernando-Ferreira-Filho\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\staticwebassets\FastMechanical.StaticWebAssets.Pack.cache
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.FastMechanical.Microsoft.AspNetCore.StaticWebAssets.props
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.build.FastMechanical.props
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildMultiTargeting.FastMechanical.props
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\staticwebassets\msbuild.buildTransitive.FastMechanical.props
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Cliente\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Details.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Edit.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\New.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\Details.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\Edit.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\New.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Details.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Edit.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\New.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Disable.cshtml.g.cs

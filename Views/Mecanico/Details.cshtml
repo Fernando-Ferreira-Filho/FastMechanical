@@ -1,4 +1,4 @@
-﻿@model FastMechanical.Models.Mecanico
+﻿@model Person
 @{
     ViewData["Title"] = $"Detalhes do(a) Mecânico(a) {@Model.Nome}";
 }
@@ -121,10 +121,10 @@
 
         </div>
     </div>
-   
-        <div class="col-12 mt-5 mb-5">
-            <a role="button" asp-route-id="@Model.Id" asp-action="Edit" asp-controller="Mecanico" class="btn btn-primary">Editar</a>
-            <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Mecanico">Voltar</a>
-        </div>
+
+    <div class="col-12 mt-5 mb-5">
+        <a role="button" asp-route-id="@Model.Id" asp-action="Edit" asp-controller="Mecanico" class="btn btn-primary">Editar</a>
+        <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Mecanico">Voltar</a>
+    </div>
 
 </div>

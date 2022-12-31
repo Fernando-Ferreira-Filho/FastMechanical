@@ -1,10 +1,12 @@
-﻿using PresMed.Models.ValidationModels;
+﻿using FastMechanical.Models.Enums;
+using PresMed.Models.ValidationModels;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 using System;
 
-namespace FastMechanical.Models
-{
-    public class Mecanico {
+namespace FastMechanical.Models {
+    public class Person {
+
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [MinLength(3, ErrorMessage = "Campo inválido ")]
@@ -15,11 +17,12 @@ namespace FastMechanical.Models
         [DataType(DataType.PhoneNumber, ErrorMessage = "Campo inválido")]
         [Display(Name = "Telefone")]
         public long? Telefone { get; set; }
+
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Campo inválido")]
         [Display(Name = "Email")]
         public string Email { get; set; }
-        [MaxLength(11, ErrorMessage = "Campo inválido")]
+        [MaxLength(11, ErrorMessage = "Campo invalido")]
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [CpfValidation(ErrorMessage = "Campo inválido")]
         [Display(Name = "CPF")]
@@ -59,11 +62,13 @@ namespace FastMechanical.Models
         [Display(Name = "Data de nascimento")]
         [BirthDateValidation(ErrorMessage = "O usuário deve ter mais de 18 anos e menos de 130 anos")]
         public DateTime? DataDeNascimento { get; set; }
+        public Status Status { get; set; }
 
-        public Mecanico() { }
+        public TipoPessoa TipoPessoa { get; set; }
 
-        public Mecanico(string nome, long? telefone, string email, string cpf, string rua, string bairro, string estado, string complemento, string cidade, string numero, DateTime? dataDeNascimento)
-        {
+        public Person() { }
+
+        public Person(string nome, long? telefone, string email, string cpf, string rua, string bairro, string estado, string complemento, string cidade, Status status, string numero, DateTime? dataDeNascimento, TipoPessoa tipoPessoa) {
             Nome = nome;
             Telefone = telefone;
             Email = email;
@@ -75,6 +80,9 @@ namespace FastMechanical.Models
             Cidade = cidade;
             Numero = numero;
             DataDeNascimento = dataDeNascimento;
+            Status = status;
+            TipoPessoa = tipoPessoa;
         }
+
     }
 }

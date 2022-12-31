@@ -27,22 +27,23 @@ namespace FastMechanical {
             services.AddDbContext<BancoContext>(options => options.UseMySql(Configuration.GetConnectionString("BancoContext"), builder =>
                builder.MigrationsAssembly("FastMechanical")));
 
-            services.AddScoped<IClienteService, ClienteService>();
-            services.AddScoped<IMecanicoService, MecanicoService>();
-            services.AddScoped<IVendedorService, VendedorService>();
-            services.AddScoped<IVeiculoService, VeiculoService>();
+            services.AddScoped<SeedingService>();
+            services.AddScoped<IVeiculoServices, VeiculoServices>();
+            services.AddScoped<IPersonServices, PersonServices>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
+                seedingService.Seed();
             }
             else {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                seedingService.Seed();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();

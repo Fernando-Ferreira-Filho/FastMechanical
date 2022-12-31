@@ -1,7 +1,7 @@
-﻿@model IEnumerable<FastMechanical.Models.Mecanico>
+﻿@model IEnumerable<Person>
 
 @{
-   ViewData["Title"] = $"Mecânicos";
+    ViewData["Title"] = $"Mecânicos";
 }
 
 @if (TempData["SuccessMessage"] != null) {
@@ -22,8 +22,10 @@
     <div class="col-lg-10">
         <span class="display-4">@ViewData["Title"]</span>
     </div>
-    <div class="col-lg-2">
-        <a asp-action="New" asp-controller="Mecanico" class="link-dark  float-sm-end"><i class="fas fa-plus d-block text-center text-success" style="font-size:2rem; "></i><span>Novo</span></a>
+    <div class="col-lg-16">
+        <a style="margin-right:5px;" asp-action="New" asp-controller="Mecanico" class="link-dark  float-sm-end"><i class="fa fa-user-plus d-block text-center text-success" style="font-size:2rem; "></i><span>Novo</span></a>
+        <a style="margin-right:5px;" asp-action="Index" asp-controller="Mecanico" class="link-dark  float-sm-end"><i class="fa fa-user d-block text-center" style="font-size:2rem; "></i><span>Ativos</span></a>
+        <a style="margin-right:5px;" asp-action="Inativos" asp-controller="Mecanico" class="link-dark  float-sm-end"><i class="fa fa-user-lock d-block text-center text-success" style="font-size:2rem; "></i><span>Inativos</span></a>
     </div>
 
 
@@ -51,8 +53,16 @@
                     <td>@item.Telefone</td>
                     <td>
                         <div class="btn-group-sm" role="group">
-                            <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Edit">Editar</a>
-                            <a role="button" class="btn btn-dark" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Details">Detalhes</a>
+                            @if (item.Status == FastMechanical.Models.Enums.Status.Ativado) {
+                                <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Edit">Editar</a>
+                                <a role="button" class="btn btn-dark" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Details">Detalhes</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Disable">Desativar</a>
+                            }
+                            @if (item.Status == FastMechanical.Models.Enums.Status.Desativado) {
+                                <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Edit">Editar</a>
+                                <a role="button" class="btn btn-dark" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Details">Detalhes</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Mecanico" asp-action="Disable">Desativar</a>
+                            }
                         </div>
                     </td>
                 </tr>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FastMechanical.Services {
-    public interface IVeiculoService {
+    public interface IVeiculoServices {
 
         public Task InsertAsync(Veiculo veiculo);
 

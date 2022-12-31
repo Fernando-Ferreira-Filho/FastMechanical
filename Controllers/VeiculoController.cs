@@ -7,10 +7,10 @@ using FastMechanical.Models;
 namespace FastMechanical.Controllers {
     public class VeiculoController : Controller {
 
-        private readonly IVeiculoService _veiculoService;
+        private readonly IVeiculoServices _veiculoService;
 
 
-        public VeiculoController(IVeiculoService veiculoService)
+        public VeiculoController(IVeiculoServices veiculoService)
         {
             _veiculoService = veiculoService;
 

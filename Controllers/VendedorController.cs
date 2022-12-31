@@ -2,110 +2,107 @@
 using System.Threading.Tasks;
 using System;
 using FastMechanical.Services;
-using FastMechanical.Models;
 using FastMechanical.Models.Enums;
+using FastMechanical.Models.ViewModel;
+using FastMechanical.Models;
 
 namespace FastMechanical.Controllers {
     public class VendedorController : Controller {
 
-        private readonly IVendedorService _vendedorService;
+
+        private readonly IPersonServices _personService;
 
 
-        public VendedorController(IVendedorService vendedorService) {
-            _vendedorService = vendedorService;
+
+        public VendedorController(IPersonServices personService) {
+            _personService = personService;
 
         }
 
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index() {
             ViewData["Title"] = "Listagem de vendedores ativos";
-            var list = await _vendedorService.FindAllActiveAsync();
+            var list = await _personService.TodosVendedoresAtivosAsync();
             return View(list);
         }
 
-        public IActionResult New()
-        {
+        public IActionResult New() {
             return View();
         }
 
-        public async Task<IActionResult> Inativos()
-        {
-            try
-            {
+        public async Task<IActionResult> Inativos() {
+            try {
                 ViewData["Title"] = "Listagen de vendedores inativos.";
-                var list = await _vendedorService.FindAllDisableAsync();
+                var list = await _personService.TodosVendedoresDesativadosAsync();
                 return View("Index", list);
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData[""] = erro.Message;
                 return View("ErrorMessage");
             }
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
+        public async Task<IActionResult> Edit(int? id) {
 
-            if (id == null)
-            {
+            if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Vendedor vendedor = await _vendedorService.FindByIdAsync(id.Value);
-            if (vendedor == null)
-            {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            return View(vendedor);
-        }
-
-        public async Task<IActionResult> Disable(int? id)
-        {
-
-            if (id == null)
-            {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            Vendedor vendedor = await _vendedorService.FindByIdAsync(id.Value);
-            if (vendedor == null)
-            {
+            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            if (vendedor == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
             return View(vendedor);
         }
 
+        public async Task<IActionResult> Disable(int? id) {
 
-        public async Task<IActionResult> Enabled(int? id)
-        {
-
-            if (id == null)
-            {
+            if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Vendedor vendedor = await _vendedorService.FindByIdAsync(id.Value);
-            if (vendedor == null)
-            {
+            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            if (vendedor == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+
+            if (vendedor.Status == Status.Desativado) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+            return View(vendedor);
+        }
+
+
+        public async Task<IActionResult> Enabled(int? id) {
+
+            if (id == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            if (vendedor == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+            if (vendedor.Status == Status.Ativado) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
             return View("Disable", vendedor);
         }
 
-        public async Task<IActionResult> Details(int? id)
-        {
+        public async Task<IActionResult> Details(int? id) {
 
-            if (id == null)
-            {
+            if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Vendedor vendedor = await _vendedorService.FindByIdAsync(id.Value);
-            if (vendedor == null)
-            {
+            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            if (vendedor == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
@@ -114,11 +111,9 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Vendedor vendedor)
-        {
-            try
-            {
-                if (!ModelState.IsValid){
+        public async Task<IActionResult> New(Person vendedor) {
+            try {
+                if (!ModelState.IsValid) {
                     return View(vendedor);
                 }
                 vendedor.Status = Status.Ativado;
@@ -126,13 +121,12 @@ namespace FastMechanical.Controllers {
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
                 vendedor.Cpf = str;
-                vendedor = _vendedorService.TransformUpperCase(vendedor);
-                await _vendedorService.InsertAsync(vendedor);
+                vendedor = await _personService.TransformCaptalizeAsync(vendedor);
+                await _personService.SalvarAsync(vendedor);
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -142,24 +136,20 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Disable(int id)
-        {
+        public async Task<IActionResult> Disable(int id) {
 
-            try
-            {
-                Vendedor vendedor = await _vendedorService.FindByIdAsync(id);
-                if (vendedor == null)
-                {
+            try {
+                Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
+                if (vendedor == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 vendedor.Status = Status.Desativado;
-                await _vendedorService.UpdateAsync(vendedor);
+                await _personService.AtualizarAsync(vendedor);
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -170,24 +160,20 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Enable(int id)
-        {
+        public async Task<IActionResult> Enable(int id) {
 
-            try
-            {
-                Vendedor vendedor = await _vendedorService.FindByIdAsync(id);
-                if (vendedor == null)
-                {
+            try {
+                Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
+                if (vendedor == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 vendedor.Status = Status.Ativado;
-                await _vendedorService.UpdateAsync(vendedor);
+                await _personService.AtualizarAsync(vendedor);
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -198,18 +184,14 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Vendedor vendedor)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
+        public async Task<IActionResult> Edit(Person vendedor) {
+            try {
+                if (!ModelState.IsValid) {
                     return View(vendedor);
                 }
                 int id = (int)vendedor.Id;
-                Vendedor dbPessoa = await _vendedorService.FindByIdAsync(id);
-                if (dbPessoa == null)
-                {
+                Person dbPessoa = await _personService.BuscarVendedoresPorIdAsync(id);
+                if (dbPessoa == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -223,14 +205,13 @@ namespace FastMechanical.Controllers {
                 dbPessoa.Complemento = vendedor.Complemento;
                 dbPessoa.Numero = vendedor.Numero;
                 dbPessoa.DataDeNascimento = vendedor.DataDeNascimento;
-                dbPessoa = _vendedorService.TransformUpperCase(dbPessoa);
-                await _vendedorService.UpdateAsync(dbPessoa);
+                dbPessoa = await _personService.TransformCaptalizeAsync(dbPessoa);
+                await _personService.AtualizarAsync(dbPessoa);
                 TempData["SuccessMessage"] = "Usuario alterado com sucesso";
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }

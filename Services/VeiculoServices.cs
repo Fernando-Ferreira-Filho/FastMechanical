@@ -7,10 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace FastMechanical.Services {
-    public class VeiculoService : IVeiculoService {
+    public class VeiculoServices : IVeiculoServices {
         private readonly BancoContext _context;
 
-        public VeiculoService(BancoContext context) {
+        public VeiculoServices(BancoContext context) {
             _context = context;
         }
 
