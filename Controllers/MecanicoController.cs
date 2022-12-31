@@ -64,6 +64,10 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
+            if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
 
             if (mecanico.Status == Status.Desativado) {
                 TempData["ErrorMessage"] = "ID não encontrado";
@@ -74,7 +78,7 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> Enabled(int? id) {
+        public async Task<IActionResult> Enable(int? id) {
 
             if (id == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
@@ -82,6 +86,11 @@ namespace FastMechanical.Controllers {
             }
             Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
             if (mecanico == null) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+            if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
@@ -141,6 +150,16 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+                if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (mecanico.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                mecanico.Status = Status.Desativado;
                 await _personServices.AtualizarAsync(mecanico);
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
@@ -164,6 +183,17 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+
+                if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (mecanico.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                mecanico.Status = Status.Ativado;
                 await _personServices.AtualizarAsync(mecanico);
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");

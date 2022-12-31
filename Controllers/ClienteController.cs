@@ -4,16 +4,17 @@ using System;
 using FastMechanical.Services;
 using FastMechanical.Models.Enums;
 using FastMechanical.Models;
+using System.Collections.Generic;
 
 namespace FastMechanical.Controllers {
     public class ClienteController : Controller {
 
         private readonly IPersonServices _personService;
+        private readonly IVeiculoServices _veiculoService;
 
-
-        public ClienteController(IPersonServices personService) {
+        public ClienteController(IPersonServices personService, IVeiculoServices veiculoServices) {
             _personService = personService;
-
+            _veiculoService = veiculoServices;
         }
 
         public async Task<IActionResult> Index() {
@@ -68,6 +69,11 @@ namespace FastMechanical.Controllers {
                 return RedirectToAction("Index");
             }
 
+            if (cliente.TipoPessoa != TipoPessoa.Cliente) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
             return View(cliente);
         }
 
@@ -85,6 +91,11 @@ namespace FastMechanical.Controllers {
             }
 
             if (cliente.Status == Status.Ativado) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+            if (cliente.TipoPessoa != TipoPessoa.Cliente) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
@@ -143,8 +154,23 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+
+                if (cliente.TipoPessoa != TipoPessoa.Cliente) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (cliente.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                List<Veiculo> veiculos = await _veiculoService.BuscarVeiculoPorClienteId(id);
                 cliente.Status = Status.Desativado;
                 await _personService.AtualizarAsync(cliente);
+                foreach (var item in veiculos) {
+                    item.Status = Status.Desativado;
+                    await _veiculoService.AtualizarVeiculoAsync(item);
+                }
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
             }
@@ -167,8 +193,25 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+
+                if (cliente.TipoPessoa != TipoPessoa.Cliente) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (cliente.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
                 cliente.Status = Status.Ativado;
                 await _personService.AtualizarAsync(cliente);
+
+                List<Veiculo> veiculos = await _veiculoService.BuscarVeiculoPorClienteId(id);
+                foreach (var item in veiculos) {
+                    item.Status = Status.Ativado;
+                    await _veiculoService.AtualizarVeiculoAsync(item);
+                }
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");
             }

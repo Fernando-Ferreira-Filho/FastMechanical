@@ -1,5 +1,6 @@
 ﻿using FastMechanical.Data;
 using FastMechanical.Models;
+using FastMechanical.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,27 @@ namespace FastMechanical.Services {
             _context = context;
         }
 
-        public async Task<List<Veiculo>> FindAllAsync() {
+        public async Task<List<Veiculo>> TodosVeiculosAtivosAsync() {
 
             try {
-                return await _context.Veiculo.ToListAsync();
+                return await _context.Veiculo.Where(v => v.Status == Status.Ativado).ToListAsync();
             }
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
             }
         }
 
-        public async Task<Veiculo> FindByIdAsync(int id) {
+        public async Task<List<Veiculo>> TodosVeiculosDesativadosAsync() {
+
+            try {
+                return await _context.Veiculo.Where(v => v.Status == Status.Desativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
+
+        public async Task<Veiculo> EncontrarVeiculoPorIdAsync(int id) {
             try {
                 return await _context.Veiculo.FirstOrDefaultAsync(obj => obj.Id == id);
             }
@@ -33,7 +44,7 @@ namespace FastMechanical.Services {
             }
         }
 
-        public async Task InsertAsync(Veiculo veiculo) {
+        public async Task SalvarVeiculoAsync(Veiculo veiculo) {
             try {
                 _context.Veiculo.Add(veiculo);
                 await _context.SaveChangesAsync();
@@ -46,7 +57,7 @@ namespace FastMechanical.Services {
             }
         }
 
-        public Veiculo TransformUpperCase(Veiculo veiculo) {
+        public Veiculo TransformCaptalizeAsync(Veiculo veiculo) {
 
             veiculo.Renavam = veiculo.Renavam.Trim().ToUpper();
             veiculo.Placa = veiculo.Placa.Trim().ToUpper();
@@ -54,19 +65,10 @@ namespace FastMechanical.Services {
             veiculo.Cor = veiculo.Cor.Trim().ToUpper();
             veiculo.Marca = veiculo.Marca.Trim().ToUpper();
 
-            //if (veiculo.Numero != null && cliente.Numero != "") {
-            //     veiculo.Numero = cliente.Numero.Trim().ToUpper();
-            // }
-
-
-            // if (cliente.Complemento != null && cliente.Complemento != "") {
-            //     cliente.Complemento = cliente.Complemento.Trim().ToUpper();
-            //}
-
             return veiculo;
         }
 
-        public async Task UpdateAsync(Veiculo veiculo) {
+        public async Task AtualizarVeiculoAsync(Veiculo veiculo) {
             try {
                 bool hasAny = await _context.Veiculo.AnyAsync(x => x.Id == veiculo.Id);
 
@@ -80,6 +82,10 @@ namespace FastMechanical.Services {
             catch (Exception e) {
                 throw new Exception(e.Message);
             }
+        }
+
+        public async Task<List<Veiculo>> BuscarVeiculoPorClienteId(int id) {
+            return await _context.Veiculo.Include(v => v.Pessoa).Where(v => v.Pessoa.Id == id).ToListAsync();
         }
     }
 }

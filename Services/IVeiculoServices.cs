@@ -5,14 +5,16 @@ using System.Threading.Tasks;
 namespace FastMechanical.Services {
     public interface IVeiculoServices {
 
-        public Task InsertAsync(Veiculo veiculo);
+        public Task SalvarVeiculoAsync(Veiculo veiculo);
 
-        public Task<List<Veiculo>> FindAllAsync();
+        public Task<List<Veiculo>> TodosVeiculosAtivosAsync();
+        public Task<List<Veiculo>> TodosVeiculosDesativadosAsync();
 
-        public Task<Veiculo> FindByIdAsync(int id);
+        public Task<Veiculo> EncontrarVeiculoPorIdAsync(int id);
 
-        public Task UpdateAsync(Veiculo veiculo);
+        public Task AtualizarVeiculoAsync(Veiculo veiculo);
 
-        public Veiculo TransformUpperCase(Veiculo veiculo);
+        public Veiculo TransformCaptalizeAsync(Veiculo veiculo);
+        public Task<List<Veiculo>> BuscarVeiculoPorClienteId(int id);
     }
 }

@@ -72,6 +72,13 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
+
+
+            if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
             return View(vendedor);
         }
 
@@ -89,6 +96,12 @@ namespace FastMechanical.Controllers {
             }
 
             if (vendedor.Status == Status.Ativado) {
+                TempData["ErrorMessage"] = "ID não encontrado";
+                return RedirectToAction("Index");
+            }
+
+
+            if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
@@ -144,6 +157,16 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
+                if (vendedor.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
                 vendedor.Status = Status.Desativado;
                 await _personService.AtualizarAsync(vendedor);
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
@@ -165,6 +188,16 @@ namespace FastMechanical.Controllers {
             try {
                 Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
                 if (vendedor == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (vendedor.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }

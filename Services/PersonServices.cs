@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Globalization;
+using System;
 
 namespace FastMechanical.Services {
     public class PersonServices : IPersonServices {
@@ -16,49 +17,129 @@ namespace FastMechanical.Services {
             _context = context;
         }
         public async Task<List<Person>> TodosClientesAtivosAsync() {
-            return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Cliente && c.Status == Status.Ativado).ToListAsync();
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Cliente && c.Status == Status.Ativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<List<Person>> TodosMecanicosAtivosAsync() {
-            return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Mecanico && c.Status == Status.Ativado).ToListAsync();
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Mecanico && c.Status == Status.Ativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<List<Person>> TodosVendedoresAtivosAsync() {
-            return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Vendedor && c.Status == Status.Ativado).ToListAsync();
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Vendedor && c.Status == Status.Ativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
 
         public async Task<List<Person>> TodosClientesDesativadosAsync() {
-            return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Cliente && c.Status == Status.Desativado).ToListAsync();
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Cliente && c.Status == Status.Desativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<List<Person>> TodosMecanicosDesativadosAsync() {
-            return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Mecanico && c.Status == Status.Desativado).ToListAsync();
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Mecanico && c.Status == Status.Desativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<List<Person>> TodosVendedoresDesativadosAsync() {
-            return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Mecanico && c.Status == Status.Desativado).ToListAsync();
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Vendedor && c.Status == Status.Desativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<Person> BuscarClientePorIdAsync(int id) {
-            return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Cliente && i.Id == id);
+
+            try {
+                return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Cliente && i.Id == id);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<Person> BuscarMecanicoPorIdAsync(int id) {
-            return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Mecanico && i.Id == id);
+
+            try {
+                return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Mecanico && i.Id == id);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task<Person> BuscarVendedoresPorIdAsync(int id) {
-            return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Mecanico && i.Id == id);
+
+            try {
+                return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Vendedor && i.Id == id);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
         }
 
         public async Task SalvarAsync(Person person) {
-            await _context.Person.AddAsync(person);
-            await _context.SaveChangesAsync();
+
+            try {
+                await _context.Person.AddAsync(person);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e) {
+                if (e.InnerException.Message.Contains(person.Cpf)) {
+                    throw new Exception($"Houve um erro ao salvar, registro duplicado");
+                }
+                throw new Exception($"Houve um erro ao salvar, ERRO: {e.InnerException.Message}");
+            }
+
+
         }
+
         public async Task AtualizarAsync(Person person) {
-            _context.Person.Update(person);
-            await _context.SaveChangesAsync();
+            try {
+                _context.Person.Update(person);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e) {
+                throw new Exception(e.Message);
+            }
+
         }
 
         public async Task<Person> TransformCaptalizeAsync(Person person) {

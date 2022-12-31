@@ -762,3 +762,4 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Edit.cshtml.g
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Index.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\New.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\Disable.cshtml.g.cs
