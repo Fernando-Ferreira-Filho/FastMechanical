@@ -2,6 +2,8 @@
 using FastMechanical.Models.ValidationModels;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Net.Mail;
+using FastMechanical.Helper;
 
 namespace FastMechanical.Models {
     public class Pessoa {
@@ -65,9 +67,11 @@ namespace FastMechanical.Models {
 
         public TipoPessoa TipoPessoa { get; set; }
 
+        public string Password { get; set; }
+
         public Pessoa() { }
 
-        public Pessoa(string nome, long? telefone, string email, string cpf, string rua, string bairro, string estado, string complemento, string cidade, Status status, string numero, DateTime? dataDeNascimento, TipoPessoa tipoPessoa) {
+        public Pessoa(string nome, long? telefone, string email, string cpf, string rua, string bairro, string estado, string complemento, string cidade, Status status, string numero, DateTime? dataDeNascimento, TipoPessoa tipoPessoa, string password) {
             Nome = nome;
             Telefone = telefone;
             Email = email;
@@ -81,6 +85,44 @@ namespace FastMechanical.Models {
             DataDeNascimento = dataDeNascimento;
             Status = status;
             TipoPessoa = tipoPessoa;
+            Password = password;
+        }
+
+        public static string PasswordGenerate() {
+            string chars = "abcdefghjkmnpqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXIZ.*()@#$%,|";
+            string pass = "";
+            Random random = new Random();
+            for (int f = 0; f < 10; f++) {
+                pass += chars.Substring(random.Next(0, chars.Length - 1), 1);
+            }
+
+            return pass;
+        }
+
+        //public static void SendMail(string emailMessage, string message, string title) {
+        //    // create email message
+        //    var email = new MimeMessage();
+        //    email.From.Add(MailboxAddress.Parse("testesapps51@gmail.com"));
+        //    email.To.Add(MailboxAddress.Parse(emailMessage));
+        //    email.Subject = title;
+        //    email.Body = new TextPart(TextFormat.Plain) { Text = message };
+
+        //    // send email
+        //    using var smtp = new SmtpClient();
+        //    smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+        //    smtp.Authenticate("testesapps51@gmail.com", "fahtsroanthccqxd");
+        //    smtp.Send(email);
+        //    smtp.Disconnect(true);
+        //}
+
+        public bool ValidPassword(string password) {
+
+            return Password == password.MakeHash();
+        }
+
+
+        public void SetPasswordHash() {
+            Password = Password.MakeHash();
         }
 
     }

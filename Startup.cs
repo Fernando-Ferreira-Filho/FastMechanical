@@ -2,11 +2,13 @@ using FastMechanical.Data;
 using FastMechanical.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PresMed.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +29,19 @@ namespace FastMechanical {
             services.AddDbContext<BancoContext>(options => options.UseMySql(Configuration.GetConnectionString("BancoContext"), builder =>
                builder.MigrationsAssembly("FastMechanical")));
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddScoped<SeedingService>();
             services.AddScoped<IVeiculoServices, VeiculoServices>();
             services.AddScoped<IPessoaServices, PessoaServices>();
             services.AddScoped<IServicosServices, ServicosServices>();
             services.AddScoped<IAlmoxarifadoServices, AlmoxarifadoServices>();
+            services.AddScoped<ILoginService, LoginService>();
+
+            services.AddSession(o => {
+                o.Cookie.HttpOnly = true;
+                o.Cookie.IsEssential = true;
+            });
 
         }
 
@@ -54,10 +64,12 @@ namespace FastMechanical {
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Index}/{id?}");
             });
         }
     }
