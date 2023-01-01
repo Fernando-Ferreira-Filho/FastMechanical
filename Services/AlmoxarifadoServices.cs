@@ -3,6 +3,7 @@ using FastMechanical.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace FastMechanical.Services {
         //     throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
         // }
 
-        public async Task<List<Materiais>> ListarTodosMateriaisAtivos() {
+        public async Task<List<Materiais>> ListarTodosMateriaisAtivosAsync() {
 
             try {
                 return await _context.Materiais.Where(m => m.Status == Models.Enums.Status.Ativado).ToListAsync();
@@ -30,7 +31,7 @@ namespace FastMechanical.Services {
             }
         }
 
-        public async Task<List<Materiais>> ListarTodosMateriaisDesativados() {
+        public async Task<List<Materiais>> ListarTodosMateriaisDesativadosAsync() {
 
             try {
                 return await _context.Materiais.Where(m => m.Status == Models.Enums.Status.Desativado).ToListAsync();
@@ -40,7 +41,7 @@ namespace FastMechanical.Services {
             }
         }
 
-        public async Task<Materiais> EncontrarMaterialPorId(int id) {
+        public async Task<Materiais> EncontrarMaterialPorIdAsync(int id) {
 
             try {
                 return await _context.Materiais.FirstOrDefaultAsync(m => m.Id == id);
@@ -50,7 +51,7 @@ namespace FastMechanical.Services {
             }
         }
 
-        public async Task AtualizarMaterial(Materiais material) {
+        public async Task AtualizarMaterialAsync(Materiais material) {
 
             try {
                 _context.Materiais.Update(material);
@@ -59,6 +60,26 @@ namespace FastMechanical.Services {
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
             }
+        }
+
+        public async Task SalvarMaterialAsync(Materiais material) {
+
+            try {
+                await _context.Materiais.AddAsync(material);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
+
+        public async Task<Materiais> TransformCaptalizeAsync(Materiais material) {
+            TextInfo myTI = new CultureInfo("pt-BR", false).TextInfo;
+
+            material.Nome = myTI.ToTitleCase(material.Nome).Trim();
+            material.Descricao = myTI.ToTitleCase(material.Descricao).Trim();
+
+            return material;
         }
     }
 }

@@ -24,13 +24,22 @@
     </div>
     <div class="col-md-6">
         <label asp-for="@Model.ValorCusto" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.ValorCusto" type="text" class="form-control" placeholder="Digite o valor de custo do material">
+        <input asp-for="@Model.ValorCusto" type="number" class="form-control" placeholder="Digite o valor de custo do material">
         <span asp-validation-for="@Model.ValorCusto" class="text-danger"></span>
     </div>
     <div class="col-md-6">
         <label asp-for="@Model.PorcentagemLucro" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.PorcentagemLucro" type="text" class="form-control" placeholder="Digite a porcentagem de lucro do material">
+        <input asp-for="@Model.PorcentagemLucro" type="number" class="form-control" placeholder="Digite a porcentagem de lucro do material">
         <span asp-validation-for="@Model.PorcentagemLucro" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Unidade de medida</label><span class="text-danger">*</span>
+        <select asp-for="@Model.UnidadeMedidade" class="form-select">
+            <option value="@FastMechanical.Models.Enums.TipoUnidadeMedidade.PEÇA">Peça</option>
+            <option value="@FastMechanical.Models.Enums.TipoUnidadeMedidade.METRO">Metro</option>
+        </select>
+        <span asp-validation-for="@Model.UnidadeMedidade" class="text-danger"></span>
     </div>
 
 

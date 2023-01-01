@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PresMed.Models.ValidationModels {
+namespace FastMechanical.Models.ValidationModels {
     public class CpfValidation : ValidationAttribute {
         public override bool IsValid(object value) {
             if (value == null || string.IsNullOrEmpty(value.ToString()))

@@ -17,7 +17,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Index() {
             try {
                 ViewData["Title"] = "Listagem de materiais ativos";
-                var list = await _almoxarifadoServices.ListarTodosMateriaisAtivos();
+                var list = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync();
                 return View(list);
             }
             catch (Exception erro) {
@@ -29,7 +29,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> MateriaisDesativados() {
             try {
                 ViewData["Title"] = "Listagem de materiais desativados";
-                var list = await _almoxarifadoServices.ListarTodosMateriaisDesativados();
+                var list = await _almoxarifadoServices.ListarTodosMateriaisDesativadosAsync();
                 return View("Index", list);
             }
             catch (Exception erro) {
@@ -49,7 +49,7 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorId(id.Value);
+                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(id.Value);
                 if (material == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -70,7 +70,7 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorId(id.Value);
+                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(id.Value);
                 if (material == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -97,7 +97,7 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorId(id.Value);
+                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(id.Value);
                 if (material == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -124,7 +124,7 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorId(id.Value);
+                Materiais material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(id.Value);
                 if (material == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -138,114 +138,129 @@ namespace FastMechanical.Controllers {
 
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> New(Servicos servicos) {
-        //    try {
-        //        if (!ModelState.IsValid) {
-        //            return View(servicos);
-        //        }
-        //        servicos.Status = Status.Ativado;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NovoMaterial(Materiais materiais) {
+            try {
+                if (!ModelState.IsValid) {
+                    return View(materiais);
+                }
+                materiais.Status = Status.Ativado;
+                materiais.Quantidade = 0;
+                string str = $"{materiais.PorcentagemLucro}";
+                if (!str.Contains(".") || !str.Contains(",")) {
+                    materiais.PorcentagemLucro /= 100;
+                }
+                materiais = await _almoxarifadoServices.TransformCaptalizeAsync(materiais);
 
-        //        servicos = await _servicosService.TransformCaptalizeAsync(servicos);
+                await _almoxarifadoServices.SalvarMaterialAsync(materiais);
+                TempData["SuccessMessage"] = "Material cadastrado com sucesso";
+                return RedirectToAction("Index");
+            }
+            catch (Exception e) {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Index");
+            }
 
-        //        await _servicosService.SalvarServicosAsync(servicos);
-        //        TempData["SuccessMessage"] = "Serviço cadastrado com sucesso";
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception e) {
-        //        TempData["ErrorMessage"] = e.Message;
-        //        return RedirectToAction("Index");
-        //    }
-
-        //}
-
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Disable(int id) {
-
-        //    try {
-        //        Servicos servicos = await _servicosService.EncontrarServicosPorIdAsync(id);
-        //        if (servicos == null) {
-        //            TempData["ErrorMessage"] = "ID não encontrado";
-        //            return RedirectToAction("Index");
-        //        }
-        //        if (servicos.Status == Status.Desativado) {
-        //            TempData["ErrorMessage"] = "ID não encontrado";
-        //            return RedirectToAction("Index");
-        //        }
-        //        servicos.Status = Status.Desativado;
-        //        await _servicosService.AtualizarServicosAsync(servicos);
-        //        TempData["SuccessMessage"] = "Serviço desativado com sucesso";
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception e) {
-        //        TempData["ErrorMessage"] = e.Message;
-        //        return RedirectToAction("Index");
-        //    }
+        }
 
 
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DesabilitarMaterial(Materiais materiais) {
+
+            try {
+                materiais = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(materiais.Id);
+                if (materiais == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (materiais.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (materiais.Quantidade != 0) {
+                    TempData["ErrorMessage"] = "Para desativar um material o estoque deve estar zerado";
+                    return RedirectToAction("Index");
+                }
+                materiais.Status = Status.Desativado;
+                await _almoxarifadoServices.AtualizarMaterialAsync(materiais);
+                TempData["SuccessMessage"] = "Material desativado com sucesso";
+                return RedirectToAction("Index");
+            }
+            catch (Exception e) {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Index");
+            }
 
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Enable(int id) {
-
-        //    try {
-        //        Servicos servicos = await _servicosService.EncontrarServicosPorIdAsync(id);
-        //        if (servicos == null) {
-        //            TempData["ErrorMessage"] = "ID não encontrado";
-        //            return RedirectToAction("Index");
-        //        }
-        //        if (servicos.Status == Status.Ativado) {
-        //            TempData["ErrorMessage"] = "ID não encontrado";
-        //            return RedirectToAction("Index");
-        //        }
+        }
 
 
-        //        servicos.Status = Status.Ativado;
-        //        await _servicosService.AtualizarServicosAsync(servicos);
-        //        TempData["SuccessMessage"] = "Serviço ativado com sucesso";
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception e) {
-        //        TempData["ErrorMessage"] = e.Message;
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> HabilitarMaterial(Materiais materiais) {
+
+            try {
+                materiais = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(materiais.Id);
+                if (materiais == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (materiais.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                materiais.Status = Status.Ativado;
+                await _almoxarifadoServices.AtualizarMaterialAsync(materiais);
+                TempData["SuccessMessage"] = "Material ativado com sucesso";
+                return RedirectToAction("Index");
+            }
+            catch (Exception e) {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Index");
+            }
 
 
-        //}
+        }
 
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Servicos servicos) {
-        //    try {
-        //        if (!ModelState.IsValid) {
-        //            return View(servicos);
-        //        }
-        //        int id = (int)servicos.Id;
-        //        Servicos dbServicos = await _servicosService.EncontrarServicosPorIdAsync(id);
-        //        if (dbServicos == null) {
-        //            TempData["ErrorMessage"] = "ID não encontrado";
-        //            return RedirectToAction("Index");
-        //        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarMaterial(Materiais materiais) {
+            try {
+                if (!ModelState.IsValid) {
+                    return View(materiais);
+                }
 
-        //        dbServicos.Nome = servicos.Nome;
-        //        dbServicos.Valor = servicos.Valor;
-        //        dbServicos = await _servicosService.TransformCaptalizeAsync(dbServicos);
-        //        await _servicosService.AtualizarServicosAsync(dbServicos);
-        //        TempData["SuccessMessage"] = "Serviço alterado com sucesso";
+                Materiais dbMateriais = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(materiais.Id);
+                if (dbMateriais == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                string str = $"{materiais.PorcentagemLucro}";
+                if (!str.Contains(".") || !str.Contains(",")) {
+                    materiais.PorcentagemLucro /= 100;
+                }
+                dbMateriais.Nome = materiais.Nome;
+                dbMateriais.PorcentagemLucro = materiais.PorcentagemLucro;
+                dbMateriais.UnidadeMedidade = materiais.UnidadeMedidade;
+                dbMateriais.Descricao = materiais.Descricao;
+                dbMateriais.ValorCusto = materiais.ValorCusto;
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception e) {
-        //        TempData["ErrorMessage"] = e.Message;
-        //        return RedirectToAction("Index");
-        //    }
-        //}
+                dbMateriais = await _almoxarifadoServices.TransformCaptalizeAsync(dbMateriais);
+                await _almoxarifadoServices.AtualizarMaterialAsync(dbMateriais);
+                TempData["SuccessMessage"] = "Material alterado com sucesso";
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e) {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
 
     }
 }

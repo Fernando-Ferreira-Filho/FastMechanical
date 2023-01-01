@@ -1,5 +1,5 @@
 ﻿using FastMechanical.Models.Enums;
-using PresMed.Models.ValidationModels;
+using FastMechanical.Models.ValidationModels;
 using System.ComponentModel.DataAnnotations;
 using System;
 

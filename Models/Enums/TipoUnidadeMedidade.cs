@@ -1,6 +1,6 @@
 ﻿namespace FastMechanical.Models.Enums {
     public enum TipoUnidadeMedidade : int {
-        pç = 0,
-        mt = 1
+        PEÇA = 0,
+        METRO = 1
     }
 }

@@ -41,6 +41,16 @@
         <span asp-validation-for="@Model.PorcentagemLucro" class="text-danger"></span>
     </div>
 
+    <div class="col-md-6">
+        <label class="form-label">Unidade de medida</label><span class="text-danger">*</span>
+        <select asp-for="@Model.UnidadeMedidade" class="form-select">
+            <option value="@FastMechanical.Models.Enums.TipoUnidadeMedidade.PEÇA">Peça</option>
+            <option value="@FastMechanical.Models.Enums.TipoUnidadeMedidade.METRO">Metro</option>
+        </select>
+        <span asp-validation-for="@Model.UnidadeMedidade" class="text-danger"></span>
+    </div>
+
+
     <div class="col-12 mb-5">
         <button type="submit" class="btn btn-success">Cadastrar</button>
         <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Almoxarifado">Voltar</a>
