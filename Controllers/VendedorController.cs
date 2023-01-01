@@ -18,9 +18,16 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> Index() {
-            ViewData["Title"] = "Listagem de vendedores ativos";
-            var list = await _personService.TodosVendedoresAtivosAsync();
-            return View(list);
+            try {
+                ViewData["Title"] = "Listagem de vendedores ativos";
+                var list = await _personService.TodosVendedoresAtivosAsync();
+                return View(list);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
         }
 
         public IActionResult New() {
@@ -28,6 +35,7 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> Inativos() {
+
             try {
                 ViewData["Title"] = "Listagen de vendedores inativos.";
                 var list = await _personService.TodosVendedoresDesativadosAsync();
@@ -40,84 +48,109 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> Edit(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+                if (vendedor == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(vendedor);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
-            if (vendedor == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            return View(vendedor);
+
         }
 
         public async Task<IActionResult> Disable(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+                if (vendedor == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+
+                if (vendedor.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                return View(vendedor);
             }
-            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
-            if (vendedor == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
 
-
-            if (vendedor.Status == Status.Desativado) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-
-
-            if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-
-            return View(vendedor);
         }
 
 
         public async Task<IActionResult> Enabled(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+                if (vendedor == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
-            if (vendedor == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-
-            if (vendedor.Status == Status.Ativado) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
+                if (vendedor.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
 
 
-            if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+                if (vendedor.TipoPessoa != TipoPessoa.Vendedor) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View("Disable", vendedor);
             }
-            return View("Disable", vendedor);
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
         }
 
         public async Task<IActionResult> Details(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+                if (vendedor == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(vendedor);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
-            if (vendedor == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            return View(vendedor);
         }
 
         [HttpPost]

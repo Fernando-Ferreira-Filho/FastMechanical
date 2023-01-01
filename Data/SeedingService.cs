@@ -43,14 +43,21 @@ namespace FastMechanical.Data {
             Pessoa admin = new Pessoa { Nome = "Antonio Marcos Pereira", Bairro = "Centro", Cidade = "Goianésia", Complemento = null, Cpf = "51629376060", DataDeNascimento = new DateTime(2000, 11, 04), Email = "antonioPereira@gmail.com", Estado = "Goiás", Numero = "486", Rua = "05", Status = Status.Ativado, Telefone = 62876954042, TipoPessoa = TipoPessoa.Administrador };
 
 
-
             Servicos s1 = new Servicos { Nome = "Troca De Oleo", Valor = 20.0, Status = Status.Ativado };
             Servicos s2 = new Servicos { Nome = "Revisão Geral", Valor = 250.0, Status = Status.Ativado };
             Servicos s3 = new Servicos { Nome = "Troca De Lampadas Em Geral", Valor = 15.0, Status = Status.Ativado };
 
+
+            Materiais mt1 = new Materiais { Nome = "Lampada Led", Descricao = "Utilizavel em Wolks", Quantidade = 55, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.pç, PorcentagemLucro = 0.3, ValorCusto = 20 };
+            Materiais mt2 = new Materiais { Nome = "Vela Volks Geração 4", Descricao = null, Quantidade = 10, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.pç, PorcentagemLucro = 0.5, ValorCusto = 45 };
+            Materiais mt3 = new Materiais { Nome = "Fio Eletrico", Descricao = null, Quantidade = 90, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.mt, PorcentagemLucro = 0.05, ValorCusto = 1 };
+            Materiais mt4 = new Materiais { Nome = "Sockete lampada", Descricao = "Utilizavel em Wolks", Quantidade = 2, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.pç, PorcentagemLucro = 0.3, ValorCusto = 20 };
+
+
             _context.Pessoa.AddRange(c1, c2, c3, vd1, vd2, m1, m2, admin);
             _context.Veiculo.AddRange(v1, v2, v3);
             _context.Servicos.AddRange(s1, s2, s3);
+            _context.Materiais.AddRange(mt1, mt2, mt3, mt4);
             _context.SaveChanges();
         }
     }

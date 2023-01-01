@@ -1,0 +1,73 @@
+﻿@using System.Globalization;
+@model Materiais
+@{
+    ViewData["Title"] = $"Detalhes do Material {@Model.Nome}";
+}
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-6">
+        <h6 class="display-6 mb-5">Dados do Material</h6>
+
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Nome)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Nome)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Descricao)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Descricao)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Quantidade)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Quantidade)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.ValorCusto)</span>
+            </div>
+            <div class="col-md-7">
+                <span>@string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", Model.ValorCusto)</span>
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.PorcentagemLucro)</span>
+            </div>
+            <div class="col-md-7">
+                <span>@string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:0%}", Model.PorcentagemLucro)</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-12 mt-5 mb-5">
+        <a role="button" asp-route-id="@Model.Id" asp-action="EditarMaterial" asp-controller="Almoxarifado" class="btn btn-primary">Editar</a>
+        <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Almoxarifado">Voltar</a>
+    </div>
+
+</div>

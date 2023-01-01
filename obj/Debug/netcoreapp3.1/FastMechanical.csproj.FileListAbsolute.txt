@@ -773,3 +773,8 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Disable.cshtm
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Edit.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Index.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\New.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\DesabilitarMaterial.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\DetalhesMaterial.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\EditarMaterial.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\NovoMaterial.cshtml.g.cs

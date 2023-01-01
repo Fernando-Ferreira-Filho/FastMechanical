@@ -1,4 +1,5 @@
-﻿@model Servicos
+﻿@using System.Globalization;
+@model Servicos
 @{
     ViewData["Title"] = $"Detalhes do serviço {@Model.Nome}";
 }
@@ -28,7 +29,7 @@
                 <span class="fw-bold">@Html.DisplayNameFor(model => model.Valor)</span>
             </div>
             <div class="col-md-7">
-                R$ @Html.DisplayFor(model => model.Valor)
+                <span>@string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", Model.Valor)</span>
             </div>
 
         </div>

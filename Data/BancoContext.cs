@@ -10,7 +10,7 @@ namespace FastMechanical.Data {
         public DbSet<Veiculo> Veiculo { get; set; }
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<Servicos> Servicos { get; set; }
-
+        public DbSet<Materiais> Materiais { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Pessoa>()

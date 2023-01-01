@@ -15,9 +15,17 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> Index() {
-            ViewData["Title"] = "Listagem de admines ativos";
-            var list = await _personService.TodosAdminAtivosAsync();
-            return View(list);
+
+            try {
+                ViewData["Title"] = "Listagem de admines ativos";
+                var list = await _personService.TodosAdminAtivosAsync();
+                return View(list);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
         }
 
         public IActionResult New() {
@@ -31,95 +39,129 @@ namespace FastMechanical.Controllers {
                 return View("Index", list);
             }
             catch (Exception erro) {
-                TempData[""] = erro.Message;
-                return View("ErrorMessage");
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
         }
 
         public async Task<IActionResult> Edit(int? id) {
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            try {
+
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
+                if (admin == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(admin);
+
             }
-            Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-            if (admin == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
-            return View(admin);
+
         }
 
         public async Task<IActionResult> Disable(int? id) {
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
+                if (admin == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                if (admin.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                if (admin.TipoPessoa != TipoPessoa.Administrador) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                return View(admin);
             }
-            Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-            if (admin == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
 
 
-            if (admin.Status == Status.Desativado) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-
-
-            if (admin.TipoPessoa != TipoPessoa.Administrador) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-
-            return View(admin);
         }
 
 
         public async Task<IActionResult> Enabled(int? id) {
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
+                if (admin == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (admin.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                if (admin.TipoPessoa != TipoPessoa.Administrador) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View("Disable", admin);
             }
-            Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-            if (admin == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
 
-            if (admin.Status == Status.Ativado) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
 
-
-            if (admin.TipoPessoa != TipoPessoa.Administrador) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            return View("Disable", admin);
         }
 
         public async Task<IActionResult> Details(int? id) {
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            try {
+
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
+                if (admin == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(admin);
             }
-            Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-            if (admin == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
-            return View(admin);
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> New(Pessoa admin) {
+
             try {
                 if (!ModelState.IsValid) {
                     return View(admin);

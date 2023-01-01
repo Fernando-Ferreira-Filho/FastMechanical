@@ -31,6 +31,7 @@ namespace FastMechanical {
             services.AddScoped<IVeiculoServices, VeiculoServices>();
             services.AddScoped<IPessoaServices, PessoaServices>();
             services.AddScoped<IServicosServices, ServicosServices>();
+            services.AddScoped<IAlmoxarifadoServices, AlmoxarifadoServices>();
 
         }
 

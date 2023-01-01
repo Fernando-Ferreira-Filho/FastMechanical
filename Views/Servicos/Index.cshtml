@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Servicos>
+﻿@using System.Globalization;
+@model IEnumerable<Servicos>
 
 @{
     ViewData["Title"] = $"Serviços";
@@ -24,8 +25,8 @@
     </div>
     <div class="col-lg-16">
         <a style="margin-right:10px;" asp-action="New" asp-controller="Servicos" class="link-dark  float-sm-end"><i class="fas fa-plus d-block text-center" style="font-size:2rem; "></i><span>Novo</span></a>
-        <a style="margin-right:10px;" asp-action="Index" asp-controller="Servicos" class="link-dark  float-sm-end"><i class="fas fa-car d-block text-center text-success" style="font-size:2rem; "></i><span>Ativos</span></a>
-        <a style="margin-right:10px;" asp-action="Inativos" asp-controller="Servicos" class="link-dark  float-sm-end"><i class="fas fa-car d-block text-center text-danger" style="font-size:2rem; "></i><span>Inativos</span></a>
+        <a style="margin-right:10px;" asp-action="Index" asp-controller="Servicos" class="link-dark  float-sm-end"><i class="fas fa-concierge-bell d-block text-center text-success" style="font-size:2rem; "></i><span>Ativos</span></a>
+        <a style="margin-right:10px;" asp-action="Inativos" asp-controller="Servicos" class="link-dark  float-sm-end"><i class="fas fa-concierge-bell d-block text-center text-danger" style="font-size:2rem; "></i><span>Inativos</span></a>
     </div>
 
 
@@ -52,7 +53,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Nome</td>
-                    <td>@item.Valor</td>
+                    <td>@string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", @item.Valor)</td>
                     <td>
                         @if (item.Status == FastMechanical.Models.Enums.Status.Ativado) {
                             <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Servicos" asp-action="Edit">Editar</a>
