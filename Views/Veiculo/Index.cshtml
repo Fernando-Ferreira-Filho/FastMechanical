@@ -38,7 +38,7 @@
 
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Id)</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Modelo)</th>
-            <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Renavam)</th>
+            <th class="text-center" scope="col">Dono</th>
             <th class="text-center" scope="col">@Html.DisplayNameFor(model => model.Placa)</th>
 
 
@@ -53,7 +53,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Modelo</td>
-                    <td>@item.Renavam</td>
+                    <td>@item.Pessoa.Nome</td>
                     <td>@item.Placa</td>
                     <td>
                         @if (item.Status == FastMechanical.Models.Enums.Status.Ativado) {

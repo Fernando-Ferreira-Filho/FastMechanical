@@ -4,16 +4,19 @@ using System;
 using FastMechanical.Services;
 using FastMechanical.Models;
 using FastMechanical.Models.Enums;
+using FastMechanical.Models.ViewModel;
+
 
 namespace FastMechanical.Controllers {
     public class VeiculoController : Controller {
 
         private readonly IVeiculoServices _veiculoService;
+        private readonly IPessoaServices _pessoaServices;
 
 
-        public VeiculoController(IVeiculoServices veiculoService) {
+        public VeiculoController(IVeiculoServices veiculoService, IPessoaServices pessoaServices) {
             _veiculoService = veiculoService;
-
+            _pessoaServices = pessoaServices;
         }
 
         public async Task<IActionResult> Index() {
@@ -22,8 +25,9 @@ namespace FastMechanical.Controllers {
             return View(list);
         }
 
-        public IActionResult New() {
-            return View();
+        public async Task<IActionResult> New() {
+            VeiculoViewModel veiculo = new VeiculoViewModel { ClienteList = await _pessoaServices.TodosClientesAtivosAsync() };
+            return View(veiculo);
         }
         public async Task<IActionResult> Inativos() {
             try {
@@ -47,7 +51,8 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            return View(veiculo);
+            VeiculoViewModel veiculoViewModel = new VeiculoViewModel { ClienteList = await _pessoaServices.TodosClientesAtivosAsync(), AnoDeFabricacao = veiculo.AnoDeFabricacao, Cor = veiculo.Cor, Marca = veiculo.Marca, Modelo = veiculo.Modelo, Pessoa = veiculo.Pessoa, Placa = veiculo.Placa, Renavam = veiculo.Renavam, Status = veiculo.Status, Id = veiculo.Id };
+            return View(veiculoViewModel);
         }
 
         public async Task<IActionResult> Disable(int? id) {
@@ -108,17 +113,26 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Veiculo veiculo) {
+        public async Task<IActionResult> New(VeiculoViewModel veiculo) {
+
             try {
-                if (!ModelState.IsValid) {
-                    return View(veiculo);
+                veiculo.ClienteList = await _pessoaServices.TodosClientesAtivosAsync();
+                if (veiculo.AnoDeFabricacao == 0 || veiculo.Modelo == null || veiculo.Cor == null || veiculo.Marca == null || veiculo.Placa == null || veiculo.Renavam == null) {
+
+                    if (!ModelState.IsValid) {
+                        return View(veiculo);
+                    }
                 }
+
                 string str = veiculo.Renavam;
                 str = str.Trim();
                 str = str.Replace(".", "").Replace("-", "");
                 veiculo.Renavam = str;
-                veiculo = _veiculoService.TransformCaptalizeAsync(veiculo);
-                await _veiculoService.SalvarVeiculoAsync(veiculo);
+
+                Veiculo dbVeiculo = new Veiculo { AnoDeFabricacao = veiculo.AnoDeFabricacao, Modelo = veiculo.Modelo, Cor = veiculo.Cor, Marca = veiculo.Marca, Pessoa = await _pessoaServices.BuscarClientePorIdAsync(veiculo.Pessoa.Id), Placa = veiculo.Placa, Renavam = veiculo.Renavam, Status = Status.Ativado };
+
+                dbVeiculo = _veiculoService.TransformCaptalizeAsync(dbVeiculo);
+                await _veiculoService.SalvarVeiculoAsync(dbVeiculo);
                 TempData["SuccessMessage"] = "Veículo cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
@@ -131,25 +145,31 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Veiculo veiculo) {
+        public async Task<IActionResult> Edit(VeiculoViewModel veiculo) {
             try {
-                if (!ModelState.IsValid) {
-                    return View(veiculo);
+                veiculo.ClienteList = await _pessoaServices.TodosClientesAtivosAsync();
+                if (veiculo.AnoDeFabricacao == 0 || veiculo.Modelo == null || veiculo.Cor == null || veiculo.Marca == null || veiculo.Placa == null || veiculo.Renavam == null) {
+
+                    if (!ModelState.IsValid) {
+                        return View(veiculo);
+                    }
                 }
+
                 int id = (int)veiculo.Id;
-                Veiculo dbPessoa = await _veiculoService.EncontrarVeiculoPorIdAsync(id);
-                if (dbPessoa == null) {
+                Veiculo dbVeiculo = await _veiculoService.EncontrarVeiculoPorIdAsync(id);
+                if (dbVeiculo == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
-                dbPessoa.Renavam = veiculo.Renavam;
-                dbPessoa.Placa = veiculo.Placa;
-                dbPessoa.Modelo = veiculo.Modelo;
-                dbPessoa.Cor = veiculo.Cor;
-                dbPessoa.Marca = veiculo.Marca;
-                dbPessoa = _veiculoService.TransformCaptalizeAsync(dbPessoa);
-                await _veiculoService.AtualizarVeiculoAsync(dbPessoa);
+                dbVeiculo.Renavam = veiculo.Renavam;
+                dbVeiculo.Placa = veiculo.Placa;
+                dbVeiculo.Modelo = veiculo.Modelo;
+                dbVeiculo.Cor = veiculo.Cor;
+                dbVeiculo.Marca = veiculo.Marca;
+                dbVeiculo.Pessoa = await _pessoaServices.BuscarClientePorIdAsync(veiculo.Pessoa.Id);
+                dbVeiculo = _veiculoService.TransformCaptalizeAsync(dbVeiculo);
+                await _veiculoService.AtualizarVeiculoAsync(dbVeiculo);
                 TempData["SuccessMessage"] = "Veículo alterado com sucesso";
 
                 return RedirectToAction("Index");

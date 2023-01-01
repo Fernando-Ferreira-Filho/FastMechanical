@@ -1,4 +1,4 @@
-﻿@model FastMechanical.Models.Veiculo
+﻿@model FastMechanical.Models.ViewModel.VeiculoViewModel
 
 @{
     ViewData["Title"] = "Cadastrar veículos";
@@ -39,7 +39,23 @@
         <input asp-for="@Model.Marca" type="text" class="form-control" placeholder="Digite a marca do veículo">
         <span asp-validation-for="@Model.Marca" class="text-danger"></span>
     </div>
-    
+
+    <div class="col-md-6">
+        <label asp-for="@Model.AnoDeFabricacao" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.AnoDeFabricacao" type="datetime" class="form-control">
+        <span asp-validation-for="@Model.AnoDeFabricacao" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Dono do veículo</label><span class="text-danger">*</span>
+        <select asp-for="@Model.Pessoa.Id" class="form-select">
+            @foreach (var item in Model.ClienteList) {
+                <option value="@item.Id">@item.Nome</option>
+            }
+        </select>
+    </div>
+
+
     <div class="col-12 mb-5">
         <button type="submit" class="btn btn-success">Cadastrar</button>
         <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Veiculo">Voltar</a>
