@@ -128,6 +128,7 @@ namespace FastMechanical.Controllers {
                 str = str.Replace(".", "").Replace("-", "");
                 mecanico.Cpf = str;
                 mecanico = await _personServices.TransformCaptalizeAsync(mecanico);
+                mecanico.TipoPessoa = TipoPessoa.Mecanico;
                 await _personServices.SalvarAsync(mecanico);
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");

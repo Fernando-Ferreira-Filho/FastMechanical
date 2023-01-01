@@ -763,3 +763,8 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Index.cshtml.
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\New.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Disable.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Veiculo\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Details.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Edit.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\New.cshtml.g.cs

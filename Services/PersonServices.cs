@@ -48,6 +48,17 @@ namespace FastMechanical.Services {
 
         }
 
+        public async Task<List<Person>> TodosAdminAtivosAsync() {
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Administrador && c.Status == Status.Ativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
+        }
+
 
         public async Task<List<Person>> TodosClientesDesativadosAsync() {
 
@@ -82,6 +93,17 @@ namespace FastMechanical.Services {
 
         }
 
+        public async Task<List<Person>> TodosAdminDesativadosAsync() {
+
+            try {
+                return await _context.Person.Where(c => c.TipoPessoa == TipoPessoa.Administrador && c.Status == Status.Desativado).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
+        }
+
         public async Task<Person> BuscarClientePorIdAsync(int id) {
 
             try {
@@ -108,6 +130,17 @@ namespace FastMechanical.Services {
 
             try {
                 return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Vendedor && i.Id == id);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
+        }
+
+        public async Task<Person> BuscarAdminPorIdAsync(int id) {
+
+            try {
+                return await _context.Person.FirstOrDefaultAsync(i => i.TipoPessoa == TipoPessoa.Administrador && i.Id == id);
             }
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
