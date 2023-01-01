@@ -46,7 +46,7 @@ namespace FastMechanical.Data {
 
             Servicos s1 = new Servicos { Nome = "Troca De Oleo", Valor = 20.0, Status = Status.Ativado };
             Servicos s2 = new Servicos { Nome = "Revisão Geral", Valor = 250.0, Status = Status.Ativado };
-            Servicos s3 = new Servicos { Nome = "Troca de lampadas em geral", Valor = 15.0, Status = Status.Ativado };
+            Servicos s3 = new Servicos { Nome = "Troca De Lampadas Em Geral", Valor = 15.0, Status = Status.Ativado };
 
             _context.Pessoa.AddRange(c1, c2, c3, vd1, vd2, m1, m2, admin);
             _context.Veiculo.AddRange(v1, v2, v3);

@@ -30,6 +30,7 @@ namespace FastMechanical {
             services.AddScoped<SeedingService>();
             services.AddScoped<IVeiculoServices, VeiculoServices>();
             services.AddScoped<IPessoaServices, PessoaServices>();
+            services.AddScoped<IServicosServices, ServicosServices>();
 
         }
 

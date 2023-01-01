@@ -768,3 +768,8 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Disable.cshtml.g
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Edit.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\New.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Details.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Disable.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Edit.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Servicos\New.cshtml.g.cs
