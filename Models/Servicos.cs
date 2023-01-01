@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FastMechanical.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace FastMechanical.Models {
@@ -10,6 +11,7 @@ namespace FastMechanical.Models {
         public string Nome { get; set; }
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [Display(Name = "Valor do serviço")]
-        public float Valor { get; set; }
+        public double Valor { get; set; }
+        public Status Status { get; set; }
     }
 }

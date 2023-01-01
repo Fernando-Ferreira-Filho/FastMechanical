@@ -8,11 +8,12 @@ namespace FastMechanical.Data {
         public BancoContext(DbContextOptions<BancoContext> options) : base(options) { }
 
         public DbSet<Veiculo> Veiculo { get; set; }
-        public DbSet<Person> Person { get; set; }
+        public DbSet<Pessoa> Pessoa { get; set; }
+        public DbSet<Servicos> Servicos { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Person>()
+            modelBuilder.Entity<Pessoa>()
                 .HasIndex(p => p.Cpf)
                 .IsUnique(true);
             modelBuilder.Entity<Veiculo>()

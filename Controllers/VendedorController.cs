@@ -10,9 +10,9 @@ namespace FastMechanical.Controllers {
     public class VendedorController : Controller {
 
 
-        private readonly IPersonServices _personService;
+        private readonly IPessoaServices _personService;
 
-        public VendedorController(IPersonServices personService) {
+        public VendedorController(IPessoaServices personService) {
             _personService = personService;
 
         }
@@ -45,7 +45,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
             if (vendedor == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -59,7 +59,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
             if (vendedor == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -87,7 +87,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
             if (vendedor == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -112,7 +112,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+            Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
             if (vendedor == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -122,7 +122,7 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Person vendedor) {
+        public async Task<IActionResult> New(Pessoa vendedor) {
             try {
                 if (!ModelState.IsValid) {
                     return View(vendedor);
@@ -151,7 +151,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Disable(int id) {
 
             try {
-                Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
                 if (vendedor == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -185,7 +185,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Enable(int id) {
 
             try {
-                Person vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id);
                 if (vendedor == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -216,13 +216,13 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Person vendedor) {
+        public async Task<IActionResult> Edit(Pessoa vendedor) {
             try {
                 if (!ModelState.IsValid) {
                     return View(vendedor);
                 }
                 int id = (int)vendedor.Id;
-                Person dbPessoa = await _personService.BuscarVendedoresPorIdAsync(id);
+                Pessoa dbPessoa = await _personService.BuscarVendedoresPorIdAsync(id);
                 if (dbPessoa == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");

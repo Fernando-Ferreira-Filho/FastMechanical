@@ -29,7 +29,7 @@ namespace FastMechanical {
 
             services.AddScoped<SeedingService>();
             services.AddScoped<IVeiculoServices, VeiculoServices>();
-            services.AddScoped<IPersonServices, PersonServices>();
+            services.AddScoped<IPessoaServices, PessoaServices>();
 
         }
 

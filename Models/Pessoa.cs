@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 
 namespace FastMechanical.Models {
-    public class Person {
+    public class Pessoa {
 
         public int Id { get; set; }
         [Required(ErrorMessage = "O campo não pode ser vazio")]
@@ -65,9 +65,9 @@ namespace FastMechanical.Models {
 
         public TipoPessoa TipoPessoa { get; set; }
 
-        public Person() { }
+        public Pessoa() { }
 
-        public Person(string nome, long? telefone, string email, string cpf, string rua, string bairro, string estado, string complemento, string cidade, Status status, string numero, DateTime? dataDeNascimento, TipoPessoa tipoPessoa) {
+        public Pessoa(string nome, long? telefone, string email, string cpf, string rua, string bairro, string estado, string complemento, string cidade, Status status, string numero, DateTime? dataDeNascimento, TipoPessoa tipoPessoa) {
             Nome = nome;
             Telefone = telefone;
             Email = email;

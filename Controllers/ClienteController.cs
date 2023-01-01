@@ -9,10 +9,10 @@ using System.Collections.Generic;
 namespace FastMechanical.Controllers {
     public class ClienteController : Controller {
 
-        private readonly IPersonServices _personService;
+        private readonly IPessoaServices _personService;
         private readonly IVeiculoServices _veiculoService;
 
-        public ClienteController(IPersonServices personService, IVeiculoServices veiculoServices) {
+        public ClienteController(IPessoaServices personService, IVeiculoServices veiculoServices) {
             _personService = personService;
             _veiculoService = veiculoServices;
         }
@@ -44,7 +44,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
+            Pessoa cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -58,7 +58,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
+            Pessoa cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -84,7 +84,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
+            Pessoa cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -109,7 +109,7 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
             }
-            Person cliente = await _personService.BuscarClientePorIdAsync(id.Value);
+            Pessoa cliente = await _personService.BuscarClientePorIdAsync(id.Value);
             if (cliente == null) {
                 TempData["ErrorMessage"] = "ID não encontrado";
                 return RedirectToAction("Index");
@@ -119,7 +119,7 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Person cliente) {
+        public async Task<IActionResult> New(Pessoa cliente) {
             try {
                 if (!ModelState.IsValid) {
                     return View(cliente);
@@ -149,7 +149,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Disable(int id) {
 
             try {
-                Person cliente = await _personService.BuscarClientePorIdAsync(id);
+                Pessoa cliente = await _personService.BuscarClientePorIdAsync(id);
                 if (cliente == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -188,7 +188,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Enable(int id) {
 
             try {
-                Person cliente = await _personService.BuscarClientePorIdAsync(id);
+                Pessoa cliente = await _personService.BuscarClientePorIdAsync(id);
                 if (cliente == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -226,13 +226,13 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Person cliente) {
+        public async Task<IActionResult> Edit(Pessoa cliente) {
             try {
                 if (!ModelState.IsValid) {
                     return View(cliente);
                 }
                 int id = (int)cliente.Id;
-                Person dbPessoa = await _personService.BuscarClientePorIdAsync(id);
+                Pessoa dbPessoa = await _personService.BuscarClientePorIdAsync(id);
                 if (dbPessoa == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
