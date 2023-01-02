@@ -1,39 +1,40 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PresMed</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min-lux.css" />
+    <title>@ViewData["Title"] - FastMechanical</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src="~/js/jquery.inputmask.js"></script>
-
-
-    <!-- <link rel="stylesheet" type="text/css" href="~/lib/Datatable/datatables.min.css" /> -->
+    <link rel="stylesheet" href="~/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" />
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
-<body id="" style="overflow: hidden">
-    <nav class="navbar navbar-light bg-light">
-        <div class="container">
-            <div class="">
-                <img src="~/images/documento.png" width="40px" height="40px" style="margin-top: -1.2rem" class="ms-4" /> <span class="display-6 ms-4 ">PresMed</span>
+<body>
+    <div class="wrapper">
+
+        <div id="content">
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
             </div>
         </div>
-    </nav>
-    <!--Container Main start-->
-    <div role="main" style="height: 100%">
-        @RenderBody()
     </div>
-
-    <!--Container Main end-->
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
+
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
     @RenderSection("Scripts", required: false)
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
 </body>
 </html>

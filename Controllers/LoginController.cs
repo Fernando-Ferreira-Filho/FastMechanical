@@ -1,7 +1,7 @@
 ﻿using FastMechanical.Helper;
 using FastMechanical.Models;
 using FastMechanical.Models.Enums;
-using FastMechanical.Models.ViewModels;
+using FastMechanical.Models.ViewModel;
 using FastMechanical.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

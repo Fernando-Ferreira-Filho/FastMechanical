@@ -778,3 +778,7 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\Desabilit
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\DetalhesMaterial.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\EditarMaterial.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\NovoMaterial.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Components\Menu\Default.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LayoutLoggedOut.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Home\TrocarSenha.cshtml.g.cs

@@ -4,8 +4,10 @@ using System;
 using FastMechanical.Services;
 using FastMechanical.Models.Enums;
 using FastMechanical.Models;
+using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
     public class ServicosController : Controller {
 
 

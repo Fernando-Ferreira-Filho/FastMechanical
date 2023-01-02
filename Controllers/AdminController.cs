@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
 using FastMechanical.Models;
+using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
     public class AdminController : Controller {
+
         private readonly IPessoaServices _personService;
 
         public AdminController(IPessoaServices personService) {

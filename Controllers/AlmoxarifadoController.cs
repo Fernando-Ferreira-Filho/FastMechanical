@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
 using FastMechanical.Models.Enums;
+using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
     public class AlmoxarifadoController : Controller {
         private readonly IAlmoxarifadoServices _almoxarifadoServices;
 

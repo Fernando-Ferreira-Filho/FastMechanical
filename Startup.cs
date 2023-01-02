@@ -1,4 +1,5 @@
 using FastMechanical.Data;
+using FastMechanical.Helper;
 using FastMechanical.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PresMed.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +37,7 @@ namespace FastMechanical {
             services.AddScoped<IServicosServices, ServicosServices>();
             services.AddScoped<IAlmoxarifadoServices, AlmoxarifadoServices>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<ISessionUser, Session>();
 
             services.AddSession(o => {
                 o.Cookie.HttpOnly = true;

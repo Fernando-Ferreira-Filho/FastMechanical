@@ -17,11 +17,11 @@ namespace FastMechanical.Data {
                 return;
             }
 
-            Pessoa c1 = new Pessoa { Nome = "Loeku Supue", Bairro = "Nossa Senhora da Penha", Cidade = "Goianésia", Complemento = null, Cpf = "51956708030", DataDeNascimento = new DateTime(2000, 12, 01), Email = "loekuSupue@gmail.com", Estado = "Goiás", Numero = "857", Rua = "7", Status = Status.Ativado, Telefone = 62156390585, TipoPessoa = TipoPessoa.Cliente };
+            Pessoa c1 = new Pessoa { Nome = "Loeku Supue", Bairro = "Nossa Senhora da Penha", Cidade = "Goianésia", Complemento = null, Cpf = "51956708030", DataDeNascimento = new DateTime(2000, 12, 01), Email = "loekuSupue@gmail.com", Estado = "Goiás", Numero = "857", Rua = "7", Status = Status.Ativado, Telefone = 62156390585, TipoPessoa = TipoPessoa.Cliente, Password = null };
 
-            Pessoa c2 = new Pessoa { Nome = "Elton Simao", Bairro = "Carrilho", Cidade = "Goianésia", Complemento = null, Cpf = "98180715060", DataDeNascimento = new DateTime(1970, 01, 17), Email = "eltonsimao@gmail.com", Estado = "Goiás", Numero = "12", Rua = "48", Status = Status.Ativado, Telefone = 62343410323, TipoPessoa = TipoPessoa.Cliente };
+            Pessoa c2 = new Pessoa { Nome = "Elton Simao", Bairro = "Carrilho", Cidade = "Goianésia", Complemento = null, Cpf = "98180715060", DataDeNascimento = new DateTime(1970, 01, 17), Email = "eltonsimao@gmail.com", Estado = "Goiás", Numero = "12", Rua = "48", Status = Status.Ativado, Telefone = 62343410323, TipoPessoa = TipoPessoa.Cliente, Password = null };
 
-            Pessoa c3 = new Pessoa { Nome = "Joao Martins da Silva", Bairro = "Boa Vista", Cidade = "Goianésia", Complemento = null, Cpf = "63346162001", DataDeNascimento = new DateTime(1997, 05, 10), Email = "joaosilva@gmail.com", Estado = "Goiás", Numero = "01", Rua = "24", Status = Status.Ativado, Telefone = 62757496316, TipoPessoa = TipoPessoa.Cliente };
+            Pessoa c3 = new Pessoa { Nome = "Joao Martins da Silva", Bairro = "Boa Vista", Cidade = "Goianésia", Complemento = null, Cpf = "63346162001", DataDeNascimento = new DateTime(1997, 05, 10), Email = "joaosilva@gmail.com", Estado = "Goiás", Numero = "01", Rua = "24", Status = Status.Ativado, Telefone = 62757496316, TipoPessoa = TipoPessoa.Cliente, Password = null };
 
 
             Veiculo v1 = new Veiculo { AnoDeFabricacao = 1996, Cor = "Amarelo", Marca = "GM - Chevrolet", Modelo = "S10 Blazer DLX 2.2 MPFI / EFI", Placa = "LVJ7375", Renavam = "95641158277", Pessoa = c1, Status = Status.Ativado };
@@ -29,18 +29,18 @@ namespace FastMechanical.Data {
             Veiculo v3 = new Veiculo { AnoDeFabricacao = 2008, Cor = "Dourado", Marca = "Nissan", Modelo = "Frontier SEL CD 4x4 2.5 TB Diesel Aut.", Placa = "HZI2946", Renavam = "12107129462", Pessoa = c3, Status = Status.Ativado };
 
 
-            Pessoa vd1 = new Pessoa { Nome = "Buapi Rinan", Bairro = "Universitário", Cidade = "Goianésia", Complemento = null, Cpf = "05788039096", DataDeNascimento = new DateTime(1992, 02, 16), Email = "buapirinan@gmail.com", Estado = "Goiás", Numero = "15", Rua = "9", Status = Status.Ativado, Telefone = 62811460860, TipoPessoa = TipoPessoa.Vendedor };
+            Pessoa vd1 = new Pessoa { Nome = "Buapi Rinan", Bairro = "Universitário", Cidade = "Goianésia", Complemento = null, Cpf = "05788039096", DataDeNascimento = new DateTime(1992, 02, 16), Email = "buapirinan@gmail.com", Estado = "Goiás", Numero = "15", Rua = "9", Status = Status.Ativado, Telefone = 62811460860, TipoPessoa = TipoPessoa.Vendedor, Password = "1775866fc55b8179d8b3f92c432d217c27423958" };
 
 
-            Pessoa vd2 = new Pessoa { Nome = "Maria Santos Ferreira", Bairro = "Sul", Cidade = "Goianésia", Complemento = null, Cpf = "42097926088", DataDeNascimento = new DateTime(2004, 03, 18), Email = "mariaferreira@gmail.com", Estado = "Goiás", Numero = "10", Rua = "19", Status = Status.Desativado, Telefone = 62634089444, TipoPessoa = TipoPessoa.Vendedor };
+            Pessoa vd2 = new Pessoa { Nome = "Maria Santos Ferreira", Bairro = "Sul", Cidade = "Goianésia", Complemento = null, Cpf = "42097926088", DataDeNascimento = new DateTime(2004, 03, 18), Email = "mariaferreira@gmail.com", Estado = "Goiás", Numero = "10", Rua = "19", Status = Status.Desativado, Telefone = 62634089444, TipoPessoa = TipoPessoa.Vendedor, Password = "1775866fc55b8179d8b3f92c432d217c27423958" };
 
-            Pessoa m1 = new Pessoa { Nome = "Marcos Silva", Bairro = "Morro da Ema", Cidade = "Goianésia", Complemento = null, Cpf = "41360773002", DataDeNascimento = new DateTime(2002, 02, 16), Email = "marcosilva@gmail.com", Estado = "Goiás", Numero = "15", Rua = "17", Status = Status.Ativado, Telefone = 62651186664, TipoPessoa = TipoPessoa.Mecanico };
-
-
-            Pessoa m2 = new Pessoa { Nome = "Fernando Torres Silva", Bairro = "Norte", Cidade = "Goianésia", Complemento = null, Cpf = "04278339062", DataDeNascimento = new DateTime(2000, 11, 04), Email = "fernandotorres@gmail.com", Estado = "Goiás", Numero = "486", Rua = "05", Status = Status.Ativado, Telefone = 62634089444, TipoPessoa = TipoPessoa.Mecanico };
+            Pessoa m1 = new Pessoa { Nome = "Marcos Silva", Bairro = "Morro da Ema", Cidade = "Goianésia", Complemento = null, Cpf = "41360773002", DataDeNascimento = new DateTime(2002, 02, 16), Email = "marcosilva@gmail.com", Estado = "Goiás", Numero = "15", Rua = "17", Status = Status.Ativado, Telefone = 62651186664, TipoPessoa = TipoPessoa.Mecanico, Password = "1775866fc55b8179d8b3f92c432d217c27423958" };
 
 
-            Pessoa admin = new Pessoa { Nome = "Antonio Marcos Pereira", Bairro = "Centro", Cidade = "Goianésia", Complemento = null, Cpf = "51629376060", DataDeNascimento = new DateTime(2000, 11, 04), Email = "antonioPereira@gmail.com", Estado = "Goiás", Numero = "486", Rua = "05", Status = Status.Ativado, Telefone = 62876954042, TipoPessoa = TipoPessoa.Administrador };
+            Pessoa m2 = new Pessoa { Nome = "Fernando Torres Silva", Bairro = "Norte", Cidade = "Goianésia", Complemento = null, Cpf = "04278339062", DataDeNascimento = new DateTime(2000, 11, 04), Email = "fernandotorres@gmail.com", Estado = "Goiás", Numero = "486", Rua = "05", Status = Status.Ativado, Telefone = 62634089444, TipoPessoa = TipoPessoa.Mecanico, Password = "1775866fc55b8179d8b3f92c432d217c27423958" };
+
+
+            Pessoa admin = new Pessoa { Nome = "Antonio Marcos Pereira", Bairro = "Centro", Cidade = "Goianésia", Complemento = null, Cpf = "51629376060", DataDeNascimento = new DateTime(2000, 11, 04), Email = "antonioPereira@gmail.com", Estado = "Goiás", Numero = "486", Rua = "05", Status = Status.Ativado, Telefone = 62876954042, TipoPessoa = TipoPessoa.Administrador, Password = "1775866fc55b8179d8b3f92c432d217c27423958" };
 
 
             Servicos s1 = new Servicos { Nome = "Troca De Oleo", Valor = 20.0, Status = Status.Ativado };

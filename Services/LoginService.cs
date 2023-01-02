@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PresMed.Services {
+namespace FastMechanical.Services {
     public class LoginService : ILoginService {
         private readonly BancoContext _context;
         public LoginService(BancoContext context) {

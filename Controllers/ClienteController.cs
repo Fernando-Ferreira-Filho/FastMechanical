@@ -5,8 +5,10 @@ using FastMechanical.Services;
 using FastMechanical.Models.Enums;
 using FastMechanical.Models;
 using System.Collections.Generic;
+using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
     public class ClienteController : Controller {
 
         private readonly IPessoaServices _personService;

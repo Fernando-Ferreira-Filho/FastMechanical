@@ -2,19 +2,72 @@
 
 <nav class="nav">
     <div>
-        <a asp-controller="Home" asp-action="Index" class="nav_logo"> <img img src="~/images/documento.png" width="20px" height="20px" class='nav_logo-icon' /> <span class="nav_logo-name">PresMed</span> </a>
-        <div class="nav_list">
-            @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Administrador) {
-                <a asp-controller="Attendance" asp-action="Index" class="nav_link" id="agendamentos"> <i class="fas fa-briefcase"></i> <span class="nav_name">Atendimento</span> </a>
-                <a asp-controller="Attendance" asp-action="Scheduling" class="nav_link" id="agendamentos"> <i class="fas fa-calendar-alt"></i> <span class="nav_name">Agenda</span> </a>
-                <a asp-controller="Attendance" asp-action="DoctorSelfEdit" class="nav_link" id="agendamentos"> <i class="far fa-clock"></i> <span class="nav_name" title="Horario de Atendimento">Horario de Atendimento</span> </a>
-            }
-
-
+        <div class="sidebar-header">
+            <h4>FastMechanical</h4>
         </div>
-    </div>
-    <div class="nav_list">
-        <a asp-controller="Home" asp-action="ChangePassword" class="nav_link"><i class="fas fa-key"></i> <span class="nav_name">Trocar senha</span> </a>
-        <a asp-controller="Login" asp-action="Exit" class="nav_link"> <i class="fas fa-sign-out-alt"></i> <span class="nav_name">Sair</span> </a>
+
+        @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Administrador) {
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start">
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Veiculo" asp-action="Index">
+                        <i class="fa fa-car"></i> Veículos
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Cliente" asp-action="Index">
+                        <i class="fa fa-user"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Mecanico" asp-action="Index">
+                        <i class="fa fa-wrench"></i> Mecânicos
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Vendedor" asp-action="Index">
+                        <i class="fa fa-user-tie"></i> Vendedores
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Index">
+                        <i class="fas fa-users-cog"></i> Administradores
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Servicos" asp-action="Index">
+                        <i class="fas fa-concierge-bell"></i> Serviços
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Almoxarifado" asp-action="Index">
+                        <i class="fas fa-warehouse"></i> Almoxarifado
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <a class=""></a>
+            </ul>
+        }
+        <ul class="list-unstyled components">
+            <li>
+                <a asp-controller="Home" asp-action="TrocarSenha">
+                    <i class="fas fa-key"></i> Trocar senha
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Login" asp-action="Exit">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav_name">Sair</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </nav>

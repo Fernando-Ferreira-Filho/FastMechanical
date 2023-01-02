@@ -5,8 +5,10 @@ using FastMechanical.Services;
 using FastMechanical.Models.Enums;
 using FastMechanical.Models.ViewModel;
 using FastMechanical.Models;
+using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
     public class VendedorController : Controller {
 
 
