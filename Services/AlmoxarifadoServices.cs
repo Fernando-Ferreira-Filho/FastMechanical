@@ -68,6 +68,20 @@ namespace FastMechanical.Services {
                 await _context.Materiais.AddAsync(material);
                 await _context.SaveChangesAsync();
             }
+            catch (Exception e) {
+                if (e.InnerException.Message.Contains(material.Codigo)) {
+                    throw new Exception($"Houve um erro ao salvar, codigo duplicado");
+                }
+                throw new Exception($"Houve um erro ao salvar, ERRO: {e.InnerException.Message}");
+            }
+        }
+
+        public async Task SalvarMovimentacaoEstoqueAsync(Estoque estoque) {
+
+            try {
+                await _context.Estoque.AddAsync(estoque);
+                await _context.SaveChangesAsync();
+            }
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
             }
@@ -78,6 +92,7 @@ namespace FastMechanical.Services {
 
             material.Nome = myTI.ToTitleCase(material.Nome).Trim();
             material.Descricao = myTI.ToTitleCase(material.Descricao).Trim();
+            material.Codigo = material.Codigo.Trim().ToUpper();
 
             return material;
         }

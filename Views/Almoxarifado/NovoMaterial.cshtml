@@ -13,12 +13,17 @@
 
 <form class="row g-3" asp-action="NovoMaterial">
     <div class="col-md-6">
+        <label asp-for="@Model.Codigo" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Codigo" type="text" class="form-control" placeholder="Digite o codigo do material">
+        <span asp-validation-for="@Model.Codigo" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
         <label asp-for="@Model.Nome" class="form-label"></label><span class="text-danger">*</span>
         <input asp-for="@Model.Nome" type="text" class="form-control" placeholder="Digite o nome do material">
         <span asp-validation-for="@Model.Nome" class="text-danger"></span>
     </div>
     <div class="col-md-6">
-        <label asp-for="@Model.Descricao" class="form-label"></label>
+        <label asp-for="@Model.Descricao" class="form-label"></label><span class="text-danger">*</span>
         <input asp-for="@Model.Descricao" type="text" class="form-control" placeholder="Digite a descriação do material">
         <span asp-validation-for="@Model.Descricao" class="text-danger"></span>
     </div>
@@ -29,7 +34,7 @@
     </div>
     <div class="col-md-6">
         <label asp-for="@Model.PorcentagemLucro" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.PorcentagemLucro" type="number" class="form-control" placeholder="Digite a porcentagem de lucro do material">
+        <input asp-for="@Model.PorcentagemLucro" class="form-control" placeholder="Digite a porcentagem de lucro do material">
         <span asp-validation-for="@Model.PorcentagemLucro" class="text-danger"></span>
     </div>
 

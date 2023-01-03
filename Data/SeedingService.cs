@@ -48,10 +48,10 @@ namespace FastMechanical.Data {
             Servicos s3 = new Servicos { Nome = "Troca De Lampadas Em Geral", Valor = 15.0, Status = Status.Ativado };
 
 
-            Materiais mt1 = new Materiais { Nome = "Lampada Led", Descricao = "Utilizavel em Wolks", Quantidade = 55, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.PEÇA, PorcentagemLucro = 0.3, ValorCusto = 20 };
-            Materiais mt2 = new Materiais { Nome = "Vela Volks Geração 4", Descricao = null, Quantidade = 10, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.PEÇA, PorcentagemLucro = 0.5, ValorCusto = 45 };
-            Materiais mt3 = new Materiais { Nome = "Fio Eletrico", Descricao = null, Quantidade = 90, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.METRO, PorcentagemLucro = 0.05, ValorCusto = 1 };
-            Materiais mt4 = new Materiais { Nome = "Sockete lampada", Descricao = "Utilizavel em Wolks", Quantidade = 2, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.PEÇA, PorcentagemLucro = 0.3, ValorCusto = 20 };
+            Materiais mt1 = new Materiais { Nome = "Lampada Led", Descricao = "Utilizavel em Wolks", Quantidade = 55, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.PEÇA, PorcentagemLucro = 0.3, ValorCusto = 20, Codigo = "S1" };
+            Materiais mt2 = new Materiais { Nome = "Vela Volks Geração 4", Descricao = "", Quantidade = 10, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.PEÇA, PorcentagemLucro = 0.5, ValorCusto = 45, Codigo = "S2" };
+            Materiais mt3 = new Materiais { Nome = "Fio Eletrico", Descricao = "", Quantidade = 90, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.METRO, PorcentagemLucro = 0.05, ValorCusto = 1, Codigo = "S9" };
+            Materiais mt4 = new Materiais { Nome = "Sockete lampada", Descricao = "Utilizavel em Wolks", Quantidade = 2, Status = Status.Ativado, UnidadeMedidade = TipoUnidadeMedidade.PEÇA, PorcentagemLucro = 0.3, ValorCusto = 20, Codigo = "A1" };
 
 
             _context.Pessoa.AddRange(c1, c2, c3, vd1, vd2, m1, m2, admin);

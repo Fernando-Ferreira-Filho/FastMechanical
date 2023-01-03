@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastMechanical.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20230101224725_inicial")]
-    partial class inicial
+    [Migration("20230102233153_Criacao do estoque3")]
+    partial class Criacaodoestoque3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,11 +19,57 @@ namespace FastMechanical.Migrations
                 .HasAnnotation("ProductVersion", "3.1.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("FastMechanical.Models.Estoque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Adicao")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AtendimentoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Baixa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ChaveAcessoNotaFiscal")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("ExecutorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumeroNotaFiscal")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("TipoMovimentacao")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExecutorId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("Estoque");
+                });
+
             modelBuilder.Entity("FastMechanical.Models.Materiais", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Descricao")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -98,6 +144,9 @@ namespace FastMechanical.Migrations
                     b.Property<string>("Numero")
                         .HasColumnType("varchar(7) CHARACTER SET utf8mb4")
                         .HasMaxLength(7);
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Rua")
                         .IsRequired()
@@ -194,6 +243,17 @@ namespace FastMechanical.Migrations
                         .IsUnique();
 
                     b.ToTable("Veiculo");
+                });
+
+            modelBuilder.Entity("FastMechanical.Models.Estoque", b =>
+                {
+                    b.HasOne("FastMechanical.Models.Pessoa", "Executor")
+                        .WithMany()
+                        .HasForeignKey("ExecutorId");
+
+                    b.HasOne("FastMechanical.Models.Materiais", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId");
                 });
 
             modelBuilder.Entity("FastMechanical.Models.Veiculo", b =>

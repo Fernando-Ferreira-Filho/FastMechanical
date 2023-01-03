@@ -7,7 +7,7 @@ using FastMechanical.Models;
 using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
-    [PaginaParaUsuarioLogado]
+    [PaginaParaAdministrador]
     public class AdminController : Controller {
 
         private readonly IPessoaServices _personService;

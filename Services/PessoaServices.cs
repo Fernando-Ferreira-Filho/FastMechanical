@@ -148,6 +148,16 @@ namespace FastMechanical.Services {
 
         }
 
+        public async Task<Pessoa> BuscarPessoaPorIdAsync(int id) {
+            try {
+                return await _context.Pessoa.FirstOrDefaultAsync(i => i.Id == id);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+
+        }
+
         public async Task SalvarAsync(Pessoa person) {
 
             try {

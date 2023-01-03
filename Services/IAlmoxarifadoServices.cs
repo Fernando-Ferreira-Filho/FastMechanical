@@ -12,5 +12,7 @@ namespace FastMechanical.Services {
         public Task SalvarMaterialAsync(Materiais material);
         public Task<Materiais> TransformCaptalizeAsync(Materiais material);
 
+        public Task SalvarMovimentacaoEstoqueAsync(Estoque estoque);
+
     }
 }

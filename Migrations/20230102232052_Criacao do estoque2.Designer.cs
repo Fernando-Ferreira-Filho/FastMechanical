@@ -3,14 +3,16 @@ using System;
 using FastMechanical.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastMechanical.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20230102232052_Criacao do estoque2")]
+    partial class Criacaodoestoque2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,12 +36,6 @@ namespace FastMechanical.Migrations
 
                     b.Property<string>("ChaveAcessoNotaFiscal")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime?>("DataAdicao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("DataBaixa")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("ExecutorId")
                         .HasColumnType("int");
@@ -71,12 +67,7 @@ namespace FastMechanical.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
                     b.Property<string>("Descricao")
-                        .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Nome")
@@ -99,9 +90,6 @@ namespace FastMechanical.Migrations
                         .HasColumnType("double");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Codigo")
-                        .IsUnique();
 
                     b.ToTable("Materiais");
                 });

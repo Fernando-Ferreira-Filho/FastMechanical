@@ -2,12 +2,16 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FastMechanical.Migrations {
-    public partial class inicial : Migration {
-        protected override void Up(MigrationBuilder migrationBuilder) {
+namespace FastMechanical.Migrations
+{
+    public partial class Criacaodoestoque : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.CreateTable(
                 name: "Materiais",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: false),
@@ -18,13 +22,15 @@ namespace FastMechanical.Migrations {
                     ValorCusto = table.Column<double>(nullable: false),
                     PorcentagemLucro = table.Column<double>(nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Materiais", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Pessoa",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(maxLength: 50, nullable: false),
@@ -39,28 +45,63 @@ namespace FastMechanical.Migrations {
                     Numero = table.Column<string>(maxLength: 7, nullable: true),
                     DataDeNascimento = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    TipoPessoa = table.Column<int>(nullable: false)
+                    TipoPessoa = table.Column<int>(nullable: false),
+                    Password = table.Column<string>(nullable: true)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Pessoa", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Servicos",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: false),
                     Valor = table.Column<double>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Servicos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
+                name: "Estoque",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    MaterialId = table.Column<int>(nullable: true),
+                    Baixa = table.Column<int>(nullable: false),
+                    Adicao = table.Column<int>(nullable: false),
+                    Observacao = table.Column<string>(nullable: true),
+                    ExecutorId = table.Column<int>(nullable: true),
+                    AtendimentoId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Estoque", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Estoque_Pessoa_ExecutorId",
+                        column: x => x.ExecutorId,
+                        principalTable: "Pessoa",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Estoque_Materiais_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "Materiais",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Veiculo",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Renavam = table.Column<string>(maxLength: 11, nullable: false),
@@ -72,7 +113,8 @@ namespace FastMechanical.Migrations {
                     Status = table.Column<int>(nullable: false),
                     PessoaId = table.Column<int>(nullable: true)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Veiculo", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Veiculo_Pessoa_PessoaId",
@@ -81,6 +123,16 @@ namespace FastMechanical.Migrations {
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estoque_ExecutorId",
+                table: "Estoque",
+                column: "ExecutorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estoque_MaterialId",
+                table: "Estoque",
+                column: "MaterialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pessoa_Cpf",
@@ -106,15 +158,19 @@ namespace FastMechanical.Migrations {
                 unique: true);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder) {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
             migrationBuilder.DropTable(
-                name: "Materiais");
+                name: "Estoque");
 
             migrationBuilder.DropTable(
                 name: "Servicos");
 
             migrationBuilder.DropTable(
                 name: "Veiculo");
+
+            migrationBuilder.DropTable(
+                name: "Materiais");
 
             migrationBuilder.DropTable(
                 name: "Pessoa");

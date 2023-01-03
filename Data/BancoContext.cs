@@ -11,6 +11,7 @@ namespace FastMechanical.Data {
         public DbSet<Pessoa> Pessoa { get; set; }
         public DbSet<Servicos> Servicos { get; set; }
         public DbSet<Materiais> Materiais { get; set; }
+        public DbSet<Estoque> Estoque { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Pessoa>()
@@ -21,6 +22,9 @@ namespace FastMechanical.Data {
                  .IsUnique(true);
             modelBuilder.Entity<Veiculo>()
                 .HasIndex(p => p.Placa)
+                .IsUnique(true);
+            modelBuilder.Entity<Materiais>()
+                .HasIndex(p => p.Codigo)
                 .IsUnique(true);
         }
     }

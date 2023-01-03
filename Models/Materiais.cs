@@ -10,6 +10,11 @@ namespace FastMechanical.Models {
         [Display(Name = "Nome")]
         public string Nome { get; set; }
 
+        [Required(ErrorMessage = "O campo não pode ser vazio")]
+        [Display(Name = "Código")]
+        public string Codigo { get; set; }
+
+        [Required(ErrorMessage = "O campo não pode ser vazio")]
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
@@ -33,12 +38,15 @@ namespace FastMechanical.Models {
 
         public Materiais() { }
 
-        public Materiais(string nome, string descricao, int quantidade, Status status, TipoUnidadeMedidade unidadeMedidade) {
+        public Materiais(string nome, string codigo, string descricao, int quantidade, Status status, TipoUnidadeMedidade unidadeMedidade, double valorCusto, double porcentagemLucro) {
             Nome = nome;
+            Codigo = codigo;
             Descricao = descricao;
             Quantidade = quantidade;
             Status = status;
             UnidadeMedidade = unidadeMedidade;
+            ValorCusto = valorCusto;
+            PorcentagemLucro = porcentagemLucro;
         }
     }
 }

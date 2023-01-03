@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using FastMechanical.Models;
 using System.Threading.Tasks;
 
-namespace PresMed.ViewComponents {
+namespace FastMechanical.ViewComponents {
     public class Menu : ViewComponent {
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<IViewComponentResult> InvokeAsync() {

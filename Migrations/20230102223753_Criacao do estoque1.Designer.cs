@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastMechanical.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20230101234229_Login criado")]
-    partial class Logincriado
+    [Migration("20230102223753_Criacao do estoque1")]
+    partial class Criacaodoestoque1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,45 @@ namespace FastMechanical.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.25")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("FastMechanical.Models.Estoque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Adicao")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AtendimentoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Baixa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ChaveAcessoNotaFiscal")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("ExecutorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NumeroNotaFiscal")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExecutorId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("Estoque");
+                });
 
             modelBuilder.Entity("FastMechanical.Models.Materiais", b =>
                 {
@@ -197,6 +236,17 @@ namespace FastMechanical.Migrations
                         .IsUnique();
 
                     b.ToTable("Veiculo");
+                });
+
+            modelBuilder.Entity("FastMechanical.Models.Estoque", b =>
+                {
+                    b.HasOne("FastMechanical.Models.Pessoa", "Executor")
+                        .WithMany()
+                        .HasForeignKey("ExecutorId");
+
+                    b.HasOne("FastMechanical.Models.Materiais", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId");
                 });
 
             modelBuilder.Entity("FastMechanical.Models.Veiculo", b =>

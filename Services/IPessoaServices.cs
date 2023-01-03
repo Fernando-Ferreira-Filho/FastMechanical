@@ -18,6 +18,7 @@ namespace FastMechanical.Services {
         public Task<Pessoa> BuscarMecanicoPorIdAsync(int id);
         public Task<Pessoa> BuscarVendedoresPorIdAsync(int id);
         public Task<Pessoa> BuscarAdminPorIdAsync(int id);
+        public Task<Pessoa> BuscarPessoaPorIdAsync(int id);
         public Task<Pessoa> TransformCaptalizeAsync(Pessoa pessoa);
         public Task SalvarAsync(Pessoa pessoa);
         public Task AtualizarAsync(Pessoa pessoa);
