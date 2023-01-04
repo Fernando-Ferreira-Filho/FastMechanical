@@ -46,7 +46,7 @@ namespace FastMechanical.Controllers {
                 if (pessoa != null) {
 
                     if (pessoa.Status != Status.Ativado) {
-                        TempData["ErrorMessage"] = $"Usuário desabilitado, favor procurar sua clínica";
+                        TempData["ErrorMessage"] = $"Usuário desabilitado, favor procurar o administrador";
                         return View("Index");
                     }
 

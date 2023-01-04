@@ -17,18 +17,27 @@ namespace FastMechanical.Models {
         public string ChaveAcessoNotaFiscal { get; set; }
         public DateTime? DataBaixa { get; set; }
         public DateTime? DataAdicao { get; set; }
+        public DateTime? DataExclusao { get; set; }
+        public DateTime? DataInsercaoExclusao { get; set; }
+        public int IdMovimentacao { get; set; }
 
         public TipoMovimentacao TipoMovimentacao { get; set; }
         public Estoque() {
         }
 
-        public Estoque(Materiais material, int baixa, int adicao, string observacao, Pessoa executor, int atendimentoId) {
+        public Estoque(Materiais material, int baixa, int adicao, string observacao, Pessoa executor, int atendimentoId, string numeroNotaFiscal, string chaveAcessoNotaFiscal, DateTime? dataBaixa, DateTime? dataAdicao, DateTime? dataExclusao, TipoMovimentacao tipoMovimentacao) {
             Material = material;
             Baixa = baixa;
             Adicao = adicao;
             Observacao = observacao;
             Executor = executor;
             AtendimentoId = atendimentoId;
+            NumeroNotaFiscal = numeroNotaFiscal;
+            ChaveAcessoNotaFiscal = chaveAcessoNotaFiscal;
+            DataBaixa = dataBaixa;
+            DataAdicao = dataAdicao;
+            DataExclusao = dataExclusao;
+            TipoMovimentacao = tipoMovimentacao;
         }
     }
 }

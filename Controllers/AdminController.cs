@@ -5,16 +5,21 @@ using System.Threading.Tasks;
 using System;
 using FastMechanical.Models;
 using FastMechanical.Filters;
+using FastMechanical.Models.ViewModel;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
     [PaginaParaAdministrador]
     public class AdminController : Controller {
 
         private readonly IPessoaServices _personService;
+        private readonly IAlmoxarifadoServices _almoxarifadoServices;
 
-        public AdminController(IPessoaServices personService) {
+        public AdminController(IPessoaServices personService, IAlmoxarifadoServices almoxarifadoServices) {
             _personService = personService;
-
+            _almoxarifadoServices = almoxarifadoServices;
         }
 
         public async Task<IActionResult> Index() {
@@ -161,6 +166,184 @@ namespace FastMechanical.Controllers {
 
         }
 
+        public IActionResult Administracao() {
+
+            try {
+
+                return View();
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        public async Task<IActionResult> ExcluirBaixa() {
+
+            try {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+                    Movimentacao = await _almoxarifadoServices.BuscarBaixaPorDiaAsync(DateTime.Now),
+                    Data = DateTime.Now
+                };
+
+                return View(estoque);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+
+        public async Task<IActionResult> ConfirmarBaixa(int? id) {
+
+            try {
+                if (id == null) {
+                    if (id == null) {
+                        TempData["ErrorMessage"] = "ID não encontrado";
+                        return RedirectToAction("Index");
+                    }
+                }
+                Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
+                if (movimentacao == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(movimentacao);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+
+        public async Task<IActionResult> ExcluirEntrada() {
+
+            try {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+                    Movimentacao = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(DateTime.Now),
+                    Data = DateTime.Now
+                };
+
+                return View(estoque);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+
+        public async Task<IActionResult> ConfirmarExclusaoEntrada(int? id) {
+
+            try {
+                if (id == null) {
+                    if (id == null) {
+                        TempData["ErrorMessage"] = "ID não encontrado";
+                        return RedirectToAction("Index");
+                    }
+                }
+                Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
+                if (movimentacao == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(movimentacao);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        public async Task<IActionResult> ExcluirVenda() {
+
+            try {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+                    Movimentacao = await _almoxarifadoServices.BuscarVendaPorDiaAsync(DateTime.Now),
+                    Data = DateTime.Now
+                };
+
+                return View(estoque);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+
+        public async Task<IActionResult> ConfirmarExclusaoVenda(int? id) {
+
+            try {
+                if (id == null) {
+                    if (id == null) {
+                        TempData["ErrorMessage"] = "ID não encontrado";
+                        return RedirectToAction("Index");
+                    }
+                }
+                Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
+                if (movimentacao == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(movimentacao);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        public async Task<IActionResult> ExcluirExclusao() {
+
+            try {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+                    Movimentacao = await _almoxarifadoServices.BuscarExclusaoPorDiaAsync(DateTime.Now),
+                    Data = DateTime.Now
+                };
+
+                return View(estoque);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+
+        public async Task<IActionResult> ConfirmarExclusaoExclusao(int? id) {
+
+            try {
+                if (id == null) {
+                    if (id == null) {
+                        TempData["ErrorMessage"] = "ID não encontrado";
+                        return RedirectToAction("Index");
+                    }
+                }
+                Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
+                if (movimentacao == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(movimentacao);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> New(Pessoa admin) {
@@ -282,13 +465,208 @@ namespace FastMechanical.Controllers {
                 dbPessoa = await _personService.TransformCaptalizeAsync(dbPessoa);
                 await _personService.AtualizarAsync(dbPessoa);
                 TempData["SuccessMessage"] = "Usuario alterado com sucesso";
-
                 return RedirectToAction("Index");
             }
             catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExcluirBaixa(ExcluirBaixaViewModel baixa) {
+
+            try {
+                baixa.Movimentacao = await _almoxarifadoServices.BuscarBaixaPorDiaAsync(baixa.Data);
+
+                return View(baixa);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EfetivarExclusao(Estoque movimentacao) {
+
+            try {
+
+                var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
+                if (movimentacaoDb.Baixa == 0) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                movimentacaoDb.DataExclusao = DateTime.Now;
+                await _almoxarifadoServices.AtualizarMovimentacaoAsync(movimentacaoDb);
+                var material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(movimentacaoDb.Material.Id);
+                material.Quantidade += movimentacaoDb.Baixa;
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+                var pessoaDb = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                await _almoxarifadoServices.AtualizarMaterialAsync(material);
+                await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Material = material, Executor = pessoaDb, TipoMovimentacao = TipoMovimentacao.Exclusao, IdMovimentacao = movimentacaoDb.Id, DataInsercaoExclusao = DateTime.Now });
+
+                TempData["SuccessMessage"] = "Baixa excluida com sucesso";
+                return RedirectToAction("Administracao");
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View("Index");
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExcluirEntrada(ExcluirBaixaViewModel baixa) {
+
+            try {
+                baixa.Movimentacao = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(baixa.Data);
+
+                return View(baixa);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EfetivarExclusaoEntrada(Estoque movimentacao) {
+
+            try {
+
+                var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
+
+                if (movimentacaoDb.Adicao == 0) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                movimentacaoDb.DataExclusao = DateTime.Now;
+                await _almoxarifadoServices.AtualizarMovimentacaoAsync(movimentacaoDb);
+                var material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(movimentacaoDb.Material.Id);
+                material.Quantidade -= movimentacaoDb.Adicao;
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+                var pessoaDb = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                await _almoxarifadoServices.AtualizarMaterialAsync(material);
+                await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Material = material, Executor = pessoaDb, TipoMovimentacao = TipoMovimentacao.Exclusao, IdMovimentacao = movimentacaoDb.Id, DataInsercaoExclusao = DateTime.Now });
+
+                TempData["SuccessMessage"] = "Baixa excluida com sucesso";
+                return RedirectToAction("Administracao");
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View("Index");
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExcluirVenda(ExcluirBaixaViewModel baixa) {
+
+            try {
+                baixa.Movimentacao = await _almoxarifadoServices.BuscarVendaPorDiaAsync(baixa.Data);
+
+                return View(baixa);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EfetivarExclusaoVenda(Estoque movimentacao) {
+
+            try {
+
+                var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
+                if (movimentacaoDb.Baixa == 0) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                movimentacaoDb.DataExclusao = DateTime.Now;
+                await _almoxarifadoServices.AtualizarMovimentacaoAsync(movimentacaoDb);
+                var material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(movimentacaoDb.Material.Id);
+                material.Quantidade += movimentacaoDb.Baixa;
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+                var pessoaDb = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                await _almoxarifadoServices.AtualizarMaterialAsync(material);
+                await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Material = material, Executor = pessoaDb, TipoMovimentacao = TipoMovimentacao.Exclusao, IdMovimentacao = movimentacaoDb.Id, DataInsercaoExclusao = DateTime.Now });
+
+                TempData["SuccessMessage"] = "Baixa excluida com sucesso";
+                return RedirectToAction("Administracao");
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View("Index");
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExcluirExclusao(ExcluirBaixaViewModel baixa) {
+
+            try {
+                baixa.Movimentacao = await _almoxarifadoServices.BuscarExclusaoPorDiaAsync(baixa.Data);
+
+                return View(baixa);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EfetivarExclusaoExclusao(Estoque movimentacao) {
+
+            try {
+
+                var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
+                var movimentacaoARefazer = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacaoDb.IdMovimentacao);
+                var materialDb = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(movimentacaoDb.Material.Id);
+
+                if (movimentacaoARefazer.Baixa != 0) {
+                    materialDb.Quantidade -= movimentacaoARefazer.Baixa;
+                }
+                if (movimentacaoARefazer.Adicao != 0) {
+                    materialDb.Quantidade += movimentacaoARefazer.Adicao;
+                }
+                movimentacaoARefazer.DataExclusao = null;
+
+                await _almoxarifadoServices.AtualizarMovimentacaoAsync(movimentacaoARefazer);
+                await _almoxarifadoServices.ExcluirMovimentacaoasync(movimentacaoDb);
+
+                TempData["SuccessMessage"] = "Exclusão excluida com sucesso";
+                return RedirectToAction("Administracao");
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View("Index");
+            }
+
         }
     }
 }

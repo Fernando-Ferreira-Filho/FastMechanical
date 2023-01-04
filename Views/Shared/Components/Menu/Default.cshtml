@@ -51,10 +51,59 @@
                         <i class="fas fa-warehouse"></i> Almoxarifado
                     </a>
                 </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Administracao">
+                        <i class="fas fa-tools"></i> Administração
+                    </a>
+                </li>
             </ul>
+        }
+        @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Vendedor) {
 
-            <ul class="list-unstyled CTAs">
-                <a class=""></a>
+            <ul class="list-unstyled components">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start">
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Veiculo" asp-action="Index">
+                        <i class="fa fa-car"></i> Veículos
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Cliente" asp-action="Index">
+                        <i class="fa fa-user"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Servicos" asp-action="Index">
+                        <i class="fas fa-concierge-bell"></i> Serviços
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Almoxarifado" asp-action="Index">
+                        <i class="fas fa-warehouse"></i> Almoxarifado
+                    </a>
+                </li>
+            </ul>
+        }
+        @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Mecanico) {
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start">
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Veiculo" asp-action="Index">
+                        <i class="fa fa-car"></i> Atendimento
+                    </a>
+                </li>
             </ul>
         }
         <ul class="list-unstyled components">

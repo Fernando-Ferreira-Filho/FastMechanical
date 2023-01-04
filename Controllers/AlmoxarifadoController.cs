@@ -10,7 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace FastMechanical.Controllers {
+
     [PaginaParaUsuarioLogado]
+    [PaginaParaAdminEVendedor]
+
     public class AlmoxarifadoController : Controller {
         private readonly IAlmoxarifadoServices _almoxarifadoServices;
         private readonly IPessoaServices _pessoaServices;
@@ -145,6 +148,18 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> BaixarEstoque() {
+            try {
+                var baixarEstoqueViewModel = new BaixarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
+                return View(baixarEstoqueViewModel);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        public async Task<IActionResult> VenderEstoque() {
             try {
                 var baixarEstoqueViewModel = new BaixarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
                 return View(baixarEstoqueViewModel);
@@ -380,6 +395,57 @@ namespace FastMechanical.Controllers {
 
                 dbMaterial.Quantidade += materialViewModel.Adicao;
 
+                await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
+                TempData["SuccessMessage"] = "Material alterado com sucesso";
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e) {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VenderEstoque(BaixarEstoqueViewModel materialViewModel) {
+
+
+            try {
+                materialViewModel.ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync();
+                if (!ModelState.IsValid) {
+                    return View(materialViewModel);
+                }
+
+                if (materialViewModel.Baixa == 0) {
+                    TempData["ErrorMessage"] = "Baixa não pode ser zero.";
+                    return RedirectToAction("BaixarEstoque");
+                }
+                Materiais dbMaterial = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(materialViewModel.Material);
+                if (dbMaterial == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (dbMaterial.Quantidade <= 0) {
+                    TempData["ErrorMessage"] = "Não é possivel baixar estoque de material zerado.";
+                    return RedirectToAction("BaixarEstoque");
+                }
+
+                var baixa = dbMaterial.Quantidade - materialViewModel.Baixa;
+
+                if (baixa < 0) {
+                    TempData["ErrorMessage"] = "Baixa maior que o estoque, favor verificar.";
+                    return RedirectToAction("BaixarEstoque");
+
+                }
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+
+                var dbPessoa = await _pessoaServices.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Baixa = materialViewModel.Baixa, Executor = dbPessoa, Observacao = materialViewModel.Observacao, Material = dbMaterial, TipoMovimentacao = TipoMovimentacao.Venda, DataBaixa = DateTime.Now, DataAdicao = null });
+                dbMaterial.Quantidade -= materialViewModel.Baixa;
                 await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
                 TempData["SuccessMessage"] = "Material alterado com sucesso";
 

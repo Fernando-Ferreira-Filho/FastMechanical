@@ -785,3 +785,13 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Home\TrocarSenha.cshtm
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\BaixarEstoque.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\EntrarEstoque.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Restricted\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Administracao.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ExcluirBaixa.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ConfirmarBaixa.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\VenderEstoque.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ConfirmarExclusaoEntrada.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ExcluirEntrada.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ConfirmarExclusaoVenda.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ExcluirVenda.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ConfirmarExclusaoExclusao.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ExcluirExclusao.cshtml.g.cs

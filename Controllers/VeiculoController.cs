@@ -9,6 +9,7 @@ using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
     [PaginaParaUsuarioLogado]
+    [PaginaParaAdminEVendedor]
     public class VeiculoController : Controller {
 
         private readonly IVeiculoServices _veiculoService;

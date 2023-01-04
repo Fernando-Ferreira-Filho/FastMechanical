@@ -9,6 +9,8 @@ using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
     [PaginaParaUsuarioLogado]
+    [PaginaParaAdministrador]
+
     public class VendedorController : Controller {
 
 

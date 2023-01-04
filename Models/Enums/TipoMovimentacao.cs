@@ -3,6 +3,7 @@
 
         Baixa = 0,
         Adicao = 1,
-        Venda = 2
+        Venda = 2,
+        Exclusao = 3,
     }
 }

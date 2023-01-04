@@ -19,7 +19,7 @@ namespace FastMechanical.Filters {
                 if (pessoa == null) {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "login" }, { "action", "Index" } });
                 }
-                if (pessoa.TipoPessoa != FastMechanical.Models.Enums.TipoPessoa.Administrador) {
+                if (pessoa.TipoPessoa != Models.Enums.TipoPessoa.Vendedor) {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restricted" }, { "action", "Index" } });
                 }
 

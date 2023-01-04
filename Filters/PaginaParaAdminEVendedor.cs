@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 
 namespace FastMechanical.Filters {
-    public class PaginaParaMecanico : ActionFilterAttribute {
+    public class PaginaParaAdminEVendedor : ActionFilterAttribute {
+
         public override void OnActionExecuting(ActionExecutingContext context) {
 
             string sessionUser = context.HttpContext.Session.GetString("sessionLoggedUser");
@@ -16,11 +17,16 @@ namespace FastMechanical.Filters {
             }
             else {
                 Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
-                if (pessoa.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Mecanico) {
-                    base.OnActionExecuting(context);
+                if (pessoa == null) {
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "login" }, { "action", "Index" } });
                 }
+                if (pessoa.TipoPessoa != Models.Enums.TipoPessoa.Administrador && pessoa.TipoPessoa != Models.Enums.TipoPessoa.Vendedor) {
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restricted" }, { "action", "Index" } });
+                }
+
             }
-            context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restricted" }, { "action", "Index" } });
+
+            base.OnActionExecuting(context);
         }
     }
 }

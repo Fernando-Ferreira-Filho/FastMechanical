@@ -9,6 +9,7 @@ using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
     [PaginaParaUsuarioLogado]
+    [PaginaParaAdminEVendedor]
     public class ClienteController : Controller {
 
         private readonly IPessoaServices _personService;
