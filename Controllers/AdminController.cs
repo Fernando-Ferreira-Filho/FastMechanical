@@ -8,6 +8,7 @@ using FastMechanical.Filters;
 using FastMechanical.Models.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace FastMechanical.Controllers {
     [PaginaParaUsuarioLogado]
@@ -344,6 +345,46 @@ namespace FastMechanical.Controllers {
 
         }
 
+        public async Task<IActionResult> AlterarPerfil() {
+
+            try {
+                List<Pessoa> pessoa = await _personService.BuscarPessoasAtivasAsync();
+                return View(pessoa);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
+        public async Task<IActionResult> AlterarPerfilUsuario(int? id) {
+
+            try {
+                if (id == null) {
+                    if (id == null) {
+                        TempData["ErrorMessage"] = "ID não encontrado";
+                        return RedirectToAction("Index");
+                    }
+                }
+                Pessoa pessoa = await _personService.BuscarPessoaPorIdAsync(id.Value);
+                if (pessoa == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (pessoa.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(pessoa);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> New(Pessoa admin) {
@@ -665,6 +706,34 @@ namespace FastMechanical.Controllers {
             catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View("Index");
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AlterarPerfilUsuario(Pessoa pessoa) {
+
+            try {
+
+                Pessoa dbPessoa = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                if (dbPessoa == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (dbPessoa.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                dbPessoa.TipoPessoa = pessoa.TipoPessoa;
+                await _personService.AtualizarAsync(dbPessoa);
+                TempData["SuccessMessage"] = "Perfil alterado com sucesso";
+                return RedirectToAction("Administracao");
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
 
         }

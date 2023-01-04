@@ -22,5 +22,6 @@ namespace FastMechanical.Services {
         public Task<Pessoa> TransformCaptalizeAsync(Pessoa pessoa);
         public Task SalvarAsync(Pessoa pessoa);
         public Task AtualizarAsync(Pessoa pessoa);
+        public Task<List<Pessoa>> BuscarPessoasAtivasAsync();
     }
 }

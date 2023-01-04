@@ -185,6 +185,16 @@ namespace FastMechanical.Services {
 
         }
 
+        public async Task<List<Pessoa>> BuscarPessoasAtivasAsync() {
+            try {
+                return await _context.Pessoa.Where(p => p.Status == Status.Ativado).ToListAsync();
+            }
+            catch (Exception e) {
+                throw new Exception(e.Message);
+            }
+
+        }
+
         public async Task<Pessoa> TransformCaptalizeAsync(Pessoa person) {
 
             TextInfo myTI = new CultureInfo("pt-BR", false).TextInfo;
