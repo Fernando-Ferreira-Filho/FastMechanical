@@ -3,14 +3,16 @@ using System;
 using FastMechanical.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastMechanical.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20230105000407_criacao da agenda")]
+    partial class criacaodaagenda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,19 +28,10 @@ namespace FastMechanical.Migrations
                     b.Property<int?>("ClienteId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataFinal")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DataInicial")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<int?>("MecanicoId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ServicoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int?>("VeiculoId")

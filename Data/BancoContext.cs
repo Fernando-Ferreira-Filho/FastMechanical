@@ -12,6 +12,7 @@ namespace FastMechanical.Data {
         public DbSet<Servicos> Servicos { get; set; }
         public DbSet<Materiais> Materiais { get; set; }
         public DbSet<Estoque> Estoque { get; set; }
+        public DbSet<Agenda> Agenda { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Pessoa>()

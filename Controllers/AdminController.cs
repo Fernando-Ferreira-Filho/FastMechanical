@@ -348,7 +348,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> AlterarPerfil() {
 
             try {
-                List<Pessoa> pessoa = await _personService.BuscarPessoasAtivasAsync();
+                List<Pessoa> pessoa = await _personService.TodasPessoasAtivasAsync();
                 return View(pessoa);
             }
             catch (Exception erro) {

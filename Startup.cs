@@ -34,6 +34,7 @@ namespace FastMechanical {
             services.AddScoped<IAlmoxarifadoServices, AlmoxarifadoServices>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ISessionUser, Session>();
+            services.AddScoped<IAgendaServices, AgendaServices>();
 
             services.AddSession(o => {
                 o.Cookie.HttpOnly = true;

@@ -1,0 +1,63 @@
+﻿@using FastMechanical.Models.ViewModel;
+@model AgendaViewModel
+
+@{
+    ViewData["Title"] = $"Nova agenda de manutenção";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="row me-5">
+    <div class="col-lg-10 mb-5">
+        <span class="display-4">@ViewData["Title"]</span>
+    </div>
+</div>
+<form asp-controller="Agendamento" asp-action="MarcarAgenda">
+    <div class="row">
+
+        <div class="col-md-4 ">
+            <select asp-for="@Model.Veiculo.Id" class="form-select">
+                @foreach (var item in Model.Veiculos) {
+                    <option value="@item.Id">
+                        @item.Placa - @item.Modelo - @item.Cor
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select asp-for="@Model.Servico.Id" class="form-select">
+                @foreach (var item in Model.Servicos) {
+                    <option value="@item.Id">
+                        @item.Nome
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <select asp-for="@Model.Mecanico.Id" class="form-select">
+                @foreach (var item in Model.Mecanicos) {
+                    <option value="@item.Id">
+                        @item.Nome
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-2 pt-4">
+            <button type="submit" class="btn btn-success"><span>Salvar</span></button>
+        </div>
+
+    </div>
+</form>
+<br />

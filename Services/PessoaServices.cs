@@ -185,7 +185,7 @@ namespace FastMechanical.Services {
 
         }
 
-        public async Task<List<Pessoa>> BuscarPessoasAtivasAsync() {
+        public async Task<List<Pessoa>> TodasPessoasAtivasAsync() {
             try {
                 return await _context.Pessoa.Where(p => p.Status == Status.Ativado).ToListAsync();
             }

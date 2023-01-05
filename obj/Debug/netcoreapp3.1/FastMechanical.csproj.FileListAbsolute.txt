@@ -797,3 +797,5 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ConfirmarExclusa
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ExcluirExclusao.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AlterarPerfil.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AlterarPerfilUsuario.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Agenda.cshtml.g.cs
