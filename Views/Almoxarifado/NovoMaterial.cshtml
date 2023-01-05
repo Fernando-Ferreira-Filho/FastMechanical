@@ -1,0 +1,56 @@
+﻿@model Materiais
+
+@{
+    ViewData["Title"] = "Cadastrar novo material";
+}
+
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+
+<form class="row g-3" asp-action="NovoMaterial">
+    <div class="col-md-6">
+        <label asp-for="@Model.Codigo" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Codigo" type="text" class="form-control" placeholder="Digite o codigo do material">
+        <span asp-validation-for="@Model.Codigo" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="@Model.Nome" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Nome" type="text" class="form-control" placeholder="Digite o nome do material">
+        <span asp-validation-for="@Model.Nome" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="@Model.Descricao" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Descricao" type="text" class="form-control" placeholder="Digite a descriação do material">
+        <span asp-validation-for="@Model.Descricao" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="@Model.ValorCusto" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.ValorCusto" type="number" class="form-control" placeholder="Digite o valor de custo do material">
+        <span asp-validation-for="@Model.ValorCusto" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="@Model.PorcentagemLucro" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.PorcentagemLucro" class="form-control" placeholder="Digite a porcentagem de lucro do material">
+        <span asp-validation-for="@Model.PorcentagemLucro" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Unidade de medida</label><span class="text-danger">*</span>
+        <select asp-for="@Model.UnidadeMedidade" class="form-select">
+            <option value="@FastMechanical.Models.Enums.TipoUnidadeMedidade.PEÇA">Peça</option>
+            <option value="@FastMechanical.Models.Enums.TipoUnidadeMedidade.METRO">Metro</option>
+        </select>
+        <span asp-validation-for="@Model.UnidadeMedidade" class="text-danger"></span>
+    </div>
+
+
+    <div class="col-12 mb-5">
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+        <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Almoxarifado">Voltar</a>
+    </div>
+
+</form>

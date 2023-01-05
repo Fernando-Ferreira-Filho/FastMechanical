@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20230105000312_criacao da agenda.cs" />
+    <Compile Remove="Migrations\20230105000312_criacao da agenda.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.25" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.25">

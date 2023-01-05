@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = $"Administração";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Almoxarifado</h5>
+                <p class="card-text">Realizar exclusão de baixa de estoque.</p>
+                <a asp-action="ExcluirBaixa" asp-controller="Admin" class="btn btn-primary">Baixa de material</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Almoxarifado</h5>
+                <p class="card-text">Realizar exclusão da entrada no estoque.</p>
+                <a asp-action="ExcluirEntrada" asp-controller="Admin" class="btn btn-primary">Entrada de material</a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="row mt-2">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Almoxarifado</h5>
+                <p class="card-text">Realizar exclusão da venda do material.</p>
+                <a asp-action="ExcluirVenda" asp-controller="Admin" class="btn btn-primary">Venda de material</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Almoxarifado</h5>
+                <p class="card-text">Realizar exclusão de alguma exclusão.</p>
+                <a asp-action="ExcluirExclusao" asp-controller="Admin" class="btn btn-primary">Exclusão de exclusões</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Administração</h5>
+                <p class="card-text">Realizar alteração do perfil do usuario</p>
+                <a asp-action="AlterarPerfil" asp-controller="Admin" class="btn btn-primary">Perfil do usuario</a>
+            </div>
+        </div>
+    </div>
+</div>

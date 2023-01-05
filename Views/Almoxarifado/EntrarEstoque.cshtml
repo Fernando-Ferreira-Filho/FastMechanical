@@ -1,0 +1,69 @@
+﻿@model FastMechanical.Models.ViewModel.EntrarEstoqueViewModel
+
+@{
+    ViewData["Title"] = "Baixar estoque ";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+
+<form class="row g-3" asp-action="EntrarEstoque">
+    <div class="col-md-6">
+        <label class="form-label">Material</label><span class="text-danger">*</span>
+        <select asp-for="@Model.Material" class="form-select">
+            @foreach (var item in Model.ListaMateriais) {
+                <option value="@item.Id">@item.Nome</option>
+            }
+        </select>
+        <span asp-validation-for="@Model.Material" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="@Model.Adicao" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Adicao" type="number" class="form-control">
+        <span asp-validation-for="@Model.Adicao" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="@Model.Observacao" class="form-label"></label>
+        <input asp-for="@Model.Observacao" type="" class="form-control" placeholder="Observação da entrada">
+        <span asp-validation-for="@Model.Observacao" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="@Model.ChaveAcessoNotaFiscal" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.ChaveAcessoNotaFiscal" type="tel" class="form-control" placeholder="Digite a chave de acesso da nota fiscal">
+        <span asp-validation-for="@Model.ChaveAcessoNotaFiscal" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="@Model.NumeroNotaFiscal" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.NumeroNotaFiscal" type="tel" class="form-control" placeholder="Digite o numero da nota fiscal">
+        <span asp-validation-for="@Model.NumeroNotaFiscal" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mb-5">
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+        <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Almoxarifado">Voltar</a>
+    </div>
+
+</form>
+

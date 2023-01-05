@@ -1,0 +1,132 @@
+﻿@model Pessoa
+
+<nav class="nav">
+    <div>
+        <div class="sidebar-header">
+            <h4>FastMechanical</h4>
+        </div>
+
+        @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Administrador) {
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start">
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Veiculo" asp-action="Index">
+                        <i class="fa fa-car"></i> Veículos
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Cliente" asp-action="Index">
+                        <i class="fa fa-user"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Mecanico" asp-action="Index">
+                        <i class="fa fa-wrench"></i> Mecânicos
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Vendedor" asp-action="Index">
+                        <i class="fa fa-user-tie"></i> Vendedores
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Index">
+                        <i class="fas fa-users-cog"></i> Administradores
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Servicos" asp-action="Index">
+                        <i class="fas fa-concierge-bell"></i> Serviços
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Almoxarifado" asp-action="Index">
+                        <i class="fas fa-warehouse"></i> Almoxarifado
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Admin" asp-action="Administracao">
+                        <i class="fas fa-tools"></i> Administração
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Agendamento" asp-action="Index">
+                        <i class="fas fa-clipboard-list"></i> Agendamento
+                    </a>
+                </li>
+            </ul>
+        }
+        @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Vendedor) {
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start">
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Veiculo" asp-action="Index">
+                        <i class="fa fa-car"></i> Veículos
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Cliente" asp-action="Index">
+                        <i class="fa fa-user"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Servicos" asp-action="Index">
+                        <i class="fas fa-concierge-bell"></i> Serviços
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Almoxarifado" asp-action="Index">
+                        <i class="fas fa-warehouse"></i> Almoxarifado
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Agendamento" asp-action="Index">
+                        <i class="fas fa-clipboard-list"></i> Agendamento
+                    </a>
+                </li>
+            </ul>
+        }
+        @if (Model.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Mecanico) {
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" style="padding:6px;display: flex; align-items:start">
+                        <i style="margin-right: 2px;" class="large material-icons">home</i> Home
+                    </a>
+                </li>
+                <li>
+
+                    <a asp-controller="Veiculo" asp-action="Index">
+                        <i class="fa fa-car"></i> Atendimento
+                    </a>
+                </li>
+            </ul>
+        }
+        <ul class="list-unstyled components">
+            <li>
+                <a asp-controller="Home" asp-action="TrocarSenha">
+                    <i class="fas fa-key"></i> Trocar senha
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Login" asp-action="Exit">
+                    <i class="fas fa-sign-out-alt"></i><span class="nav_name">Sair</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

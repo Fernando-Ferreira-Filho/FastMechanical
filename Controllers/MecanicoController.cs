@@ -5,22 +5,33 @@ using FastMechanical.Services;
 using FastMechanical.Models.ViewModel;
 using FastMechanical.Models;
 using FastMechanical.Models.Enums;
+using FastMechanical.Filters;
 
 namespace FastMechanical.Controllers {
+    [PaginaParaUsuarioLogado]
+    [PaginaParaAdministrador]
+
     public class MecanicoController : Controller {
 
-        private readonly IPersonServices _personServices;
+        private readonly IPessoaServices _personServices;
 
 
-        public MecanicoController(IPersonServices personServices) {
+        public MecanicoController(IPessoaServices personServices) {
             _personServices = personServices;
 
         }
 
         public async Task<IActionResult> Index() {
-            ViewData["Title"] = "Listagem de mecanicos ativos";
-            var list = await _personServices.TodosMecanicosAtivosAsync();
-            return View(list);
+            try {
+                ViewData["Title"] = "Listagem de mecanicos ativos";
+                var list = await _personServices.TodosMecanicosAtivosAsync();
+                return View(list);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
         }
 
         public async Task<IActionResult> Inativos() {
@@ -40,85 +51,113 @@ namespace FastMechanical.Controllers {
         }
 
         public async Task<IActionResult> Edit(int? id) {
+            try {
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+                if (mecanico == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(mecanico);
             }
-            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
-            if (mecanico == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
-            return View(mecanico);
+
         }
 
         public async Task<IActionResult> Disable(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+                if (mecanico == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+                if (mecanico.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                return View(mecanico);
             }
-            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
-            if (mecanico == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
 
-            if (mecanico.Status == Status.Desativado) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
 
-            return View(mecanico);
         }
 
 
         public async Task<IActionResult> Enable(int? id) {
+            try {
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+                if (mecanico == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+                if (mecanico.Status == Status.Ativado) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View("Disable", mecanico);
             }
-            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
-            if (mecanico == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
 
-            if (mecanico.TipoPessoa != TipoPessoa.Mecanico) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-
-            if (mecanico.Status == Status.Ativado) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
-            }
-            return View("Disable", mecanico);
         }
 
         public async Task<IActionResult> Details(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
+                if (mecanico == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                return View(mecanico);
 
-            if (id == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
             }
-            Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id.Value);
-            if (mecanico == null) {
-                TempData["ErrorMessage"] = "ID não encontrado";
-                return RedirectToAction("Index");
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
             }
-            return View(mecanico);
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Person mecanico) {
+        public async Task<IActionResult> New(Pessoa mecanico) {
             try {
                 if (!ModelState.IsValid) {
                     return View(mecanico);
@@ -146,7 +185,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Disable(int id) {
 
             try {
-                Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id);
+                Pessoa mecanico = await _personServices.BuscarMecanicoPorIdAsync(id);
                 if (mecanico == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -179,7 +218,7 @@ namespace FastMechanical.Controllers {
         public async Task<IActionResult> Enable(int id) {
 
             try {
-                Person mecanico = await _personServices.BuscarMecanicoPorIdAsync(id);
+                Pessoa mecanico = await _personServices.BuscarMecanicoPorIdAsync(id);
                 if (mecanico == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
@@ -210,13 +249,13 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Person mecanico) {
+        public async Task<IActionResult> Edit(Pessoa mecanico) {
             try {
                 if (!ModelState.IsValid) {
                     return View(mecanico);
                 }
                 int id = (int)mecanico.Id;
-                Person dbPessoa = await _personServices.BuscarMecanicoPorIdAsync(id);
+                Pessoa dbPessoa = await _personServices.BuscarMecanicoPorIdAsync(id);
                 if (dbPessoa == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");

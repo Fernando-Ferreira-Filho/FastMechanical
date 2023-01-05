@@ -1,5 +1,4 @@
-﻿using PresMed.Models.ValidationModels;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System;
 using FastMechanical.Models.ViewModel;
 using FastMechanical.Models.Enums;
@@ -45,10 +44,10 @@ namespace FastMechanical.Models {
         public string Cor { get; set; }
 
         public Status Status { get; set; }
-        public Person Pessoa { get; set; }
+        public Pessoa Pessoa { get; set; }
 
         public Veiculo() { }
-        public Veiculo(string renavam, string placa, string modelo, int anoDeFabricacao, string cor, String marca, Person pessoa) {
+        public Veiculo(string renavam, string placa, string modelo, int anoDeFabricacao, string cor, String marca, Pessoa pessoa) {
             Renavam = renavam;
             Placa = placa;
             Modelo = modelo;

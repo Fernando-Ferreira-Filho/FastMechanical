@@ -1,0 +1,62 @@
+﻿@model Estoque
+@{
+    ViewData["Title"] = $"Detalhes da Entrada";
+}
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-6">
+        <h6 class="display-6 mb-5">Dados </h6>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Executor)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Executor.Nome)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.DataAdicao)</span>
+            </div>
+            <div class="col-md-7">
+                @Model.DataAdicao.Value.ToShortDateString()
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">Material</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Material.Nome)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Baixa)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Adicao)
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-12 mt-5 mb-5">
+        <form asp-action="EfetivarExclusaoEntrada" asp-controller="Admin">
+            <input type="hidden" value="@Model.Id" asp-for="@Model.Id"></inpt>
+            <button class="btn btn-danger" type="submit">Excluir</button>
+            <a role="button" class="btn btn-outline-secondary" asp-action="Administracao" asp-controller="Admin">Voltar</a>
+        </form>
+    </div>
+</div>

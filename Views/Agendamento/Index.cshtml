@@ -1,0 +1,85 @@
+﻿@using FastMechanical.Models.ViewModel;
+@model AgendaViewModel
+
+@{
+    ViewData["Title"] = $"Agenda de manutenções";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+<form asp-controller="Agendamento" asp-action="Agenda">
+    <div class="row me-5">
+        <div class="col-lg-10 mb-5">
+            <span class="display-4">@ViewData["Title"]</span>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Cliente</label>
+            <select asp-for="@Model.Cliente.Id" class="form-select">
+                @foreach (var item in Model.ListaPessoa) {
+                    <option value="@item.Id">
+                        @item.Nome
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-lg-2 m-2 pt-4">
+            <button type="submit" class="btn btn-success"><span>Nova manutenção</span></button>
+        </div>
+
+
+
+
+    </div>
+</form>
+<br />
+
+<table class="table table-striped text-center" id="table-contacts">
+    <thead>
+        <tr>
+
+            <th class="text-center" scope="col">Id</th>
+            <th class="text-center" scope="col">Cliente</th>
+            <th class="text-center" scope="col">Veiculo</th>
+            <th class="text-center" scope="col">Mecanico</th>
+            <th class="text-center" scope="col">Serviço</th>
+            @if (Model != null && Model.ListaAgenda.Any()) {
+                <th class="text-center" scope="col">Ações</th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.ListaPessoa.Any()) {
+            @foreach (var item in Model.ListaAgenda) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Cliente.Nome</td>
+                    <td>@item.Veiculo.Placa</td>
+                    <td>@item.Mecanico.Nome</td>
+                    <td>@item.Servico.Nome</td>
+                    <td>
+                        <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Veiculo" asp-action="Edit">Editar</a>
+                        <a role="button" class="btn btn-dark" asp-route-id="@item.Id" asp-controller="Veiculo" asp-action="Details">Detalhes</a>
+                        <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Veiculo" asp-action="Disable">Desativar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else {
+            <tr class="odd"><td valign="top" colspan="5">Nenhum registro encontrado</td></tr>
+        }
+
+    </tbody>
+</table>

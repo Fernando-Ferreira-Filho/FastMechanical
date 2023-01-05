@@ -1,0 +1,76 @@
+﻿@model FastMechanical.Models.ViewModel.ExcluirBaixaViewModel
+
+@{
+    ViewData["Title"] = $"Excluir baixa";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="row me-5">
+    <div class="col-lg-10">
+        <span class="display-4">@ViewData["Title"]</span>
+    </div>
+
+</div>
+<br />
+
+<form class="row g-3" asp-action="ExcluirBaixa" asp-controller="Admin" method="post">
+
+    <div class="col-md-3">
+        <label asp-for="@Model.Data" class="form-label"></label><span class="text-danger">*</span>
+        <input asp-for="@Model.Data" type="date" class="form-control" />
+        <span asp-validation-for="@Model.Data" class="text-danger"></span>
+    </div>
+    <div class="col-lg-2 pt-4">
+        <button type="submit" asp-action="ExcluirBaixa" asp-controller="Admin" class="btn float-sm-end"><i class="fas fa-search d-block text-center text-success" style="font-size:2rem; "></i><span>Buscar</span></button>
+    </div>
+</form>
+
+
+<table class="table table-striped text-center" id="table-contacts">
+    <thead>
+        <tr>
+            <th class="text-center" scope="col">Id</th>
+            <th class="text-center" scope="col">Executor</th>
+            <th class="text-center" scope="col">Material</th>
+            <th class="text-center" scope="col">Quantidade</th>
+
+            @if (Model != null && Model.Movimentacao.Any()) {
+                <th class="text-center" scope="col">Ações</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Movimentacao.Any()) {
+            @foreach (var item in Model.Movimentacao) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Executor.Nome</td>
+                    <td>@item.Material.Nome</td>
+                    <td>@item.Baixa</td>
+                    <td>
+                        <div class="btn-group-sm" role="group">
+                            <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Admin" asp-action="ConfirmarBaixa"><i class="fas fa-trash-alt"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else {
+            <tr class="odd"><td valign="top" colspan="5">Nenhum registro encontrado</td></tr>
+        }
+
+    </tbody>
+</table>
