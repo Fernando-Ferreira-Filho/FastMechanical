@@ -1,0 +1,59 @@
+﻿@using System.Globalization;
+@model Agenda
+@{
+    ViewData["Title"] = $"Excluir agenda";
+}
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">Cliente</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Cliente.Nome)
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">Serviço</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Servico.Nome)
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">Veiculo</span>
+            </div>
+            <div class="col-md-7">
+                Placa: @Html.DisplayFor(model => model.Veiculo.Placa) - Marca: @Html.DisplayFor(model => model.Veiculo.Marca) - Modelo: @Html.DisplayFor(model => model.Veiculo.Modelo)
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">Mecanico</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Mecanico.Nome)
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 mt-5 mb-5">
+        <form asp-action="Excluir" asp-controller="Agendamento">
+            <input type="hidden" value="@Model.Id" asp-for="@Model.Id" />
+            <button type="submit" class="btn btn-danger">Excluir</button>
+            <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Agendamento">Voltar</a>
+        </form>
+    </div>
+</div>

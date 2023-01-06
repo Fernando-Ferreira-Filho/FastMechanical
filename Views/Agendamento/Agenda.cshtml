@@ -28,6 +28,7 @@
     <div class="row">
 
         <div class="col-md-4 ">
+            <label class="form-label">Serviço</label>
             <select asp-for="@Model.Veiculo.Id" class="form-select">
                 @foreach (var item in Model.Veiculos) {
                     <option value="@item.Id">
@@ -37,6 +38,7 @@
             </select>
         </div>
         <div class="col-md-4">
+            <label class="form-label">Veiculo</label>
             <select asp-for="@Model.Servico.Id" class="form-select">
                 @foreach (var item in Model.Servicos) {
                     <option value="@item.Id">
@@ -46,6 +48,7 @@
             </select>
         </div>
         <div class="col-md-4">
+            <label class="form-label">Cliente</label>
             <select asp-for="@Model.Mecanico.Id" class="form-select">
                 @foreach (var item in Model.Mecanicos) {
                     <option value="@item.Id">
@@ -56,6 +59,7 @@
         </div>
         <div class="col-lg-2 pt-4">
             <button type="submit" class="btn btn-success"><span>Salvar</span></button>
+            <a role="button" class="btn btn-outline-info" asp-action="Index" asp-controller="Agendamento">Voltar</a>
         </div>
 
     </div>
