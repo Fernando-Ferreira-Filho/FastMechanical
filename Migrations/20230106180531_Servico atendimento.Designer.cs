@@ -3,14 +3,16 @@ using System;
 using FastMechanical.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastMechanical.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20230106180531_Servico atendimento")]
+    partial class Servicoatendimento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,30 +155,6 @@ namespace FastMechanical.Migrations
                         .IsUnique();
 
                     b.ToTable("Materiais");
-                });
-
-            modelBuilder.Entity("FastMechanical.Models.PecaAtendimento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AgendaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaterialId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AgendaId");
-
-                    b.HasIndex("MaterialId");
-
-                    b.ToTable("PecaAtendimento");
                 });
 
             modelBuilder.Entity("FastMechanical.Models.Pessoa", b =>
@@ -371,17 +349,6 @@ namespace FastMechanical.Migrations
                     b.HasOne("FastMechanical.Models.Pessoa", "Executor")
                         .WithMany()
                         .HasForeignKey("ExecutorId");
-
-                    b.HasOne("FastMechanical.Models.Materiais", "Material")
-                        .WithMany()
-                        .HasForeignKey("MaterialId");
-                });
-
-            modelBuilder.Entity("FastMechanical.Models.PecaAtendimento", b =>
-                {
-                    b.HasOne("FastMechanical.Models.Agenda", "Agenda")
-                        .WithMany()
-                        .HasForeignKey("AgendaId");
 
                     b.HasOne("FastMechanical.Models.Materiais", "Material")
                         .WithMany()

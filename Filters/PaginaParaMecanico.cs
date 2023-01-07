@@ -16,11 +16,16 @@ namespace FastMechanical.Filters {
             }
             else {
                 Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
-                if (pessoa.TipoPessoa == FastMechanical.Models.Enums.TipoPessoa.Mecanico) {
-                    base.OnActionExecuting(context);
+                if (pessoa == null) {
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "login" }, { "action", "Index" } });
                 }
+                if (pessoa.TipoPessoa != Models.Enums.TipoPessoa.Mecanico) {
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restricted" }, { "action", "Index" } });
+                }
+
             }
-            context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restricted" }, { "action", "Index" } });
+
+            base.OnActionExecuting(context);
         }
     }
 }

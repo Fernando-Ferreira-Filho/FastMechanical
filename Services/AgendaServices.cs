@@ -25,6 +25,17 @@ namespace FastMechanical.Services {
 
         }
 
+        public async Task<List<Agenda>> ListarTodasAgendasEmAtendimentoPorMecanicoAsync(Pessoa pessoa) {
+            try {
+                return await _context.Agenda.Include(p => p.Cliente).Include(v => v.Veiculo).Include(s => s.Servico).Include(m => m.Mecanico).Where(a => (a.Status == Models.Enums.AgendaStatus.Aguardando || a.Status == Models.Enums.AgendaStatus.Em_atendimento) && a.Mecanico.Id == pessoa.Id).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
+
+
+
         public async Task SalvarAgendaAsync(Agenda agenda) {
             try {
                 await _context.Agenda.AddAsync(agenda);
@@ -54,5 +65,14 @@ namespace FastMechanical.Services {
             }
         }
 
+        public async Task AtualizarAgendaAsync(Agenda agenda) {
+            try {
+                _context.Agenda.Update(agenda);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
     }
 }

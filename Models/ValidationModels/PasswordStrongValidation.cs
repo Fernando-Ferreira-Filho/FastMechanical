@@ -23,7 +23,7 @@ namespace FastMechanical.Models.ValidationModels {
             int pontosPorRepeticao = GetPontoPorRepeticao(senha);
             var placar = pontosPorTamanho + pontosPorMinusculas + pontosPorMaiusculas + pontosPorDigitos + pontosPorSimbolos - pontosPorRepeticao;
 
-            if (placar > 80)
+            if (placar > 50)
                 return true;
             else
                 return false;

@@ -162,6 +162,7 @@ namespace FastMechanical.Services {
             }
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<Materiais> TransformCaptalizeAsync(Materiais material) {
             TextInfo myTI = new CultureInfo("pt-BR", false).TextInfo;
 
@@ -171,5 +172,6 @@ namespace FastMechanical.Services {
 
             return material;
         }
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     }
 }

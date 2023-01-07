@@ -1,0 +1,89 @@
+﻿@model FastMechanical.Models.ViewModel.AtendimentoViewModel
+
+@{
+    ViewData["Title"] = "Atendimento";
+}
+
+<div class="">
+    <h3 class="display-6">Detalhes @ViewData["TItle"]</h3>
+</div>
+<hr />
+
+
+<div class="row">
+
+    <div class="col-md-6">
+        <label class="form-label">Cliente</label><span class="text-danger">*</span>
+        <input readonly asp-for="@Model.Agenda.Cliente.Nome" type="text" class="form-control">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Mecanico</label><span class="text-danger">*</span>
+        <input readonly asp-for="@Model.Agenda.Mecanico.Nome" type="text" class="form-control">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Veiculo</label><span class="text-danger">*</span>
+        <input readonly type="text" value="Marca: @Model.Agenda.Veiculo.Modelo - Placa: @Model.Agenda.Veiculo.Placa" class="form-control">
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Serviço indicado pelo cliente</label><span class="text-danger">*</span>
+        <input readonly asp-for="@Model.Agenda.Servico.Nome" type="text" class="form-control">
+    </div>
+
+</div>
+<hr />
+<div class="">
+    <h3 class="display-6">Serviços Realizados</h3>
+</div>
+
+<hr />
+
+<form asp-action="Add" asp-controller="Atendimento">
+    <div class="row">
+
+        <div class="col-4">
+            <input type="hidden" value="@Model.Agenda.Id" asp-for="@Model.Agenda.Id">
+            <label class="form-label">Serviço</label>
+            <select asp-for="@Model.Servico.Id" class="form-select">
+                @foreach (var item in Model.Servicos) {
+                    <option value="@item.Id">@item.Nome</option>
+                }
+            </select>
+        </div>
+        <div class="col-4 mt-4">
+            <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i></button>
+            <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Atendimento">Voltar</a>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped text-center" id="table-contacts">
+    <thead>
+        <tr>
+
+            <th class="text-center" scope="col">Id</th>
+            <th class="text-center" scope="col">Serviço</th>
+            @if (Model != null && Model.ServicoAtendimentos.Any()) {
+                <th class="text-center" scope="col">Ações</th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Servicos.Any()) {
+            @foreach (var item in Model.ServicoAtendimentos) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Servico.Nome</td>
+                    <td>
+                        <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Atendimento" asp-action="ApagarServico"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        }
+        else {
+            <tr class="odd"><td valign="top" colspan="6">Nenhum registro encontrado</td></tr>
+        }
+
+    </tbody>
+</table>

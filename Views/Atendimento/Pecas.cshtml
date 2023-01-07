@@ -1,0 +1,113 @@
+﻿@model FastMechanical.Models.ViewModel.AtendimentoViewModel
+
+@{
+    ViewData["Title"] = "Atendimento";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
+<div class="">
+    <h3 class="display-6">Detalhes @ViewData["TItle"]</h3>
+</div>
+<hr />
+
+
+<div class="row">
+
+    <div class="col-md-6">
+        <label class="form-label">Cliente</label><span class="text-danger">*</span>
+        <input readonly asp-for="@Model.Agenda.Cliente.Nome" type="text" class="form-control">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Mecanico</label><span class="text-danger">*</span>
+        <input readonly asp-for="@Model.Agenda.Mecanico.Nome" type="text" class="form-control">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Veiculo</label><span class="text-danger">*</span>
+        <input readonly type="text" value="Marca: @Model.Agenda.Veiculo.Modelo - Placa: @Model.Agenda.Veiculo.Placa" class="form-control">
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Serviço indicado pelo cliente</label><span class="text-danger">*</span>
+        <input readonly asp-for="@Model.Agenda.Servico.Nome" type="text" class="form-control">
+    </div>
+
+</div>
+<hr />
+<div class="">
+    <h3 class="display-6">Peças utilizadas no atendimento</h3>
+</div>
+
+<hr />
+
+<form asp-action="AddPeca" asp-controller="Atendimento">
+    <div class="row">
+
+        <div class="col-4">
+            <input type="hidden" value="@Model.Agenda.Id" asp-for="@Model.Agenda.Id">
+            <label class="form-label">Serviço</label>
+            <select asp-for="@Model.Material.Id" class="form-select">
+                @foreach (var item in Model.Materiais) {
+                    <option value="@item.Id">@item.Nome - Estoque: @item.Quantidade</option>
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <label class="form-label">Quantidade</label>
+            <input type="number" value="@Model.Quantidade" asp-for="@Model.Quantidade" class="form-control">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Ações</label>
+            <div class="d-bl">
+                <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i></button>
+                <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Atendimento">Voltar</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped text-center" id="table-contacts">
+    <thead>
+        <tr>
+
+            <th class="text-center" scope="col">Id</th>
+            <th class="text-center" scope="col">Material</th>
+            <th class="text-center" scope="col">Quantidade</th>
+            @if (Model != null && Model.PecaAtendimentos.Any()) {
+                <th class="text-center" scope="col">Ações</th>
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Materiais.Any()) {
+            @foreach (var item in Model.PecaAtendimentos) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Material.Nome</td>
+                    <td>@item.Quantidade</td>
+                    <td>
+                        <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Atendimento" asp-action="ApagarPeca"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        }
+        else {
+            <tr class="odd"><td valign="top" colspan="6">Nenhum registro encontrado</td></tr>
+        }
+
+    </tbody>
+</table>

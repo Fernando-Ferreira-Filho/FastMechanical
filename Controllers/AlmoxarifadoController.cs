@@ -396,9 +396,10 @@ namespace FastMechanical.Controllers {
                 dbMaterial.Quantidade += materialViewModel.Adicao;
 
                 await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
-                TempData["SuccessMessage"] = "Material alterado com sucesso";
 
-                return RedirectToAction("Index");
+                var entrarEstoqueViewModel = new EntrarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync(), ChaveAcessoNotaFiscal = materialViewModel.ChaveAcessoNotaFiscal, NumeroNotaFiscal = materialViewModel.NumeroNotaFiscal, Observacao = materialViewModel.Observacao };
+                TempData["SuccessMessage"] = $"Material {dbMaterial.Nome}, quantidade: {materialViewModel.Adicao}, inserido com sucesso";
+                return View(entrarEstoqueViewModel);
             }
             catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;

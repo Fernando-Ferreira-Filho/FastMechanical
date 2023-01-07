@@ -800,3 +800,6 @@ D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\AlterarPerfilUsu
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Index.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Agenda.cshtml.g.cs
 D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Excluir.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Atendimento\Index.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Atendimento\Servicos.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Atendimento\Pecas.cshtml.g.cs
