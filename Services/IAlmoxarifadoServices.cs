@@ -18,6 +18,8 @@ namespace FastMechanical.Services {
         public Task<List<Estoque>> BuscarAdicaoPorDiaAsync(DateTime data);
         public Task<List<Estoque>> BuscarExclusaoPorDiaAsync(DateTime data);
         public Task<Estoque> BuscarMovimentacaoPorIdAsync(int id);
+        public Task<Estoque> BuscarMovimentacaoPorAgendaIdAsync(int id);
+        public Task<List<PecaAtendimento>> BuscarMateriaisPorAgendaIdAsync(int id);
         public Task AtualizarMovimentacaoAsync(Estoque estoque);
         public Task ExcluirMovimentacaoasync(Estoque estoque);
     }

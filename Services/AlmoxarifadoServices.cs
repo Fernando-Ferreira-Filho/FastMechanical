@@ -98,6 +98,16 @@ namespace FastMechanical.Services {
             }
         }
 
+        public async Task<Estoque> BuscarMovimentacaoPorAgendaIdAsync(int id) {
+
+            try {
+                return await _context.Estoque.Include(x => x.Executor).Include(x => x.Material).FirstOrDefaultAsync(m => m.Agenda.Id == id);
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
+
         public async Task AtualizarMovimentacaoAsync(Estoque estoque) {
 
             try {
@@ -156,6 +166,15 @@ namespace FastMechanical.Services {
             try {
                 _context.Estoque.Remove(estoque);
                 await _context.SaveChangesAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
+        public async Task<List<PecaAtendimento>> BuscarMateriaisPorAgendaIdAsync(int id) {
+
+            try {
+                return await _context.PecaAtendimento.Include(pa => pa.Material).Where(pa => pa.Agenda.Id == id).ToListAsync();
             }
             catch (Exception ex) {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");

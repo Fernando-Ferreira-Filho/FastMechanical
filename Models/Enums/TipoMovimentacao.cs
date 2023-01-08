@@ -5,5 +5,6 @@
         Adicao = 1,
         Venda = 2,
         Exclusao = 3,
+        Atendimento = 4,
     }
 }

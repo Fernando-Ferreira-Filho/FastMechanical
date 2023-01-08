@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "7n+sntG80/fR6PAXqdKjsIJGYReC04EJ0TnIqBu1FCRsFeaHFPxIP5Lk6J9V4ba5DnfDhqOuwH5hpbq0XOVZ+w==",
+  "dgSpecHash": "5grYQoMFkRIeXiKup+JRq6CCdXcronqAC5kbaVpP/lhBpd8XbgYMReftSUYdEs2yG/K6jeGtk2MqpLiIpFZXZg==",
   "success": true,
   "projectFilePath": "D:\\TCC\\FastMechanical\\FastMechanical.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Fernandovisky\\.nuget\\packages\\bouncycastle\\1.8.9\\bouncycastle.1.8.9.nupkg.sha512",
+    "C:\\Users\\Fernandovisky\\.nuget\\packages\\itextsharp\\5.5.13.3\\itextsharp.5.5.13.3.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\3.1.25\\microsoft.aspnetcore.mvc.razor.extensions.3.1.25.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\3.1.25\\microsoft.aspnetcore.mvc.razor.runtimecompilation.3.1.25.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.25\\microsoft.aspnetcore.razor.language.3.1.25.nupkg.sha512",
@@ -32,7 +34,8 @@
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.25\\microsoft.extensions.logging.abstractions.3.1.25.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.extensions.options\\3.1.25\\microsoft.extensions.options.3.1.25.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.25\\microsoft.extensions.primitives.3.1.25.nupkg.sha512",
-    "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.2\\microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Fernandovisky\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\mysqlconnector\\0.61.0\\mysqlconnector.0.61.0.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\3.1.2\\pomelo.entityframeworkcore.mysql.3.1.2.nupkg.sha512",
@@ -40,6 +43,7 @@
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.collections.immutable\\1.7.1\\system.collections.immutable.1.7.1.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512",
+    "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
@@ -48,5 +52,26 @@
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
     "C:\\Users\\Fernandovisky\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.3\\system.threading.tasks.extensions.4.5.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'BouncyCastle 1.8.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "BouncyCastle",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'iTextSharp 5.5.13.3' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "iTextSharp",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

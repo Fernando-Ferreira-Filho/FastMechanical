@@ -185,8 +185,54 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                ServicoAtendimento servico = await _servicosServices.BuscarServicoAtendimentoPorIdAsync(id.Value);
-                if (servico == null) {
+                PecaAtendimento pecaAtendimento = await _servicosServices.BuscarPecaAtendimentoPorIdAsync(id.Value);
+                if (pecaAtendimento == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+
+                if (pessoa.Id != pecaAtendimento.Agenda.Mecanico.Id) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+
+
+                AtendimentoViewModel atendimentoViewModel = new AtendimentoViewModel { Agenda = pecaAtendimento.Agenda, Materiais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
+                Materiais materialDb = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(pecaAtendimento.Material.Id);
+                materialDb.Quantidade += pecaAtendimento.Quantidade;
+
+                var EstoqueDb = await _almoxarifadoServices.BuscarMovimentacaoPorAgendaIdAsync(pecaAtendimento.Agenda.Id);
+
+                await _almoxarifadoServices.ExcluirMovimentacaoasync(EstoqueDb);
+                await _almoxarifadoServices.AtualizarMaterialAsync(materialDb);
+                await _servicosServices.ExcluirPecaAtendimentoAsync(pecaAtendimento);
+                atendimentoViewModel.PecaAtendimentos = await _servicosServices.BuscarPecaAtendimentoPorAtendimento(pecaAtendimento.Agenda.Id);
+                return View("Pecas", atendimentoViewModel);
+
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View("Index");
+            }
+        }
+
+        public async Task<IActionResult> Finalizar(int? id) {
+            try {
+
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Agenda agenda = await _agendaServices.BuscarAgendaPorIdAsync(id.Value);
+
+                if (agenda == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (agenda.Status != Models.Enums.AgendaStatus.Em_atendimento) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -194,17 +240,15 @@ namespace FastMechanical.Controllers {
                 string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
                 if (string.IsNullOrEmpty(sessionUser)) return null;
                 Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
-                if (pessoa.Id != servico.Agenda.Mecanico.Id) {
+
+                if (pessoa.Id != agenda.Mecanico.Id) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
-                await _servicosServices.ExcluirServicoAtendimentoAsync(servico);
+                AtendimentoViewModel atendimento = new AtendimentoViewModel { Agenda = agenda, PecaAtendimentos = await _almoxarifadoServices.BuscarMateriaisPorAgendaIdAsync(agenda.Id), ServicoAtendimentos = await _servicosServices.BuscarServicoAtendimentoPorAtendimento(agenda.Id) };
 
-                AtendimentoViewModel atendimento = new AtendimentoViewModel { Agenda = servico.Agenda, Servicos = await _servicosServices.TodosServicosAtivosAsync(), ServicoAtendimentos = await _servicosServices.BuscarServicoAtendimentoPorAtendimento(servico.Agenda.Id) };
-
-                return View("Servicos", atendimento);
-
+                return View(atendimento);
             }
             catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
@@ -236,9 +280,7 @@ namespace FastMechanical.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPeca(AtendimentoViewModel atendimento) {
-
             try {
-
                 var agenda = await _agendaServices.BuscarAgendaPorIdAsync(atendimento.Agenda.Id);
                 var material = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(atendimento.Material.Id);
                 var estoque = material.Quantidade - atendimento.Quantidade;
@@ -246,6 +288,7 @@ namespace FastMechanical.Controllers {
                 PecaAtendimento peca = new PecaAtendimento { Agenda = agenda, Material = material, Quantidade = atendimento.Quantidade };
 
                 AtendimentoViewModel atendimentoViewModel = new AtendimentoViewModel { Agenda = agenda, Materiais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
+                atendimentoViewModel.PecaAtendimentos = await _servicosServices.BuscarPecaAtendimentoPorAtendimento(agenda.Id);
 
                 if (estoque < 0) {
                     TempData["ErrorMessage"] = $"Estoque insuficiente, estoque do material {material.Nome} tem apenas {material.Quantidade} de estoque";
@@ -255,10 +298,60 @@ namespace FastMechanical.Controllers {
                     TempData["ErrorMessage"] = $"Peça não pode ser zerada";
                     return View("Pecas", atendimentoViewModel);
                 }
+
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+
+                Pessoa pessoaDb = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                material.Quantidade = estoque;
+
+                Estoque estoqueDb = new Estoque { Agenda = agenda, Baixa = atendimento.Quantidade, DataBaixa = DateTime.Now, Executor = pessoaDb, TipoMovimentacao = Models.Enums.TipoMovimentacao.Atendimento, Adicao = 0, ChaveAcessoNotaFiscal = null, DataAdicao = null, DataExclusao = null, DataInsercaoExclusao = null, Material = material, NumeroNotaFiscal = null, Observacao = null };
+
+                await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(estoqueDb);
+                await _almoxarifadoServices.AtualizarMaterialAsync(material);
                 await _servicosServices.InserirPecaAtendimento(peca);
                 atendimentoViewModel.PecaAtendimentos = await _servicosServices.BuscarPecaAtendimentoPorAtendimento(agenda.Id);
-
                 return View("Pecas", atendimentoViewModel);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View("Pecas");
+            }
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FinalizarAtendimento(AtendimentoViewModel atendimento) {
+
+            try {
+                var agenda = await _agendaServices.BuscarAgendaPorIdAsync(atendimento.Agenda.Id);
+
+                if (agenda == null) {
+                    TempData["ErrorMessage"] = $"ID não econtrado";
+                    return View("Index");
+                }
+                if (agenda.Status != Models.Enums.AgendaStatus.Em_atendimento) {
+                    TempData["ErrorMessage"] = $"ID não econtrado";
+                    return View("Index");
+                }
+
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+
+                if (pessoa.Id != agenda.Mecanico.Id) {
+                    TempData["ErrorMessage"] = $"ID não econtrado";
+                    return View("Index");
+                }
+
+                agenda.Status = Models.Enums.AgendaStatus.Aguardando_pagamento;
+
+                await _agendaServices.AtualizarAgendaAsync(agenda);
+                TempData["SuccessMessage"] = "Atendimento finalizado";
+                return View("Index");
             }
             catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;

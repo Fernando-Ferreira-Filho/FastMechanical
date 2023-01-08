@@ -1,0 +1,90 @@
+﻿@model FastMechanical.Models.ViewModel.AtendimentoViewModel
+
+
+@{
+    ViewData["Title"] = $"Finalização de atendimento";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<br />
+<div class="row me-5">
+    <div class="col-lg-10 mb-5">
+        <span class="display-4">@ViewData["Title"]</span>
+    </div>
+</div>
+<hr />
+
+@if (Model.ServicoAtendimentos.Count != 0 || Model.ServicoAtendimentos == null) {
+    <hr />
+    <div class="row">
+        <div class="col-lg-10 mt-3">
+            <h5>Serviços realizados</h5>
+        </div>
+    </div>
+
+    <table class="table table-striped text-center" id="table-contacts">
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">Id</th>
+                <th class="text-center" scope="col">Serviço</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ServicoAtendimentos) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Servico.Nome</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.PecaAtendimentos.Count != 0 || Model.PecaAtendimentos == null) {
+    <hr />
+    <div class="row">
+        <div class="col-lg-10 mt-3">
+            <h5>Peças utilizadas</h5>
+        </div>
+    </div>
+
+    <table class="table table-striped text-center" id="table-contacts">
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">Id</th>
+                <th class="text-center" scope="col">Material</th>
+                <th class="text-center" scope="col">Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PecaAtendimentos) {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Material.Nome</td>
+                    <td>@item.Quantidade</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="col-4 mt-4">
+    <form asp-action="FinalizarAtendimento" asp-controller="Atendimento">
+        <input type="hidden" asp-for="@Model.Agenda.Id" value="@Model.Agenda.Id" />
+        <button type="submit" class="btn btn-success">Finalizar</button>
+        <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Atendimento">Voltar</a>
+    </form>
+</div>
