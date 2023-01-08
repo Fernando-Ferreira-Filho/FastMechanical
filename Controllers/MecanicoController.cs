@@ -194,6 +194,7 @@ namespace FastMechanical.Controllers {
                 mecanico.Cpf = str;
                 mecanico = await _personServices.TransformCaptalizeAsync(mecanico);
                 mecanico.TipoPessoa = TipoPessoa.Mecanico;
+                mecanico.Status = Status.Ativado;
                 mecanico.Password = Pessoa.PasswordGenerate();
                 string title = "Senha de acesso so sitema Fastmechanical";
                 string body = $"Olá, sua senha de acesso ao sistema fastmechanical é: {mecanico.Password}";
