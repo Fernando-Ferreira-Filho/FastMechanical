@@ -46,7 +46,8 @@ namespace FastMechanical.Controllers {
                 var vendas = await _almoxarifadoServices.BuscarVendasPorDatasAsync(relatorio.DataInicial, relatorio.DataFinal);
                 PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
                 pdfWriter.CloseStream = false;
-                var image = System.Drawing.Image.FromFile("D:\\TCC\\FastMechanical\\wwwroot\\images\\logo.png");
+                //var image = System.Drawing.Image.FromFile("D:\\TCC\\FastMechanical\\wwwroot\\images\\logo.png");
+                var image = System.Drawing.Image.FromFile("C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\wwwroot\\images\\logo.png");
                 document.Open();
                 Image pic = Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
                 pic.ScalePercent(15);
@@ -300,7 +301,8 @@ namespace FastMechanical.Controllers {
 
                 PdfWriter pdfWriter = PdfWriter.GetInstance(document, stream);
                 pdfWriter.CloseStream = false;
-                var image = System.Drawing.Image.FromFile("D:\\TCC\\FastMechanical\\wwwroot\\images\\logo.png");
+                //var image = System.Drawing.Image.FromFile("D:\\TCC\\FastMechanical\\wwwroot\\images\\logo.png");
+                var image = System.Drawing.Image.FromFile("C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\wwwroot\\images\\logo.png");
                 document.Open();
                 Image pic = Image.GetInstance(image, System.Drawing.Imaging.ImageFormat.Jpeg);
                 pic.ScalePercent(15);
