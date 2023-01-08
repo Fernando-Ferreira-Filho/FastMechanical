@@ -385,6 +385,32 @@ namespace FastMechanical.Controllers {
 
         }
 
+        public async Task<IActionResult> Senha(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
+                if (admin == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (admin.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "Usuário desativado";
+                    return RedirectToAction("Index");
+                }
+                return View(admin);
+
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = $"Erro ao listar, erro: {ex.Message}";
+                return View();
+            }
+
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> New(Pessoa admin) {
@@ -400,6 +426,11 @@ namespace FastMechanical.Controllers {
                 admin.Cpf = str;
                 admin = await _personService.TransformCaptalizeAsync(admin);
                 admin.TipoPessoa = TipoPessoa.Administrador;
+                admin.Password = Pessoa.PasswordGenerate();
+                string title = "Senha de acesso so sitema Fastmechanical";
+                string body = $"Olá, sua senha de acesso ao sistema fastmechanical é: {admin.Password}";
+                Pessoa.SendMail(admin.Email, body, title);
+                admin.SetPasswordHash();
                 await _personService.SalvarAsync(admin);
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");
@@ -737,5 +768,41 @@ namespace FastMechanical.Controllers {
             }
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Senha(Pessoa admin) {
+            try {
+
+                Pessoa adminDb = await _personService.BuscarAdminPorIdAsync(admin.Id);
+
+                if (adminDb == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (adminDb.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "Usuário desativado";
+                    return RedirectToAction("Index");
+                }
+
+                adminDb.Password = Pessoa.PasswordGenerate();
+                string title = "Nova senha de acesso so sitema FastMechanical";
+                string body = $"Olá, sua nova senha de acesso ao sistema presmed é: {adminDb.Password}";
+                Pessoa.SendMail(adminDb.Email, body, title);
+                adminDb.SetPasswordHash();
+                await _personService.AtualizarAsync(adminDb);
+                TempData["SuccessMessage"] = "Senha enviada com sucesso";
+                return RedirectToAction("Index");
+
+
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = $"Erro ao listar, erro: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+
+
+        }
+
     }
 }

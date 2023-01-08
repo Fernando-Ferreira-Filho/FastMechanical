@@ -2,8 +2,12 @@
 using FastMechanical.Models.ValidationModels;
 using System.ComponentModel.DataAnnotations;
 using System;
-using System.Net.Mail;
 using FastMechanical.Helper;
+using MimeKit;
+using MimeKit.Text;
+using MailKit;
+using MailKit.Security;
+using MailKit.Net.Smtp;
 
 namespace FastMechanical.Models {
     public class Pessoa {
@@ -99,21 +103,21 @@ namespace FastMechanical.Models {
             return pass;
         }
 
-        //public static void SendMail(string emailMessage, string message, string title) {
-        //    // create email message
-        //    var email = new MimeMessage();
-        //    email.From.Add(MailboxAddress.Parse("testesapps51@gmail.com"));
-        //    email.To.Add(MailboxAddress.Parse(emailMessage));
-        //    email.Subject = title;
-        //    email.Body = new TextPart(TextFormat.Plain) { Text = message };
+        public static void SendMail(string emailMessage, string message, string title) {
+            // create email message
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse("testesapps51@gmail.com"));
+            email.To.Add(MailboxAddress.Parse(emailMessage));
+            email.Subject = title;
+            email.Body = new TextPart(TextFormat.Plain) { Text = message };
 
-        //    // send email
-        //    using var smtp = new SmtpClient();
-        //    smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-        //    smtp.Authenticate("testesapps51@gmail.com", "fahtsroanthccqxd");
-        //    smtp.Send(email);
-        //    smtp.Disconnect(true);
-        //}
+            // send email
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate("testesapps51@gmail.com", "fahtsroanthccqxd");
+            smtp.Send(email);
+            smtp.Disconnect(true);
+        }
 
         public bool ValidPassword(string password) {
 

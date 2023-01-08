@@ -192,5 +192,9 @@ namespace FastMechanical.Services {
             return material;
         }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+
+        public async Task<List<Estoque>> BuscarVendasPorDatasAsync(DateTime dataInicial, DateTime dataFinal) {
+            return await _context.Estoque.Include(m => m.Material).Include(m => m.Executor).Include(m => m.Agenda).Where(e => dataInicial.Date <= e.DataBaixa.Value.Date && dataFinal.Date >= e.DataBaixa.Value.Date && e.TipoMovimentacao == TipoMovimentacao.Venda).ToListAsync();
+        }
     }
 }

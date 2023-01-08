@@ -1,0 +1,78 @@
+﻿@model FastMechanical.Models.ViewModel.RelatorioViewModel
+
+@{
+    ViewData["Title"] = $"Relatorios";
+}
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-dismissible alert-danger">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="row me-5">
+    <div class="col-lg-10">
+        <span class="display-4">@ViewData["Title"]</span>
+    </div>
+</div>
+<br />
+
+<form asp-action="LucrosPorData" asp-controller="Relatorio">
+    <div class="row">
+        <h4>Serviços realizados e lucros por data selecionada</h4>
+        <div class="col-4">
+            <label class="form-label">Data inicial</label>
+            <input type="date" asp-for="@Model.DataInicial" class="form-control" />
+        </div>
+        <div class="col-4">
+            <label class="form-label">Data Final</label>
+            <input type="date" asp-for="@Model.DataFinal" class="form-control" />
+        </div>
+        <div class="col-4 p-4">
+            <button type="submit" class="btn text-success d-block"><i class="fas fa-search-dollar" style="font-size:2rem; "></i></button>
+        </div>
+    </div>
+</form>
+
+
+<form asp-action="Orcamentos" asp-controller="Relatorio">
+    <div class="row">
+        <h4>Orçamentos de manutenções realizadas</h4>
+        <div class="col-3">
+            <label class="form-label">Data inicial</label>
+            <input type="date" asp-for="@Model.DataInicial" class="form-control" />
+        </div>
+        <div class="col-3">
+            <label class="form-label">Data Final</label>
+            <input type="date" asp-for="@Model.DataFinal" class="form-control" />
+        </div>
+        <div class="col-1 pt-4">
+            <button type="submit" class="btn text-success d-block"><i class="fas fa-search" style="font-size:2rem; "></i></button>
+        </div>
+
+        @if (Model.Agendas != null) {
+            @if (Model.Agendas.Count > 0) {
+                <div class="col-4">
+                    <label class="form-label">Atendimentos realizados</label>
+                    <select asp-for="Agenda.Id" class="form-select">
+                        @foreach (var item in Model.Agendas) {
+                            <option value="@item.Id">Carro: @item.Veiculo.Modelo - Dono: @item.Cliente.Nome</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-1 pt-4">
+                    <button type="submit" class="btn text-success d-block" asp-action="ImprimirOrcamento" asp-controller="Relatorio"><i class="far fa-file" style="font-size:2rem;"></i></button>
+                </div>
+            }
+
+        }
+    </div>
+</form>

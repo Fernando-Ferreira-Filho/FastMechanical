@@ -157,6 +157,32 @@ namespace FastMechanical.Controllers {
 
         }
 
+        public async Task<IActionResult> Senha(int? id) {
+            try {
+                if (id == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                Pessoa vendedor = await _personService.BuscarVendedoresPorIdAsync(id.Value);
+                if (vendedor == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (vendedor.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "Usuário desativado";
+                    return RedirectToAction("Index");
+                }
+                return View(vendedor);
+
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = $"Erro ao listar, erro: {ex.Message}";
+                return View();
+            }
+
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> New(Pessoa vendedor) {
@@ -171,6 +197,11 @@ namespace FastMechanical.Controllers {
                 vendedor.Cpf = str;
                 vendedor = await _personService.TransformCaptalizeAsync(vendedor);
                 vendedor.TipoPessoa = TipoPessoa.Vendedor;
+                vendedor.Password = Pessoa.PasswordGenerate();
+                string title = "Senha de acesso so sitema Fastmechanical";
+                string body = $"Olá, sua senha de acesso ao sistema fastmechanical é: {vendedor.Password}";
+                Pessoa.SendMail(vendedor.Email, body, title);
+                vendedor.SetPasswordHash();
                 await _personService.SalvarAsync(vendedor);
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");
@@ -284,6 +315,41 @@ namespace FastMechanical.Controllers {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Senha(Pessoa vemdedor) {
+            try {
+
+                Pessoa vemdedorDb = await _personService.BuscarVendedoresPorIdAsync(vemdedor.Id);
+
+                if (vemdedorDb == null) {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (vemdedorDb.Status == Status.Desativado) {
+                    TempData["ErrorMessage"] = "Usuário desativado";
+                    return RedirectToAction("Index");
+                }
+
+                vemdedorDb.Password = Pessoa.PasswordGenerate();
+                string title = "Nova senha de acesso so sitema FastMechanical";
+                string body = $"Olá, sua nova senha de acesso ao sistema presmed é: {vemdedorDb.Password}";
+                Pessoa.SendMail(vemdedorDb.Email, body, title);
+                vemdedorDb.SetPasswordHash();
+                await _personService.AtualizarAsync(vemdedorDb);
+                TempData["SuccessMessage"] = "Senha enviada com sucesso";
+                return RedirectToAction("Index");
+
+
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = $"Erro ao listar, erro: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+
+
         }
     }
 }

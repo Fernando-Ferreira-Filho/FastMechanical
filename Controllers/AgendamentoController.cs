@@ -205,7 +205,7 @@ namespace FastMechanical.Controllers {
                     table.AddCell(H4);
 
                     foreach (var item in pecaAtendimentos) {
-                        var valor = (item.Material.ValorCusto * item.Material.PorcentagemLucro + item.Material.ValorCusto) * item.Material.Quantidade;
+                        var valor = (item.Material.ValorCusto * item.Material.PorcentagemLucro + item.Material.ValorCusto) * item.Quantidade;
                         valorPecas += valor;
                         PdfPCell cell1 = new PdfPCell(new Paragraph($"{item.Material.Id}"));
                         cell1.HorizontalAlignment = Element.ALIGN_CENTER;

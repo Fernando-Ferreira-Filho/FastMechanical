@@ -74,5 +74,14 @@ namespace FastMechanical.Services {
                 throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
             }
         }
+
+        public async Task<List<Agenda>> BuscarAgendaPorDataAsync(DateTime dataInicial, DateTime dataFinal) {
+            try {
+                return await _context.Agenda.Include(a => a.Cliente).Include(a => a.Mecanico).Include(a => a.Veiculo).Include(a => a.Servico).Where(a => a.DataInicial.Date >= dataInicial.Date && a.DataInicial.Date <= dataFinal.Date).ToListAsync();
+            }
+            catch (Exception ex) {
+                throw new Exception($"Houve um erro para listar, ERRO: {ex.Message}");
+            }
+        }
     }
 }

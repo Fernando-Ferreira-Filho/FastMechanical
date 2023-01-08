@@ -57,6 +57,7 @@
                                 <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Admin" asp-action="Edit">Editar</a>
                                 <a role="button" class="btn btn-dark" asp-route-id="@item.Id" asp-controller="Admin" asp-action="Details">Detalhes</a>
                                 <a role="button" class="btn btn-danger" asp-route-id="@item.Id" asp-controller="Admin" asp-action="Disable">Desativar</a>
+                                <a role="button" class="btn btn-warning" asp-route-id="@item.Id" asp-controller="Admin" asp-action="Senha">Reenviar senha</a>
                             }
                             @if (item.Status == FastMechanical.Models.Enums.Status.Desativado) {
                                 <a role="button" class="btn btn-primary" asp-route-id="@item.Id" asp-controller="Admin" asp-action="Edit">Editar</a>

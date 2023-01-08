@@ -237,7 +237,6 @@ D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Reflection.TypeExtensi
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Resources.Reader.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Resources.ResourceManager.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Resources.Writer.dll
-D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Runtime.CompilerServices.Unsafe.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Runtime.CompilerServices.VisualC.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Runtime.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Runtime.Extensions.dll
@@ -256,7 +255,6 @@ D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Runtime.Serialization.
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.AccessControl.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Claims.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Cryptography.Algorithms.dll
-D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Cryptography.Cng.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Cryptography.Csp.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Cryptography.Encoding.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Cryptography.Primitives.dll
@@ -269,7 +267,6 @@ D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.Principal.Win
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Security.SecureString.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.ServiceModel.Web.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.ServiceProcess.dll
-D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Text.Encoding.CodePages.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Text.Encoding.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Text.Encoding.Extensions.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\refs\System.Text.RegularExpressions.dll
@@ -812,3 +809,17 @@ D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Relatorio\Index.cshtml.g.cs
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\MailKit.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\MimeKit.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\System.Formats.Asn1.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Cng.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\System.Text.Encoding.CodePages.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Security.Cryptography.Cng.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Security.Cryptography.Pkcs.dll
+D:\TCC\FastMechanical\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\System.Text.Encoding.CodePages.dll
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Senha.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Mecanico\Senha.cshtml.g.cs
+D:\TCC\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Vendedor\Senha.cshtml.g.cs

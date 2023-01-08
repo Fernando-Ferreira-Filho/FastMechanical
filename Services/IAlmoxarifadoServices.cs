@@ -22,5 +22,6 @@ namespace FastMechanical.Services {
         public Task<List<PecaAtendimento>> BuscarMateriaisPorAgendaIdAsync(int id);
         public Task AtualizarMovimentacaoAsync(Estoque estoque);
         public Task ExcluirMovimentacaoasync(Estoque estoque);
+        public Task<List<Estoque>> BuscarVendasPorDatasAsync(DateTime dataInicial, DateTime dataFinal);
     }
 }

@@ -1,0 +1,133 @@
+﻿@model Pessoa
+@{
+    ViewData["Title"] = $"Detalhes do(a) Vendedor(a) {@Model.Nome}";
+}
+
+<div class="">
+    <h3 class="display-6">@ViewData["TItle"]</h3>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-6">
+        <h6 class="display-6 mb-5">Dados Pessoais</h6>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Nome)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Nome)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Email)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Cpf)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Cpf)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Telefone)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Telefone)
+            </div>
+
+        </div>
+
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.DataDeNascimento)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.DataDeNascimento)
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-lg-6">
+        <h6 class="display-6 mb-5">Endereço</h6>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Estado)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Estado)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Cidade)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Cidade)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Bairro)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Bairro)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Rua)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Rua)
+            </div>
+
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Numero)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Numero)
+            </div>
+
+        </div>
+
+        <div class="row mb-2">
+            <div class="col-md-4">
+                <span class="fw-bold">@Html.DisplayNameFor(model => model.Complemento)</span>
+            </div>
+            <div class="col-md-7">
+                @Html.DisplayFor(model => model.Complemento)
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-12 mt-5 mb-5">
+        <form asp-action="Senha" asp-controller="Vendedor" method="post" class="mb-5 mt-5">
+            <input hidden asp-for="Id" />
+            <input type="submit" value="Reenviar senha" class="btn btn-success" />
+            <a role="button" class="btn btn-outline-secondary" asp-action="Index" asp-controller="Vendedor">Voltar</a>
+        </form>
+    </div>
+
+</div>
