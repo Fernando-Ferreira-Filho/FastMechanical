@@ -240,7 +240,7 @@ namespace FastMechanical.Controllers {
                 }
                 veiculo.Status = Status.Desativado;
                 await _veiculoService.AtualizarVeiculoAsync(veiculo);
-                TempData["SuccessMessage"] = "Usuário desativado com sucesso";
+                TempData["SuccessMessage"] = "Veículo desativado com sucesso";
                 return RedirectToAction("Index");
             }
             catch (Exception e) {
@@ -270,7 +270,7 @@ namespace FastMechanical.Controllers {
 
                 veiculo.Status = Status.Ativado;
                 await _veiculoService.AtualizarVeiculoAsync(veiculo);
-                TempData["SuccessMessage"] = "Usuario ativado com sucesso";
+                TempData["SuccessMessage"] = "Veículo ativado com sucesso";
                 return RedirectToAction("Index");
             }
             catch (Exception e) {

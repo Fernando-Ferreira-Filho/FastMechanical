@@ -200,7 +200,7 @@ namespace FastMechanical.Controllers
                 if (pecaAtendimentos.Count > 0)
                 {
 
-                    document.Add(new Paragraph($"Peças realizados\n\n"));
+                    document.Add(new Paragraph($"Peças utilizadas\n\n"));
                     PdfPTable table = new PdfPTable(4);
 
                     Paragraph p1 = new Paragraph("Id");

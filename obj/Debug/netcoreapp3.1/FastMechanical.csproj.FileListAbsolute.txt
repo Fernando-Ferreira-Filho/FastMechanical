@@ -1206,7 +1206,6 @@ C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcor
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Excluir.cshtml.g.cs
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Index.cshtml.g.cs
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Agendamento\Pagamento.cshtml.g.cs
-C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\BaixarEstoque.cshtml.g.cs
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\DesabilitarMaterial.cshtml.g.cs
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\DetalhesMaterial.cshtml.g.cs
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Almoxarifado\EditarMaterial.cshtml.g.cs
@@ -1264,3 +1263,4 @@ C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcor
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\FastMechanical.dll
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\FastMechanical.pdb
 C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\FastMechanical.genruntimeconfig.cache
+C:\Users\Lucas Jorge\OneDrive - w0ytt\Documentos\FastMechanical\obj\Debug\netcoreapp3.1\Razor\Views\Admin\BaixarEstoque.cshtml.g.cs

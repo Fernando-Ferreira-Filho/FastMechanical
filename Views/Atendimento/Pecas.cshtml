@@ -58,7 +58,7 @@
 
         <div class="col-4">
             <input type="hidden" value="@Model.Agenda.Id" asp-for="@Model.Agenda.Id">
-            <label class="form-label">Serviço</label>
+            <label class="form-label">Peça</label>
             <select asp-for="@Model.Material.Id" class="form-select">
                 @foreach (var item in Model.Materiais) {
                     <option value="@item.Id">@item.Nome - Estoque: @item.Quantidade</option>

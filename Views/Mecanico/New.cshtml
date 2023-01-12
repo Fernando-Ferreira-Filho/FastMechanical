@@ -31,7 +31,7 @@
 
     <div class="col-md-6">
         <label asp-for="@Model.Cpf" class="form-label"></label><span class="text-warning"> (Apenas números)</span><span class="text-danger">*</span>
-        <input asp-for="@Model.Cpf" type="text" class="form-control" id="cpf" placeholder="Digite o CPF do mecanico" onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
+        <input asp-for="@Model.Cpf" type="text" class="form-control" id="cpf" placeholder="Digite o CPF do mecânico" onkeypress=" if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
         <span asp-validation-for="@Model.Cpf" class="text-danger"></span>
 
     </div>

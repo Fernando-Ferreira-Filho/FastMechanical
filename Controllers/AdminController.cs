@@ -10,100 +10,122 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace FastMechanical.Controllers {
+namespace FastMechanical.Controllers
+{
     [PaginaParaUsuarioLogado]
     [PaginaParaAdministrador]
-    public class AdminController : Controller {
+    public class AdminController : Controller
+    {
 
         private readonly IPessoaServices _personService;
         private readonly IAlmoxarifadoServices _almoxarifadoServices;
 
-        public AdminController(IPessoaServices personService, IAlmoxarifadoServices almoxarifadoServices) {
+        public AdminController(IPessoaServices personService, IAlmoxarifadoServices almoxarifadoServices)
+        {
             _personService = personService;
             _almoxarifadoServices = almoxarifadoServices;
         }
 
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index()
+        {
 
-            try {
+            try
+            {
                 ViewData["Title"] = "Listagem de admines ativos";
                 var list = await _personService.TodosAdminAtivosAsync();
                 return View(list);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public IActionResult New() {
+        public IActionResult New()
+        {
             return View();
         }
 
-        public async Task<IActionResult> Inativos() {
-            try {
+        public async Task<IActionResult> Inativos()
+        {
+            try
+            {
                 ViewData["Title"] = "Listagen de admines inativos.";
                 var list = await _personService.TodosAdminDesativadosAsync();
                 return View("Index", list);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> Edit(int? id) {
+        public async Task<IActionResult> Edit(int? id)
+        {
 
-            try {
+            try
+            {
 
-                if (id == null) {
+                if (id == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(admin);
 
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> Disable(int? id) {
+        public async Task<IActionResult> Disable(int? id)
+        {
 
-            try {
-                if (id == null) {
+            try
+            {
+                if (id == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
 
-                if (admin.Status == Status.Desativado) {
+                if (admin.Status == Status.Desativado)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
 
-                if (admin.TipoPessoa != TipoPessoa.Administrador) {
+                if (admin.TipoPessoa != TipoPessoa.Administrador)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
                 return View(admin);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -112,32 +134,39 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> Enabled(int? id) {
+        public async Task<IActionResult> Enabled(int? id)
+        {
 
-            try {
-                if (id == null) {
+            try
+            {
+                if (id == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
-                if (admin.Status == Status.Ativado) {
+                if (admin.Status == Status.Ativado)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
 
-                if (admin.TipoPessoa != TipoPessoa.Administrador) {
+                if (admin.TipoPessoa != TipoPessoa.Administrador)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View("Disable", admin);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -145,52 +174,64 @@ namespace FastMechanical.Controllers {
 
         }
 
-        public async Task<IActionResult> Details(int? id) {
+        public async Task<IActionResult> Details(int? id)
+        {
 
-            try {
+            try
+            {
 
-                if (id == null) {
+                if (id == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(admin);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public IActionResult Administracao() {
+        public IActionResult Administracao()
+        {
 
-            try {
+            try
+            {
 
                 return View();
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> ExcluirBaixa() {
+        public async Task<IActionResult> ExcluirBaixa()
+        {
 
-            try {
-                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+            try
+            {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel
+                {
                     Movimentacao = await _almoxarifadoServices.BuscarBaixaPorDiaAsync(DateTime.Now),
                     Data = DateTime.Now
                 };
 
                 return View(estoque);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -198,23 +239,29 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> ConfirmarBaixa(int? id) {
+        public async Task<IActionResult> ConfirmarBaixa(int? id)
+        {
 
-            try {
-                if (id == null) {
-                    if (id == null) {
+            try
+            {
+                if (id == null)
+                {
+                    if (id == null)
+                    {
                         TempData["ErrorMessage"] = "ID não encontrado";
                         return RedirectToAction("Index");
                     }
                 }
                 Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
-                if (movimentacao == null) {
+                if (movimentacao == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(movimentacao);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -222,17 +269,21 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> ExcluirEntrada() {
+        public async Task<IActionResult> ExcluirEntrada()
+        {
 
-            try {
-                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+            try
+            {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel
+                {
                     Movimentacao = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(DateTime.Now),
                     Data = DateTime.Now
                 };
 
                 return View(estoque);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -240,40 +291,50 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> ConfirmarExclusaoEntrada(int? id) {
+        public async Task<IActionResult> ConfirmarExclusaoEntrada(int? id)
+        {
 
-            try {
-                if (id == null) {
-                    if (id == null) {
+            try
+            {
+                if (id == null)
+                {
+                    if (id == null)
+                    {
                         TempData["ErrorMessage"] = "ID não encontrado";
                         return RedirectToAction("Index");
                     }
                 }
                 Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
-                if (movimentacao == null) {
+                if (movimentacao == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(movimentacao);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> ExcluirVenda() {
+        public async Task<IActionResult> ExcluirVenda()
+        {
 
-            try {
-                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+            try
+            {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel
+                {
                     Movimentacao = await _almoxarifadoServices.BuscarVendaPorDiaAsync(DateTime.Now),
                     Data = DateTime.Now
                 };
 
                 return View(estoque);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -281,40 +342,50 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> ConfirmarExclusaoVenda(int? id) {
+        public async Task<IActionResult> ConfirmarExclusaoVenda(int? id)
+        {
 
-            try {
-                if (id == null) {
-                    if (id == null) {
+            try
+            {
+                if (id == null)
+                {
+                    if (id == null)
+                    {
                         TempData["ErrorMessage"] = "ID não encontrado";
                         return RedirectToAction("Index");
                     }
                 }
                 Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
-                if (movimentacao == null) {
+                if (movimentacao == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(movimentacao);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> ExcluirExclusao() {
+        public async Task<IActionResult> ExcluirExclusao()
+        {
 
-            try {
-                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel {
+            try
+            {
+                ExcluirBaixaViewModel estoque = new ExcluirBaixaViewModel
+                {
                     Movimentacao = await _almoxarifadoServices.BuscarExclusaoPorDiaAsync(DateTime.Now),
                     Data = DateTime.Now
                 };
 
                 return View(estoque);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -322,88 +393,110 @@ namespace FastMechanical.Controllers {
         }
 
 
-        public async Task<IActionResult> ConfirmarExclusaoExclusao(int? id) {
+        public async Task<IActionResult> ConfirmarExclusaoExclusao(int? id)
+        {
 
-            try {
-                if (id == null) {
-                    if (id == null) {
+            try
+            {
+                if (id == null)
+                {
+                    if (id == null)
+                    {
                         TempData["ErrorMessage"] = "ID não encontrado";
                         return RedirectToAction("Index");
                     }
                 }
                 Estoque movimentacao = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(id.Value);
-                if (movimentacao == null) {
+                if (movimentacao == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(movimentacao);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> AlterarPerfil() {
+        public async Task<IActionResult> AlterarPerfil()
+        {
 
-            try {
+            try
+            {
                 List<Pessoa> pessoa = await _personService.TodasPessoasAtivasAsync();
                 return View(pessoa);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> AlterarPerfilUsuario(int? id) {
+        public async Task<IActionResult> AlterarPerfilUsuario(int? id)
+        {
 
-            try {
-                if (id == null) {
-                    if (id == null) {
+            try
+            {
+                if (id == null)
+                {
+                    if (id == null)
+                    {
                         TempData["ErrorMessage"] = "ID não encontrado";
                         return RedirectToAction("Index");
                     }
                 }
                 Pessoa pessoa = await _personService.BuscarPessoaPorIdAsync(id.Value);
-                if (pessoa == null) {
+                if (pessoa == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (pessoa.Status == Status.Desativado) {
+                if (pessoa.Status == Status.Desativado)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 return View(pessoa);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
 
         }
 
-        public async Task<IActionResult> Senha(int? id) {
-            try {
-                if (id == null) {
+        public async Task<IActionResult> Senha(int? id)
+        {
+            try
+            {
+                if (id == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id.Value);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (admin.Status == Status.Desativado) {
+                if (admin.Status == Status.Desativado)
+                {
                     TempData["ErrorMessage"] = "Usuário desativado";
                     return RedirectToAction("Index");
                 }
                 return View(admin);
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 TempData["ErrorMessage"] = $"Erro ao listar, erro: {ex.Message}";
                 return View();
             }
@@ -411,12 +504,30 @@ namespace FastMechanical.Controllers {
 
         }
 
+        public async Task<IActionResult> BaixarEstoque()
+        {
+            try
+            {
+                var baixarEstoqueViewModel = new BaixarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
+                return View(baixarEstoqueViewModel);
+            }
+            catch (Exception erro)
+            {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(Pessoa admin) {
+        public async Task<IActionResult> New(Pessoa admin)
+        {
 
-            try {
-                if (!ModelState.IsValid) {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
                     return View(admin);
                 }
                 admin.Status = Status.Ativado;
@@ -435,7 +546,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Usuario cadastrado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -445,21 +557,26 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Disable(int id) {
+        public async Task<IActionResult> Disable(int id)
+        {
 
-            try {
+            try
+            {
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (admin.Status == Status.Desativado) {
+                if (admin.Status == Status.Desativado)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
 
-                if (admin.TipoPessoa != TipoPessoa.Administrador) {
+                if (admin.TipoPessoa != TipoPessoa.Administrador)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -468,7 +585,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Usuário desativado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -479,21 +597,26 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Enable(int id) {
+        public async Task<IActionResult> Enable(int id)
+        {
 
-            try {
+            try
+            {
                 Pessoa admin = await _personService.BuscarAdminPorIdAsync(id);
-                if (admin == null) {
+                if (admin == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (admin.Status == Status.Ativado) {
+                if (admin.Status == Status.Ativado)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
 
-                if (admin.TipoPessoa != TipoPessoa.Administrador) {
+                if (admin.TipoPessoa != TipoPessoa.Administrador)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -502,7 +625,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Usuario ativado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -513,14 +637,18 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Pessoa admin) {
-            try {
-                if (!ModelState.IsValid) {
+        public async Task<IActionResult> Edit(Pessoa admin)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
                     return View(admin);
                 }
                 int id = (int)admin.Id;
                 Pessoa dbPessoa = await _personService.BuscarAdminPorIdAsync(id);
-                if (dbPessoa == null) {
+                if (dbPessoa == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -539,7 +667,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Usuario alterado com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 TempData["ErrorMessage"] = e.Message;
                 return RedirectToAction("Index");
             }
@@ -547,14 +676,17 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExcluirBaixa(ExcluirBaixaViewModel baixa) {
+        public async Task<IActionResult> ExcluirBaixa(ExcluirBaixaViewModel baixa)
+        {
 
-            try {
+            try
+            {
                 baixa.Movimentacao = await _almoxarifadoServices.BuscarBaixaPorDiaAsync(baixa.Data);
 
                 return View(baixa);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -563,12 +695,15 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EfetivarExclusao(Estoque movimentacao) {
+        public async Task<IActionResult> EfetivarExclusao(Estoque movimentacao)
+        {
 
-            try {
+            try
+            {
 
                 var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
-                if (movimentacaoDb.Baixa == 0) {
+                if (movimentacaoDb.Baixa == 0)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -587,7 +722,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Baixa excluida com sucesso";
                 return RedirectToAction("Administracao");
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View("Index");
             }
@@ -596,14 +732,17 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExcluirEntrada(ExcluirBaixaViewModel baixa) {
+        public async Task<IActionResult> ExcluirEntrada(ExcluirBaixaViewModel baixa)
+        {
 
-            try {
+            try
+            {
                 baixa.Movimentacao = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(baixa.Data);
 
                 return View(baixa);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -612,13 +751,16 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EfetivarExclusaoEntrada(Estoque movimentacao) {
+        public async Task<IActionResult> EfetivarExclusaoEntrada(Estoque movimentacao)
+        {
 
-            try {
+            try
+            {
 
                 var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
 
-                if (movimentacaoDb.Adicao == 0) {
+                if (movimentacaoDb.Adicao == 0)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -638,7 +780,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Baixa excluida com sucesso";
                 return RedirectToAction("Administracao");
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View("Index");
             }
@@ -647,14 +790,17 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExcluirVenda(ExcluirBaixaViewModel baixa) {
+        public async Task<IActionResult> ExcluirVenda(ExcluirBaixaViewModel baixa)
+        {
 
-            try {
+            try
+            {
                 baixa.Movimentacao = await _almoxarifadoServices.BuscarVendaPorDiaAsync(baixa.Data);
 
                 return View(baixa);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -663,12 +809,15 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EfetivarExclusaoVenda(Estoque movimentacao) {
+        public async Task<IActionResult> EfetivarExclusaoVenda(Estoque movimentacao)
+        {
 
-            try {
+            try
+            {
 
                 var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
-                if (movimentacaoDb.Baixa == 0) {
+                if (movimentacaoDb.Baixa == 0)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -687,7 +836,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Baixa excluida com sucesso";
                 return RedirectToAction("Administracao");
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View("Index");
             }
@@ -696,14 +846,17 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ExcluirExclusao(ExcluirBaixaViewModel baixa) {
+        public async Task<IActionResult> ExcluirExclusao(ExcluirBaixaViewModel baixa)
+        {
 
-            try {
+            try
+            {
                 baixa.Movimentacao = await _almoxarifadoServices.BuscarExclusaoPorDiaAsync(baixa.Data);
 
                 return View(baixa);
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -712,18 +865,22 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EfetivarExclusaoExclusao(Estoque movimentacao) {
+        public async Task<IActionResult> EfetivarExclusaoExclusao(Estoque movimentacao)
+        {
 
-            try {
+            try
+            {
 
                 var movimentacaoDb = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacao.Id);
                 var movimentacaoARefazer = await _almoxarifadoServices.BuscarMovimentacaoPorIdAsync(movimentacaoDb.IdMovimentacao);
                 var materialDb = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(movimentacaoDb.Material.Id);
 
-                if (movimentacaoARefazer.Baixa != 0) {
+                if (movimentacaoARefazer.Baixa != 0)
+                {
                     materialDb.Quantidade -= movimentacaoARefazer.Baixa;
                 }
-                if (movimentacaoARefazer.Adicao != 0) {
+                if (movimentacaoARefazer.Adicao != 0)
+                {
                     materialDb.Quantidade += movimentacaoARefazer.Adicao;
                 }
                 movimentacaoARefazer.DataExclusao = null;
@@ -734,7 +891,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Exclusão excluida com sucesso";
                 return RedirectToAction("Administracao");
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View("Index");
             }
@@ -743,17 +901,21 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AlterarPerfilUsuario(Pessoa pessoa) {
+        public async Task<IActionResult> AlterarPerfilUsuario(Pessoa pessoa)
+        {
 
-            try {
+            try
+            {
 
                 Pessoa dbPessoa = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
 
-                if (dbPessoa == null) {
+                if (dbPessoa == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (dbPessoa.Status == Status.Desativado) {
+                if (dbPessoa.Status == Status.Desativado)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -762,7 +924,8 @@ namespace FastMechanical.Controllers {
                 TempData["SuccessMessage"] = "Perfil alterado com sucesso";
                 return RedirectToAction("Administracao");
             }
-            catch (Exception erro) {
+            catch (Exception erro)
+            {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -771,23 +934,27 @@ namespace FastMechanical.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Senha(Pessoa admin) {
-            try {
+        public async Task<IActionResult> Senha(Pessoa admin)
+        {
+            try
+            {
 
                 Pessoa adminDb = await _personService.BuscarAdminPorIdAsync(admin.Id);
 
-                if (adminDb == null) {
+                if (adminDb == null)
+                {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (adminDb.Status == Status.Desativado) {
+                if (adminDb.Status == Status.Desativado)
+                {
                     TempData["ErrorMessage"] = "Usuário desativado";
                     return RedirectToAction("Index");
                 }
 
                 adminDb.Password = Pessoa.PasswordGenerate();
-                string title = "Nova senha de acesso so sitema FastMechanical";
-                string body = $"Olá, sua nova senha de acesso ao sistema presmed é: {adminDb.Password}";
+                string title = "Nova senha de acesso ao sistema FastMechanical";
+                string body = $"Olá, \n\nSua senha foi redefinida! \n\nSegue a nova senha de acesso ao sistema FastMechanical: {adminDb.Password}";
                 Pessoa.SendMail(adminDb.Email, body, title);
                 adminDb.SetPasswordHash();
                 await _personService.AtualizarAsync(adminDb);
@@ -796,12 +963,68 @@ namespace FastMechanical.Controllers {
 
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 TempData["ErrorMessage"] = $"Erro ao listar, erro: {ex.Message}";
                 return RedirectToAction("Index");
             }
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BaixarEstoque(BaixarEstoqueViewModel materialViewModel)
+        {
+            try
+            {
+                materialViewModel.ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync();
+                if (!ModelState.IsValid)
+                {
+                    return View(materialViewModel);
+                }
 
+                if (materialViewModel.Baixa == 0)
+                {
+                    TempData["ErrorMessage"] = "Baixa não pode ser zero.";
+                    return RedirectToAction("BaixarEstoque");
+                }
+                Materiais dbMaterial = await _almoxarifadoServices.EncontrarMaterialPorIdAsync(materialViewModel.Material);
+                if (dbMaterial == null)
+                {
+                    TempData["ErrorMessage"] = "ID não encontrado";
+                    return RedirectToAction("Index");
+                }
+                if (dbMaterial.Quantidade <= 0)
+                {
+                    TempData["ErrorMessage"] = "Não é possivel baixar estoque de material zerado.";
+                    return RedirectToAction("BaixarEstoque");
+                }
+
+                var baixa = dbMaterial.Quantidade - materialViewModel.Baixa;
+
+                if (baixa < 0)
+                {
+                    TempData["ErrorMessage"] = "Baixa maior que o estoque, favor verificar.";
+                    return RedirectToAction("BaixarEstoque");
+
+                }
+                string sessionUser = HttpContext.Session.GetString("sessionLoggedUser");
+                if (string.IsNullOrEmpty(sessionUser)) return null;
+                Pessoa pessoa = JsonConvert.DeserializeObject<Pessoa>(sessionUser);
+
+                var dbPessoa = await _personService.BuscarPessoaPorIdAsync(pessoa.Id);
+
+                await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Baixa = materialViewModel.Baixa, Executor = dbPessoa, Observacao = materialViewModel.Observacao, Material = dbMaterial, TipoMovimentacao = TipoMovimentacao.Baixa, DataBaixa = DateTime.Now, DataAdicao = null });
+                dbMaterial.Quantidade -= materialViewModel.Baixa;
+                await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
+                TempData["SuccessMessage"] = "Material alterado com sucesso";
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                TempData["ErrorMessage"] = e.Message;
+                return RedirectToAction("Index");
+            }
         }
 
     }

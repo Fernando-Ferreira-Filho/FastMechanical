@@ -8,7 +8,6 @@ using System.Globalization;
 using System.IO;
 using System;
 using System.Threading.Tasks;
-using FastMechanical.Models.Enums;
 using FastMechanical.Models;
 
 namespace FastMechanical.Controllers {

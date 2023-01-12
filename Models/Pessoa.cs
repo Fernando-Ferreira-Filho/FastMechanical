@@ -106,7 +106,7 @@ namespace FastMechanical.Models {
         public static void SendMail(string emailMessage, string message, string title) {
             // create email message
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse("testesapps51@gmail.com"));
+            email.From.Add(MailboxAddress.Parse("fast.mechanics.ofc@gmail.com"));
             email.To.Add(MailboxAddress.Parse(emailMessage));
             email.Subject = title;
             email.Body = new TextPart(TextFormat.Plain) { Text = message };
@@ -114,7 +114,7 @@ namespace FastMechanical.Models {
             // send email
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("testesapps51@gmail.com", "fahtsroanthccqxd");
+            smtp.Authenticate("fast.mechanics.ofc@gmail.com", "xonfbsmuamtjhgva");
             smtp.Send(email);
             smtp.Disconnect(true);
         }

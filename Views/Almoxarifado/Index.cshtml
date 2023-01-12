@@ -23,14 +23,13 @@
     <div class="col-lg-16">
         <span class="display-4">@ViewData["Title"]</span>
     </div>
-    <hr />
-    <div class="col-lg-16 mt-3 me-3">
+    
+    <div class="w-100 col-lg-16 mt-3 me-3 d-flex justify-content-end">
         <a asp-action="NovoMaterial" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-plus d-block text-center" style="font-size:2rem; "></i><span>Novo material</span></a>
         <a asp-action="Index" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-warehouse d-block text-center text-success" style="font-size:2rem; "></i><span>Ativos</span></a>
         <a asp-action="MateriaisDesativados" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-warehouse d-block text-center text-danger" style="font-size:2rem; "></i><span>Inativos</span></a>
-        <a asp-action="BaixarEstoque" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-arrow-down d-block text-center text-danger" style="font-size:2rem; "></i><span>Baixar estoque</span></a>
         <a asp-action="EntrarEstoque" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-arrow-up d-block text-center text-success" style="font-size:2rem; "></i><span>Entrar estoque</span></a>
-        <a asp-action="VenderEstoque" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-arrow-down d-block text-center text-danger" style="font-size:2rem; "></i><span>Vender estoque</span></a>
+        <a asp-action="VenderEstoque" asp-controller="Almoxarifado" class="link-dark float-start ms-5"><i class="fas fa-solid fa-dollar-sign d-block text-center text-warning" style="font-size:2rem; "></i><span>Vender estoque</span></a>
     </div>
 
 

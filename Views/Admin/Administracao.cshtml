@@ -2,14 +2,16 @@
     ViewData["Title"] = $"Administração";
 }
 
-@if (TempData["SuccessMessage"] != null) {
+@if (TempData["SuccessMessage"] != null)
+{
     <div class="alert alert-dismissible alert-success">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         @TempData["SuccessMessage"]
     </div>
 }
 
-@if (TempData["ErrorMessage"] != null) {
+@if (TempData["ErrorMessage"] != null)
+{
     <div class="alert alert-dismissible alert-danger">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         @TempData["ErrorMessage"]
@@ -71,6 +73,15 @@
                 <h5 class="card-title">Administração</h5>
                 <p class="card-text">Realizar alteração do perfil do usuario</p>
                 <a asp-action="AlterarPerfil" asp-controller="Admin" class="btn btn-primary">Perfil do usuario</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+         <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Almoxarifado</h5>
+                <p class="card-text">Baixar estoque fora de venda</p>
+                <a asp-action="BaixarEstoque" asp-controller="Admin" class="btn btn-primary">Excluir Estoque</a>
             </div>
         </div>
     </div>

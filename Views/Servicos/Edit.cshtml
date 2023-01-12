@@ -15,12 +15,12 @@
     <input readonly asp-for="@Model.Id" type="hidden" value="@Model.Id">
     <div class="col-md-6">
         <label asp-for="@Model.Nome" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Nome" type="text" class="form-control" placeholder="Digite o número Nome">
+        <input asp-for="@Model.Nome" type="text" class="form-control" placeholder="Digite o nome do serviço">
         <span asp-validation-for="@Model.Nome" class="text-danger"></span>
     </div>
     <div class="col-md-6">
         <label asp-for="@Model.Valor" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Valor" type="text" class="form-control" placeholder="Digite a placa do veículo">
+        <input asp-for="@Model.Valor" type="text" class="form-control" placeholder="Digite o valor do serviço">
         <span asp-validation-for="@Model.Valor" class="text-danger"></span>
     </div>
 

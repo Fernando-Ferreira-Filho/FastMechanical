@@ -7,6 +7,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    padding: 0;
 }
 
 p {
@@ -148,9 +149,9 @@ a.article:hover {
 
 #content {
     width: 100%;
-    padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
+    
 }
 
 /* ---------------------------------------------------

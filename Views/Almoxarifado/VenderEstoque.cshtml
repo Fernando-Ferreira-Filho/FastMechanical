@@ -1,7 +1,7 @@
 ﻿@model FastMechanical.Models.ViewModel.BaixarEstoqueViewModel
 
 @{
-    ViewData["Title"] = "Baixar estoque ";
+    ViewData["Title"] = "Vender estoque ";
 }
 
 @if (TempData["SuccessMessage"] != null) {
@@ -38,7 +38,7 @@
 
     <div class="col-md-6">
         <label asp-for="@Model.Baixa" class="form-label"></label><span class="text-danger">*</span>
-        <input asp-for="@Model.Baixa" type="number" class="form-control" placeholder="Digite a placa do veículo">
+        <input asp-for="@Model.Baixa" type="number" class="form-control" placeholder="Digite a quantidade vendida do estoque">
         <span asp-validation-for="@Model.Baixa" class="text-danger"></span>
     </div>
 
