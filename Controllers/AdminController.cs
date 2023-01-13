@@ -1018,7 +1018,7 @@ namespace FastMechanical.Controllers
                 await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
                 TempData["SuccessMessage"] = "Material alterado com sucesso";
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Administracao");
             }
             catch (Exception e)
             {

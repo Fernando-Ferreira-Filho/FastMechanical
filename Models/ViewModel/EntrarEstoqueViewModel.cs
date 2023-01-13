@@ -16,10 +16,13 @@ namespace FastMechanical.Models.ViewModel {
         [Display(Name = "Observação")]
         public string Observacao { get; set; }
 
+        [MinLength(44, ErrorMessage = "Campo inválido ")]
+        [MaxLength(44, ErrorMessage = "Campo invalido")]
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [Display(Name = "Chave de acesso da nota fiscal")]
         public string ChaveAcessoNotaFiscal { get; set; }
 
+        
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [Display(Name = "Numero da nota fiscal")]
         public string NumeroNotaFiscal { get; set; }
