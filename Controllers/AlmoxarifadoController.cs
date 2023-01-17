@@ -150,7 +150,7 @@ namespace FastMechanical.Controllers {
 
         public async Task<IActionResult> VenderEstoque() {
             try {
-                var baixarEstoqueViewModel = new BaixarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
+                var baixarEstoqueViewModel = new BaixarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync(), Estoques = await _almoxarifadoServices.BuscarVendaPorDiaAsync(DateTime.Now) };
                 return View(baixarEstoqueViewModel);
             }
             catch (Exception erro) {
@@ -162,7 +162,8 @@ namespace FastMechanical.Controllers {
 
         public async Task<IActionResult> EntrarEstoque() {
             try {
-                var entrarEstoqueViewModel = new EntrarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync() };
+                var entrarEstoqueViewModel = new EntrarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync(), Estoques = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(DateTime.Now) };
+
                 return View(entrarEstoqueViewModel);
             }
             catch (Exception erro) {
@@ -298,7 +299,7 @@ namespace FastMechanical.Controllers {
         }
 
 
-        
+
 
 
         [HttpPost]
@@ -308,6 +309,8 @@ namespace FastMechanical.Controllers {
 
             try {
                 materialViewModel.ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync();
+                materialViewModel.Estoques = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(DateTime.Now);
+
                 if (!ModelState.IsValid) {
                     return View(materialViewModel);
                 }
@@ -336,8 +339,10 @@ namespace FastMechanical.Controllers {
 
                 await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
 
-                var entrarEstoqueViewModel = new EntrarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync(), ChaveAcessoNotaFiscal = materialViewModel.ChaveAcessoNotaFiscal, NumeroNotaFiscal = materialViewModel.NumeroNotaFiscal, Observacao = materialViewModel.Observacao };
+                var entrarEstoqueViewModel = new EntrarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync(), ChaveAcessoNotaFiscal = materialViewModel.ChaveAcessoNotaFiscal, NumeroNotaFiscal = materialViewModel.NumeroNotaFiscal, Observacao = materialViewModel.Observacao, Estoques = await _almoxarifadoServices.BuscarAdicaoPorDiaAsync(DateTime.Now) };
+
                 TempData["SuccessMessage"] = $"Material {dbMaterial.Nome}, quantidade: {materialViewModel.Adicao}, inserido com sucesso";
+
                 return View(entrarEstoqueViewModel);
             }
             catch (Exception e) {
@@ -353,6 +358,7 @@ namespace FastMechanical.Controllers {
 
             try {
                 materialViewModel.ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync();
+                materialViewModel.Estoques = await _almoxarifadoServices.BuscarBaixaPorDiaAsync(DateTime.Now);
                 if (!ModelState.IsValid) {
                     return View(materialViewModel);
                 }
@@ -387,9 +393,11 @@ namespace FastMechanical.Controllers {
                 await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Baixa = materialViewModel.Baixa, Executor = dbPessoa, Observacao = materialViewModel.Observacao, Material = dbMaterial, TipoMovimentacao = TipoMovimentacao.Venda, DataBaixa = DateTime.Now, DataAdicao = null });
                 dbMaterial.Quantidade -= materialViewModel.Baixa;
                 await _almoxarifadoServices.AtualizarMaterialAsync(dbMaterial);
+
+                var baixarEstoqueViewModel = new BaixarEstoqueViewModel { ListaMateriais = await _almoxarifadoServices.ListarTodosMateriaisAtivosAsync(), Observacao = materialViewModel.Observacao, Estoques = await _almoxarifadoServices.BuscarVendaPorDiaAsync(DateTime.Now), Baixa = materialViewModel.Baixa };
                 TempData["SuccessMessage"] = "Material alterado com sucesso";
 
-                return RedirectToAction("Index");
+                return View(baixarEstoqueViewModel);
             }
             catch (Exception e) {
                 TempData["ErrorMessage"] = e.Message;

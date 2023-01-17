@@ -18,27 +18,13 @@
         @TempData["ErrorMessage"]
     </div>
 }
-<form asp-controller="Agendamento" asp-action="Agenda">
-    <div class="row me-5">
-        <div class="col-lg-10 mb-5">
-            <span class="display-4">@ViewData["Title"]</span>
-        </div>
 
-        <div class="col-md-3">
-            <label class="form-label">Cliente</label>
-            <select asp-for="@Model.Cliente.Id" class="form-select">
-                @foreach (var item in Model.ListaPessoa) {
-                    <option value="@item.Id">
-                        @item.Nome
-                    </option>
-                }
-            </select>
-        </div>
-        <div class="col-lg-2 m-2 pt-4">
-            <button type="submit" class="btn btn-success"><span>Nova manutenção</span></button>
-        </div>
-    </div>
-</form>
+<div class="col-lg-10 mb-5">
+    <span class="display-4">@ViewData["Title"]</span>
+</div>
+<div class="col-lg-2 m-2 pt-4">
+    <a role="button" asp-action="Agenda" asp-asp-controller="Agendamento" class="btn btn-success"><span>Nova manutenção</span></a>
+</div>
 <br />
 
 <table class="table table-striped text-center" id="table-contacts">

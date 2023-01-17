@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\FastMechanical.csproj": {}
+    "D:\\TCC\\FastMechanical\\FastMechanical.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\FastMechanical.csproj": {
+    "D:\\TCC\\FastMechanical\\FastMechanical.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\FastMechanical.csproj",
+        "projectUniqueName": "D:\\TCC\\FastMechanical\\FastMechanical.csproj",
         "projectName": "FastMechanical",
-        "projectPath": "C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\FastMechanical.csproj",
-        "packagesPath": "C:\\Users\\Lucas Jorge\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lucas Jorge\\OneDrive - w0ytt\\Documentos\\FastMechanical\\obj\\",
+        "projectPath": "D:\\TCC\\FastMechanical\\FastMechanical.csproj",
+        "packagesPath": "C:\\Users\\Fernandovisky\\.nuget\\packages\\",
+        "outputPath": "D:\\TCC\\FastMechanical\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lucas Jorge\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Fernandovisky\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -87,7 +88,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -99,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

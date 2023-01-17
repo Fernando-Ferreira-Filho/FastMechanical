@@ -67,3 +67,37 @@
 
 </form>
 
+<div class="">
+    <h4>Entrada de estoque do dia atual</h4>
+</div>
+<hr />
+
+<table class="table table-striped text-center" id="table-contacts">
+    <thead>
+        <tr>
+
+            <th class="text-center" scope="col">Material</th>
+            <th class="text-center" scope="col">Quantidade</th>
+            <th class="text-center" scope="col">Nota</th>
+            <th class="text-center" scope="col">Executor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Estoques.Any()) {
+            @foreach (var item in Model.Estoques) {
+                <tr>
+                    <td>@item.Material.Nome</td>
+                    <td>@item.Adicao</td>
+                    <td>@item.NumeroNotaFiscal</td>
+                    <td>@item.Executor.Nome</td>
+                </tr>
+            }
+        }
+        else {
+            <tr class="odd"><td valign="top" colspan="5">Nenhum registro encontrado</td></tr>
+        }
+
+    </tbody>
+</table>
+
+

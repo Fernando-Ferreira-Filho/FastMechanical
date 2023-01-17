@@ -19,5 +19,7 @@ namespace FastMechanical.Models.ViewModel {
         public string Observacao { get; set; }
 
         public List<Materiais> ListaMateriais { get; set; }
+
+        public List<Estoque> Estoques { get; set; }
     }
 }

@@ -11,12 +11,11 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Globalization;
 using static iTextSharp.text.pdf.AcroFields;
+using System.Collections.Generic;
 
-namespace FastMechanical.Controllers
-{
+namespace FastMechanical.Controllers {
     [PaginaParaAdminEVendedor]
-    public class AgendamentoController : Controller
-    {
+    public class AgendamentoController : Controller {
 
         private readonly IPessoaServices _personService;
         private readonly IAlmoxarifadoServices _almoxarifadoServices;
@@ -24,8 +23,7 @@ namespace FastMechanical.Controllers
         private readonly IVeiculoServices _veiculoServices;
         private readonly IServicosServices _servicosServices;
 
-        public AgendamentoController(IPessoaServices personService, IAlmoxarifadoServices almoxarifadoServices, IAgendaServices agendaServices, IVeiculoServices veiculoServices, IServicosServices servicosServices)
-        {
+        public AgendamentoController(IPessoaServices personService, IAlmoxarifadoServices almoxarifadoServices, IAgendaServices agendaServices, IVeiculoServices veiculoServices, IServicosServices servicosServices) {
             _personService = personService;
             _almoxarifadoServices = almoxarifadoServices;
             _agendaServices = agendaServices;
@@ -33,69 +31,55 @@ namespace FastMechanical.Controllers
             _servicosServices = servicosServices;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            try
-            {
+        public async Task<IActionResult> Index() {
+            try {
                 var agenda = new AgendaViewModel { ListaAgenda = await _agendaServices.ListarTodasAgendasAtivasAsync(), ListaPessoa = await _personService.TodasPessoasAtivasAsync() };
                 return View(agenda);
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> Excluir(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
+        public async Task<IActionResult> Excluir(int? id) {
+            try {
+                if (id == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Agenda agenda = await _agendaServices.BuscarAgendaPorIdAsync(id.Value);
-                if (agenda == null)
-                {
+                if (agenda == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
-                if (agenda.Status == AgendaStatus.Em_atendimento || agenda.Status == AgendaStatus.Finalizado)
-                {
+                if (agenda.Status == AgendaStatus.Em_atendimento || agenda.Status == AgendaStatus.Finalizado) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
 
                 return View("Excluir", agenda);
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> Pagamento(int? id)
-        {
-            try
-            {
-                if (id == null)
-                {
+        public async Task<IActionResult> Pagamento(int? id) {
+            try {
+                if (id == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
                 Agenda agenda = await _agendaServices.BuscarAgendaPorIdAsync(id.Value);
 
-                if (agenda == null)
-                {
+                if (agenda == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (agenda.Status != AgendaStatus.Aguardando_pagamento)
-                {
+                if (agenda.Status != AgendaStatus.Aguardando_pagamento) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -104,31 +88,26 @@ namespace FastMechanical.Controllers
 
                 return View(atendimento);
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
         }
 
-        public async Task<IActionResult> RelatorioAgenda(int? id)
-        {
+        public async Task<IActionResult> RelatorioAgenda(int? id) {
             Document document = new Document();
 
             MemoryStream stream = new MemoryStream();
 
-            try
-            {
+            try {
 
                 Agenda agenda = await _agendaServices.BuscarAgendaPorIdAsync(id.Value);
 
-                if (agenda == null)
-                {
+                if (agenda == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (agenda.Status != AgendaStatus.Aguardando_pagamento)
-                {
+                if (agenda.Status != AgendaStatus.Aguardando_pagamento) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -151,8 +130,7 @@ namespace FastMechanical.Controllers
                 double valorServicos = 0;
                 double valorPecas = 0;
                 document.Add(new Paragraph($"\nOrçamento do veiculo {agenda.Veiculo.Modelo} placa - {agenda.Veiculo.Placa} - Mecanico: {agenda.Mecanico.Nome}\n\n"));
-                if (servicoAtendimentos.Count > 0)
-                {
+                if (servicoAtendimentos.Count > 0) {
                     document.Add(new Paragraph($"Serviços realizados\n\n"));
                     PdfPTable table = new PdfPTable(3);
 
@@ -175,8 +153,7 @@ namespace FastMechanical.Controllers
                     table.AddCell(H2);
                     table.AddCell(H3);
 
-                    foreach (var item in servicoAtendimentos)
-                    {
+                    foreach (var item in servicoAtendimentos) {
                         valorServicos += item.Servico.Valor;
                         PdfPCell cell1 = new PdfPCell(new Paragraph($"{item.Servico.Id}"));
                         cell1.HorizontalAlignment = Element.ALIGN_CENTER;
@@ -197,8 +174,7 @@ namespace FastMechanical.Controllers
                     table.SpacingAfter = 10f;
                     document.Add(table);
                 }
-                if (pecaAtendimentos.Count > 0)
-                {
+                if (pecaAtendimentos.Count > 0) {
 
                     document.Add(new Paragraph($"Peças utilizadas\n\n"));
                     PdfPTable table = new PdfPTable(4);
@@ -230,8 +206,7 @@ namespace FastMechanical.Controllers
                     table.AddCell(H3);
                     table.AddCell(H4);
 
-                    foreach (var item in pecaAtendimentos)
-                    {
+                    foreach (var item in pecaAtendimentos) {
                         var valor = (item.Material.ValorCusto * item.Material.PorcentagemLucro + item.Material.ValorCusto) * item.Quantidade;
                         valorPecas += valor;
                         PdfPCell cell1 = new PdfPCell(new Paragraph($"{item.Material.Id}"));
@@ -258,12 +233,10 @@ namespace FastMechanical.Controllers
                 }
 
             }
-            catch (DocumentException de)
-            {
+            catch (DocumentException de) {
                 Console.Error.WriteLine(de.Message);
             }
-            catch (IOException ioe)
-            {
+            catch (IOException ioe) {
                 Console.Error.WriteLine(ioe.Message);
             }
 
@@ -274,20 +247,33 @@ namespace FastMechanical.Controllers
             return File(stream, "application/pdf", $"Orçamento.pdf");
         }
 
+        public async Task<IActionResult> Agenda() {
+            try {
+
+                AgendaViewModel agenda = new AgendaViewModel {
+                    ListaPessoa = await _personService.TodasPessoasAtivasAsync(),
+                    Veiculos = new List<Veiculo>()
+                };
+                return View(agenda);
+            }
+            catch (Exception erro) {
+                TempData["ErrorMessage"] = erro.Message;
+                return View();
+            }
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Agenda(AgendaViewModel agenda)
-        {
-            try
-            {
+        public async Task<IActionResult> Cliente(AgendaViewModel agenda) {
+            try {
                 agenda.Veiculos = await _veiculoServices.BuscarVeiculoPorClienteId(agenda.Cliente.Id);
                 agenda.Servicos = await _servicosServices.TodosServicosAtivosAsync();
                 agenda.Mecanicos = await _personService.TodosMecanicosAtivosAsync();
-                return View(agenda);
+                agenda.ListaPessoa = await _personService.TodasPessoasAtivasAsync();
+                return View("Agenda", agenda);
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -295,38 +281,31 @@ namespace FastMechanical.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MarcarAgenda(AgendaViewModel agenda)
-        {
-            try
-            {
+        public async Task<IActionResult> MarcarAgenda(AgendaViewModel agenda) {
+            try {
 
-                if (agenda.Veiculo == null || agenda.Servico == null || agenda.Mecanico == null)
-                {
+                if (agenda.Veiculo == null || agenda.Servico == null || agenda.Mecanico == null) {
                     TempData["ErrorMessage"] = "Todos os campos devem estar preenchidos";
                     return RedirectToAction("Index");
                 }
                 Pessoa mecanico = await _personService.BuscarMecanicoPorIdAsync(agenda.Mecanico.Id);
-                if (mecanico == null)
-                {
+                if (mecanico == null) {
                     TempData["ErrorMessage"] = "ID inválido";
                     return RedirectToAction("Index");
                 }
                 Veiculo veiculo = await _veiculoServices.EncontrarVeiculoPorIdAsync(agenda.Veiculo.Id);
-                if (veiculo == null)
-                {
+                if (veiculo == null) {
                     TempData["ErrorMessage"] = "ID inválido";
                     return RedirectToAction("Index");
                 }
                 Pessoa cliente = await _personService.BuscarClientePorIdAsync(veiculo.Pessoa.Id);
-                if (cliente == null)
-                {
+                if (cliente == null) {
                     TempData["ErrorMessage"] = "ID inválido";
                     return RedirectToAction("Index");
                 }
 
                 Servicos servico = await _servicosServices.EncontrarServicosPorIdAsync(agenda.Servico.Id);
-                if (servico == null)
-                {
+                if (servico == null) {
                     TempData["ErrorMessage"] = "ID inválido";
                     return RedirectToAction("Index");
                 }
@@ -336,8 +315,7 @@ namespace FastMechanical.Controllers
                 TempData["SuccessMessage"] = "Agenda marcada com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -345,23 +323,18 @@ namespace FastMechanical.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Excluir(Agenda agenda)
-        {
-            try
-            {
+        public async Task<IActionResult> Excluir(Agenda agenda) {
+            try {
                 var agendaDb = await _agendaServices.BuscarAgendaPorIdAsync(agenda.Id);
-                if (agendaDb == null)
-                {
+                if (agendaDb == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (agendaDb.Status == AgendaStatus.Em_atendimento)
-                {
+                if (agendaDb.Status == AgendaStatus.Em_atendimento) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (agendaDb.Status == AgendaStatus.Finalizado)
-                {
+                if (agendaDb.Status == AgendaStatus.Finalizado) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -371,8 +344,7 @@ namespace FastMechanical.Controllers
                 TempData["SuccessMessage"] = "Agenda excluida com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }
@@ -380,18 +352,14 @@ namespace FastMechanical.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FinalizarAgendamento(AtendimentoViewModel agendaViewMdodel)
-        {
-            try
-            {
+        public async Task<IActionResult> FinalizarAgendamento(AtendimentoViewModel agendaViewMdodel) {
+            try {
                 var agendaDb = await _agendaServices.BuscarAgendaPorIdAsync(agendaViewMdodel.Agenda.Id);
-                if (agendaDb == null)
-                {
+                if (agendaDb == null) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
-                if (agendaDb.Status != AgendaStatus.Aguardando_pagamento)
-                {
+                if (agendaDb.Status != AgendaStatus.Aguardando_pagamento) {
                     TempData["ErrorMessage"] = "ID não encontrado";
                     return RedirectToAction("Index");
                 }
@@ -404,8 +372,7 @@ namespace FastMechanical.Controllers
                 TempData["SuccessMessage"] = "Agenda finalizada com sucesso";
                 return RedirectToAction("Index");
             }
-            catch (Exception erro)
-            {
+            catch (Exception erro) {
                 TempData["ErrorMessage"] = erro.Message;
                 return View();
             }

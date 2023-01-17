@@ -22,12 +22,15 @@ namespace FastMechanical.Models.ViewModel {
         [Display(Name = "Chave de acesso da nota fiscal")]
         public string ChaveAcessoNotaFiscal { get; set; }
 
-        
+
         [Required(ErrorMessage = "O campo não pode ser vazio")]
         [Display(Name = "Numero da nota fiscal")]
         public string NumeroNotaFiscal { get; set; }
 
         public List<Materiais> ListaMateriais { get; set; }
+
+        public List<Estoque> Estoques { get; set; }
+
 
     }
 
