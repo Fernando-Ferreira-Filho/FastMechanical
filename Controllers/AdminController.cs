@@ -719,7 +719,7 @@ namespace FastMechanical.Controllers
                 await _almoxarifadoServices.AtualizarMaterialAsync(material);
                 await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Material = material, Executor = pessoaDb, TipoMovimentacao = TipoMovimentacao.Exclusao, IdMovimentacao = movimentacaoDb.Id, DataInsercaoExclusao = DateTime.Now });
 
-                TempData["SuccessMessage"] = "Baixa excluida com sucesso";
+                TempData["SuccessMessage"] = "Baixa excluída com sucesso";
                 return RedirectToAction("Administracao");
             }
             catch (Exception erro)
@@ -777,7 +777,7 @@ namespace FastMechanical.Controllers
                 await _almoxarifadoServices.AtualizarMaterialAsync(material);
                 await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Material = material, Executor = pessoaDb, TipoMovimentacao = TipoMovimentacao.Exclusao, IdMovimentacao = movimentacaoDb.Id, DataInsercaoExclusao = DateTime.Now });
 
-                TempData["SuccessMessage"] = "Baixa excluida com sucesso";
+                TempData["SuccessMessage"] = "Entrada excluída com sucesso";
                 return RedirectToAction("Administracao");
             }
             catch (Exception erro)
@@ -833,7 +833,7 @@ namespace FastMechanical.Controllers
                 await _almoxarifadoServices.AtualizarMaterialAsync(material);
                 await _almoxarifadoServices.SalvarMovimentacaoEstoqueAsync(new Estoque { Material = material, Executor = pessoaDb, TipoMovimentacao = TipoMovimentacao.Exclusao, IdMovimentacao = movimentacaoDb.Id, DataInsercaoExclusao = DateTime.Now });
 
-                TempData["SuccessMessage"] = "Baixa excluida com sucesso";
+                TempData["SuccessMessage"] = "Venda excluída com sucesso";
                 return RedirectToAction("Administracao");
             }
             catch (Exception erro)
@@ -888,7 +888,7 @@ namespace FastMechanical.Controllers
                 await _almoxarifadoServices.AtualizarMovimentacaoAsync(movimentacaoARefazer);
                 await _almoxarifadoServices.ExcluirMovimentacaoasync(movimentacaoDb);
 
-                TempData["SuccessMessage"] = "Exclusão excluida com sucesso";
+                TempData["SuccessMessage"] = "Exclusão excluída com sucesso";
                 return RedirectToAction("Administracao");
             }
             catch (Exception erro)

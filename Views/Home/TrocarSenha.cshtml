@@ -19,19 +19,19 @@
     </div>
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="d-flex align-items-center justify-content-center mt-3">@ViewData["Title"]</h1>
 <hr />
-<div class="row">
+<div class="row d-flex align-content-center justify-content-center mt-8" style="height: 60vh;">
     <div class="col-6 d-flex ">
         <div class="col-lg-11">
             <form asp-controller="Home" asp-action="TrocarSenha">
                 <div class="mb-3">
-                    <label for="user" class="form-label">Insira a senha</label>
+                    <label for="user" class="form-label">Insira a nova senha</label>
                     <input asp-for="@Model.Password" type="password" class="form-control" id="user">
                     <span asp-validation-for="@Model.Password" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label for="user" class="form-label">Redefina a senha</label>
+                    <label for="user" class="form-label">Confirme a nova senha</label>
                     <input asp-for="@Model.ConfirmPassword" type="password" class="form-control" id="user">
                     <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
                 </div>
